@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "BottomSheet",
+        "repositoryURL": "https://github.com/LucasMucGH/BottomSheet",
+        "state": {
+          "branch": null,
+          "revision": "5192b9f4b8ba254abd121489f320071705da97a0",
+          "version": "2.2.0"
+        }
+      },
+      {
         "package": "SwiftUIX",
         "repositoryURL": "https://github.com/SwiftUIX/SwiftUIX",
         "state": {
