@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE2299D2268D00B4002B16EA /* MalinkiMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */; };
+		CE2299D4268D00EC002B16EA /* MalinkiMapControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */; };
 		CEC9FB4D268A4445005882E7 /* MalinkiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9FB4C268A4445005882E7 /* MalinkiApp.swift */; };
 		CEC9FB4F268A4445005882E7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9FB4E268A4445005882E7 /* ContentView.swift */; };
 		CEC9FB51268A4447005882E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC9FB50268A4447005882E7 /* Assets.xcassets */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapView.swift; sourceTree = "<group>"; };
+		CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapControl.swift; sourceTree = "<group>"; };
 		CEC9FB49268A4445005882E7 /* Malinki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Malinki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC9FB4C268A4445005882E7 /* MalinkiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiApp.swift; sourceTree = "<group>"; };
 		CEC9FB4E268A4445005882E7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -37,6 +41,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE2299D0268D0026002B16EA /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */,
+				CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */,
+			);
+			path = "User Interface";
+			sourceTree = "<group>";
+		};
 		CEC9FB40268A4445005882E7 = {
 			isa = PBXGroup;
 			children = (
@@ -56,6 +69,7 @@
 		CEC9FB4B268A4445005882E7 /* Malinki */ = {
 			isa = PBXGroup;
 			children = (
+				CE2299D0268D0026002B16EA /* User Interface */,
 				CEC9FB4C268A4445005882E7 /* MalinkiApp.swift */,
 				CEC9FB4E268A4445005882E7 /* ContentView.swift */,
 				CEC9FB50268A4447005882E7 /* Assets.xcassets */,
@@ -150,7 +164,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2299D2268D00B4002B16EA /* MalinkiMapView.swift in Sources */,
 				CEC9FB4F268A4445005882E7 /* ContentView.swift in Sources */,
+				CE2299D4268D00EC002B16EA /* MalinkiMapControl.swift in Sources */,
 				CEC9FB4D268A4445005882E7 /* MalinkiApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
