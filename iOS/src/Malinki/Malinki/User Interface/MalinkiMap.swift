@@ -9,8 +9,24 @@ import SwiftUI
 
 struct MalinkiMap: View {
     var body: some View {
-        MalinkiMapView()
-            .edgesIgnoringSafeArea(.all)
+        ZStack {
+            //the map view
+            MalinkiMapView()
+                .edgesIgnoringSafeArea(.all)
+            
+            //controls will overlay the map view
+            VStack {
+                
+                //some buttons at the top
+                HStack {
+                    Spacer()
+                    MalinkiButtonGroup()
+                }
+                
+                
+            }
+        }
+        
     }
 }
 
