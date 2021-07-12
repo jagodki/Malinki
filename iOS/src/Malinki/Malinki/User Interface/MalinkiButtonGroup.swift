@@ -13,7 +13,6 @@ struct MalinkiButtonGroup: View {
         ZStack {
             //a blur effect for the background
             VisualEffectBlurView(blurStyle: .regular)
-                .frame(width: 50, height: 135)
             
             VStack {
                 //a button for showing the users position
@@ -22,13 +21,11 @@ struct MalinkiButtonGroup: View {
                     
                 }) {
                     Image(systemName: "location")
-                        .resizable()
-                        .frame(width: 20, height: 20, alignment: .center)
+                        .font(.system(size: 20, weight: .regular))
                         .padding()
                 }
                 
                 Divider()
-                    .frame(width: 50)
                 
                 //a button for sharing the map
                 Button(action: {
@@ -36,12 +33,12 @@ struct MalinkiButtonGroup: View {
                     
                 }) {
                     Image(systemName: "square.and.arrow.up")
-                        .resizable()
-                        .frame(width: 20, height: 25, alignment: .center)
+                        .font(.system(size: 20, weight: .regular))
                         .padding()
                 }
             }
         }
+        .frame(width: 50, height: 130)
         .cornerRadius(10)
         .shadow(radius: 2.5)
         .padding()
