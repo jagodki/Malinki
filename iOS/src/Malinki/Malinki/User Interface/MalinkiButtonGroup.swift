@@ -12,7 +12,7 @@ struct MalinkiButtonGroup: View {
     var body: some View {
         ZStack {
             //a blur effect for the background
-            VisualEffectBlurView(blurStyle: .regular)
+            VisualEffectBlurView(blurStyle: .prominent)
             
             VStack {
                 //a button for showing the users position
