@@ -9,22 +9,27 @@ import SwiftUI
 
 struct MalinkiMap: View {
     var body: some View {
-        ZStack {
-            //the map view
-            MalinkiMapView()
-                .edgesIgnoringSafeArea(.all)
+        GeometryReader { geo in
             
-            //controls will overlay the map view
-            VStack {
+            ZStack {
+                //the map view
+                MalinkiMapView(scaleXPosition: 75, compassXPosition: 15, scaleCompassYPosition: Int(geo.size.height * 0.075))
+                    .edgesIgnoringSafeArea(.all)
                 
-                //some buttons at the top
-                HStack {
+                //controls will overlay the map view
+                VStack {
+                    
+                    //some buttons at the top
+                    HStack {
+                        Spacer()
+                        MalinkiButtonGroup()
+                    }
+                    
                     Spacer()
-                    MalinkiButtonGroup()
+                    
                 }
-                
-                
             }
+            
         }
         
     }
