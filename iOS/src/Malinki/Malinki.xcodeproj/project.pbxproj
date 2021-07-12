@@ -17,6 +17,9 @@
 		CEC9FB54268A4447005882E7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC9FB53268A4447005882E7 /* Preview Assets.xcassets */; };
 		CEC9FB5D268A462A005882E7 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = CEC9FB5C268A462A005882E7 /* SwiftUIX */; };
 		CEC9FB60268A514A005882E7 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = CEC9FB5F268A514A005882E7 /* BottomSheet */; };
+		CECCE5BF269CC8B500BA8B30 /* MalinkiSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5BE269CC8B500BA8B30 /* MalinkiSheetView.swift */; };
+		CECCE5C3269CC8FA00BA8B30 /* MalinkiSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */; };
+		CECCE5C5269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		CEC9FB50268A4447005882E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEC9FB53268A4447005882E7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CEC9FB55268A4447005882E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CECCE5BE269CC8B500BA8B30 /* MalinkiSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSheetView.swift; sourceTree = "<group>"; };
+		CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSearchView.swift; sourceTree = "<group>"; };
+		CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiObjectDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,10 +54,13 @@
 		CE2299D0268D0026002B16EA /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */,
-				CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */,
 				CE0736A4269649DB00490383 /* MalinkiMap.swift */,
+				CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */,
+				CECCE5BE269CC8B500BA8B30 /* MalinkiSheetView.swift */,
 				CE2A348226977693009E4148 /* MalinkiButtonGroup.swift */,
+				CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */,
+				CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */,
+				CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */,
 			);
 			path = "User Interface";
 			sourceTree = "<group>";
@@ -170,12 +179,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CECCE5C3269CC8FA00BA8B30 /* MalinkiSearchView.swift in Sources */,
 				CE2299D2268D00B4002B16EA /* MalinkiMapView.swift in Sources */,
 				CE2A348326977693009E4148 /* MalinkiButtonGroup.swift in Sources */,
+				CECCE5BF269CC8B500BA8B30 /* MalinkiSheetView.swift in Sources */,
 				CEC9FB4F268A4445005882E7 /* ContentView.swift in Sources */,
 				CE2299D4268D00EC002B16EA /* MalinkiMapControl.swift in Sources */,
 				CE0736A5269649DB00490383 /* MalinkiMap.swift in Sources */,
 				CEC9FB4D268A4445005882E7 /* MalinkiApp.swift in Sources */,
+				CECCE5C5269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
