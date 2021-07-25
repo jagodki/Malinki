@@ -15,7 +15,6 @@
 		CEC9FB4F268A4445005882E7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC9FB4E268A4445005882E7 /* ContentView.swift */; };
 		CEC9FB51268A4447005882E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC9FB50268A4447005882E7 /* Assets.xcassets */; };
 		CEC9FB54268A4447005882E7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC9FB53268A4447005882E7 /* Preview Assets.xcassets */; };
-		CEC9FB5D268A462A005882E7 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = CEC9FB5C268A462A005882E7 /* SwiftUIX */; };
 		CEC9FB60268A514A005882E7 /* BottomSheet in Frameworks */ = {isa = PBXBuildFile; productRef = CEC9FB5F268A514A005882E7 /* BottomSheet */; };
 		CECCE5BF269CC8B500BA8B30 /* MalinkiSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5BE269CC8B500BA8B30 /* MalinkiSheetView.swift */; };
 		CECCE5C3269CC8FA00BA8B30 /* MalinkiSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */; };
@@ -43,7 +42,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CEC9FB5D268A462A005882E7 /* SwiftUIX in Frameworks */,
 				CEC9FB60268A514A005882E7 /* BottomSheet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,7 +117,6 @@
 			);
 			name = Malinki;
 			packageProductDependencies = (
-				CEC9FB5C268A462A005882E7 /* SwiftUIX */,
 				CEC9FB5F268A514A005882E7 /* BottomSheet */,
 			);
 			productName = Malinki;
@@ -150,7 +147,6 @@
 			);
 			mainGroup = CEC9FB40268A4445005882E7;
 			packageReferences = (
-				CEC9FB5B268A462A005882E7 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 				CEC9FB5E268A514A005882E7 /* XCRemoteSwiftPackageReference "BottomSheet" */,
 			);
 			productRefGroup = CEC9FB4A268A4445005882E7 /* Products */;
@@ -378,30 +374,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CEC9FB5B268A462A005882E7 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.0.7;
-			};
-		};
 		CEC9FB5E268A514A005882E7 /* XCRemoteSwiftPackageReference "BottomSheet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/LucasMucGH/BottomSheet";
 			requirement = {
-				kind = exactVersion;
-				version = 2.2.0;
+				branch = "temp-fix-18";
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CEC9FB5C268A462A005882E7 /* SwiftUIX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CEC9FB5B268A462A005882E7 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
-			productName = SwiftUIX;
-		};
 		CEC9FB5F268A514A005882E7 /* BottomSheet */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CEC9FB5E268A514A005882E7 /* XCRemoteSwiftPackageReference "BottomSheet" */;

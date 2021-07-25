@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIX
 
 struct MalinkiButtonGroup: View {
     
@@ -26,7 +25,7 @@ struct MalinkiButtonGroup: View {
             }) {
                 ZStack {
                     Rectangle()
-                        .foregroundColor(Color.systemGray5)
+                        .foregroundColor(Color(UIColor.systemGray5))
                     Image(systemName: "location")
                         .font(.system(size: 20, weight: .regular))
                         .padding()
@@ -41,7 +40,7 @@ struct MalinkiButtonGroup: View {
             }) {
                 ZStack {
                     Rectangle()
-                        .foregroundColor(Color.systemGray5)
+                        .foregroundColor(Color(UIColor.systemGray5))
                     Image(systemName: "square.and.arrow.up")
                         .font(.system(size: 20, weight: .regular))
                         .padding()
@@ -56,7 +55,7 @@ struct MalinkiButtonGroup: View {
                 }) {
                     ZStack {
                         Rectangle()
-                            .foregroundColor(Color.systemGray5)
+                            .foregroundColor(Color(UIColor.systemGray5))
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 20, weight: .regular))
                             .padding()
@@ -71,7 +70,7 @@ struct MalinkiButtonGroup: View {
                 }) {
                     ZStack {
                         Rectangle()
-                            .foregroundColor(Color.systemGray5)
+                            .foregroundColor(Color(UIColor.systemGray5))
                         Image(systemName: "square.and.arrow.up")
                             .font(.system(size: 20, weight: .regular))
                             .padding()

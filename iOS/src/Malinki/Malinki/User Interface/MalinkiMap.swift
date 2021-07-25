@@ -18,6 +18,7 @@ struct MalinkiMap: View {
             MalinkiMapView(scaleXPosition: 75, compassXPosition: 15, scaleCompassYPosition: Int(geo.size.height * 0.075))
                 .edgesIgnoringSafeArea(.all)
                 .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition,
+//                             options: [],
                              options: [.appleScrollBehavior],
                              title: "Test",
                              content: {
@@ -25,8 +26,8 @@ struct MalinkiMap: View {
                                     Text("Content")
                                     MalinkiButtonGroup()
                                         .padding()
+                                    Spacer()
                                 }
-                                
                              })
         }
         
