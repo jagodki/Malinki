@@ -8,12 +8,18 @@
 import SwiftUI
 import BottomSheet
 
+/// A structure to present a SearchBar written in pure SwiftUI for integration into a BottomSheet.
 struct MalinkiSearchBar: View {
     
     @Binding private var bottomSheetPosition: BottomSheetPosition
     @Binding private var searchText: String
     @Binding private var isEditing: Bool
     
+    /// The initialiser of the struct.
+    /// - Parameters:
+    ///   - bottomSheetPosition: a binding to the position of the BottomSheet where the SearchBar is located in
+    ///   - searchText: a binding to the text presented in the SearchBar
+    ///   - isEditing: a binding to a Bool, if the SearchBar is in editing mode
     init(bottomSheetPosition: Binding<BottomSheetPosition>, searchText: Binding<String>, isEditing: Binding<Bool>) {
         self._searchText = searchText
         self._bottomSheetPosition = bottomSheetPosition
