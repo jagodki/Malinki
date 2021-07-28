@@ -54,16 +54,48 @@
 		CE2299D0268D0026002B16EA /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				CE5A7B7526B1D62C00D423E9 /* MapControl */,
+				CE5A7B7726B1D67D00D423E9 /* MapObjects */,
+				CE5A7B7426B1D62100D423E9 /* MapView */,
+				CE5A7B7626B1D65E00D423E9 /* Search */,
 				CE0736A4269649DB00490383 /* MalinkiMap.swift */,
-				CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */,
 				CECCE5BE269CC8B500BA8B30 /* MalinkiSheetView.swift */,
-				CE2A348226977693009E4148 /* MalinkiButtonGroup.swift */,
-				CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */,
-				CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */,
-				CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */,
-				CEB2A15C26AF40C9002F2D52 /* MalinkiSearchBar.swift */,
 			);
 			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		CE5A7B7426B1D62100D423E9 /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
+		CE5A7B7526B1D62C00D423E9 /* MapControl */ = {
+			isa = PBXGroup;
+			children = (
+				CE2A348226977693009E4148 /* MalinkiButtonGroup.swift */,
+				CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */,
+			);
+			path = MapControl;
+			sourceTree = "<group>";
+		};
+		CE5A7B7626B1D65E00D423E9 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				CEB2A15C26AF40C9002F2D52 /* MalinkiSearchBar.swift */,
+				CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		CE5A7B7726B1D67D00D423E9 /* MapObjects */ = {
+			isa = PBXGroup;
+			children = (
+				CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */,
+			);
+			path = MapObjects;
 			sourceTree = "<group>";
 		};
 		CEC9FB40268A4445005882E7 = {
