@@ -26,7 +26,7 @@ struct MalinkiMap: View {
                                 MalinkiSearchBar(bottomSheetPosition: self.$bottomSheetPosition, searchText: self.$searchText, isEditing: self.$isEditing)
                              }){
                     VStack {
-                        Text("Content")
+                        Text("Content", comment: "Test Content")
                         MalinkiButtonGroup()
                             .padding()
                         Spacer()
