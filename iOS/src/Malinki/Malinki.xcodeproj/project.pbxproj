@@ -27,6 +27,7 @@
 		CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapView.swift; sourceTree = "<group>"; };
 		CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapControl.swift; sourceTree = "<group>"; };
 		CE2A348226977693009E4148 /* MalinkiButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiButtonGroup.swift; sourceTree = "<group>"; };
+		CE582B9D26B1E2C100BAA289 /* Configuration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Configuration.json; sourceTree = "<group>"; };
 		CEB2A15C26AF40C9002F2D52 /* MalinkiSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSearchBar.swift; sourceTree = "<group>"; };
 		CEC9FB49268A4445005882E7 /* Malinki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Malinki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC9FB4C268A4445005882E7 /* MalinkiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiApp.swift; sourceTree = "<group>"; };
@@ -101,6 +102,7 @@
 		CEC9FB40268A4445005882E7 = {
 			isa = PBXGroup;
 			children = (
+				CE582B9D26B1E2C100BAA289 /* Configuration.json */,
 				CEC9FB4B268A4445005882E7 /* Malinki */,
 				CEC9FB4A268A4445005882E7 /* Products */,
 			);
