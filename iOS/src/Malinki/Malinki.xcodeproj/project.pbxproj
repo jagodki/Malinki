@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CE0736A5269649DB00490383 /* MalinkiMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE0736A4269649DB00490383 /* MalinkiMap.swift */; };
+		CE09C10E26BC5ECE0077177F /* MalinkiBasemapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE09C10D26BC5ECE0077177F /* MalinkiBasemapButton.swift */; };
 		CE2299D2268D00B4002B16EA /* MalinkiMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */; };
 		CE2299D4268D00EC002B16EA /* MalinkiMapControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */; };
 		CE2A348326977693009E4148 /* MalinkiButtonGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2A348226977693009E4148 /* MalinkiButtonGroup.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		CE0736A4269649DB00490383 /* MalinkiMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMap.swift; sourceTree = "<group>"; };
+		CE09C10D26BC5ECE0077177F /* MalinkiBasemapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiBasemapButton.swift; sourceTree = "<group>"; };
 		CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapView.swift; sourceTree = "<group>"; };
 		CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapControl.swift; sourceTree = "<group>"; };
 		CE2A348226977693009E4148 /* MalinkiButtonGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiButtonGroup.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				CE2A348226977693009E4148 /* MalinkiButtonGroup.swift */,
 				CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */,
 				CE582B9F26B1E64800BAA289 /* MalinkiMapThemeButton.swift */,
+				CE09C10D26BC5ECE0077177F /* MalinkiBasemapButton.swift */,
 			);
 			path = MapControl;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				CEB2A15D26AF40C9002F2D52 /* MalinkiSearchBar.swift in Sources */,
 				CEC9FB4D268A4445005882E7 /* MalinkiApp.swift in Sources */,
 				CECCE5C5269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift in Sources */,
+				CE09C10E26BC5ECE0077177F /* MalinkiBasemapButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
