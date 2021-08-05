@@ -36,14 +36,12 @@ struct MalinkiMapThemeButton: View {
             Button(action: {
                 print("Theme Button pressed")
             }) {
-                VStack {
-                    Image(systemName: self.imageName)
-                        .font(.system(size: 35, weight: .regular))
-                        .frame(width: 100, height: 75, alignment: .center)
-                        .foregroundColor(self.isToggled ? self.secondColour : self.firstColour)
-                        .background(self.isToggled ? self.firstColour : Color(UIColor.secondarySystemFill))
-                        .cornerRadius(10)
-                }
+                Image(systemName: self.imageName)
+                    .font(.system(size: 35, weight: .regular))
+                    .frame(width: 100, height: 75, alignment: .center)
+                    .foregroundColor(self.isToggled ? self.secondColour : self.firstColour)
+                    .background(self.isToggled ? self.firstColour : Color(UIColor.secondarySystemFill))
+                    .cornerRadius(10)
             }
             
             Text(self.themeName)
