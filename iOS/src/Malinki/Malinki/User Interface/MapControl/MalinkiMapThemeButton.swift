@@ -39,15 +39,15 @@ struct MalinkiMapThemeButton: View {
                 Image(systemName: self.imageName)
                     .font(.system(size: 35, weight: .regular))
                     .frame(width: 100, height: 75, alignment: .center)
-                    .foregroundColor(self.isToggled ? self.secondColour : self.firstColour)
-                    .background(self.isToggled ? self.firstColour : Color(UIColor.secondarySystemFill))
+                    .foregroundColor(self.isToggled ? self.firstColour : .secondary)
+                    .background(self.isToggled ? Color("themeBackgroundSelected") : Color("themeBackgroundUnselected"))
                     .cornerRadius(10)
+                    .shadow(radius: self.isToggled ? 5 : 0)
             }
             
             Text(self.themeName)
                 .frame(width: 100, height: 20, alignment: .center)
-                .font(.footnote)
-                .foregroundColor(.primary)
+                .font(.footnote)                .foregroundColor(self.isToggled ? .primary : .secondary)
         }
     }
 }
@@ -55,5 +55,7 @@ struct MalinkiMapThemeButton: View {
 struct MalinkiMapThemeButton_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiMapThemeButton(imageName: "map.fill", firstColour: .blue, secondColour: .white, isThemeToggled: .constant(false), themeName: "Test Theme")
+            .environment(\.colorScheme, .dark)
+            .background(Color.gray)
     }
 }
