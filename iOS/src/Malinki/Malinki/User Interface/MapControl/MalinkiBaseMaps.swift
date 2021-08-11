@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MalinkiButtonGroup: View {
+struct MalinkiBaseMaps: View {
     
     private var columns: [GridItem] = [GridItem(.flexible()),
                                        GridItem(.flexible()),
@@ -84,6 +84,6 @@ struct MalinkiButtonGroup: View {
 
 struct MalinkiButtonGroup_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiButtonGroup()
+        MalinkiBaseMaps()
     }
 }

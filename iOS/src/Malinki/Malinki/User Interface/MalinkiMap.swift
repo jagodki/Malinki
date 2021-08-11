@@ -27,7 +27,7 @@ struct MalinkiMap: View {
                              }){
                     VStack {
                         Text("Content", comment: "Test Content")
-                        MalinkiButtonGroup()
+                        MalinkiBaseMaps()
                             .padding()
                         Spacer()
                     }
