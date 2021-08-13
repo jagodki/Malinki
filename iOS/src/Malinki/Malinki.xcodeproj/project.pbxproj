@@ -121,6 +121,13 @@
 			path = MapObjects;
 			sourceTree = "<group>";
 		};
+		CE63ECFA26C6FF67005BD152 /* Data Interface */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Data Interface";
+			sourceTree = "<group>";
+		};
 		CEC9FB40268A4445005882E7 = {
 			isa = PBXGroup;
 			children = (
@@ -142,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				CE582B9E26B1E31A00BAA289 /* Configuration */,
+				CE63ECFA26C6FF67005BD152 /* Data Interface */,
 				CE2299D0268D0026002B16EA /* User Interface */,
 				CEC9FB4C268A4445005882E7 /* MalinkiApp.swift */,
 				CEC9FB4E268A4445005882E7 /* ContentView.swift */,
