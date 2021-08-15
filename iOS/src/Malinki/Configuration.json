@@ -1,10 +1,12 @@
 {
-    "map_themes": {},
+    "mapThemes": [
+        "test": "test"
+    ],
     "basemaps": [
         {
             "id": 1,
-            "internal_name": "osm",
-            "external_names": {
+            "internalName": "osm",
+            "externalNames": {
                 "en": "OpenStreetMap",
                 "de": "OpenStreetMap",
                 "fr": "OpenStreetMap",
@@ -14,8 +16,8 @@
             "url": ""
         }, {
             "id": 2,
-            "internal_name": "apple_roads"
-            "external_names": {
+            "internalName": "apple_roads"
+            "externalNames": {
                 "en": "Apple",
                 "de": "Apple",
                 "fr": "Apple",
