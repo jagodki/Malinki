@@ -31,7 +31,7 @@ struct MalinkiBasemaps: View {
         LazyVGrid(columns: self.columns, spacing: 2, pinnedViews: []) {
             
             ForEach(MalinkiConfigurationProvider.sharedInstance.configData?.basemaps ?? [], id: \.id) { basemap in
-                MalinkiBasemapButton(isToggled: .constant(false), imageName: basemap.imageName, basemapName: basemap.externalName.de)
+                MalinkiBasemapButton(isToggled: .constant(false), imageName: basemap.imageName, basemapName: basemap.externalNames.de)
             }
             
 //            //a button for showing the users position
