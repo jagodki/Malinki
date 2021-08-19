@@ -9,21 +9,6 @@ import SwiftUI
 
 struct MalinkiBasemaps: View {
     
-//    private var columns: [GridItem] = [GridItem(.flexible()),
-//                                       GridItem(.flexible()),
-//                                       GridItem(.flexible()),
-//                                       GridItem(.flexible())]
-//    private var columns: [GridItem] {
-//        var gridItems: [GridItem] = []
-//        let countOfBasemaps = MalinkiConfigurationProvider.sharedInstance.configData?.basemaps.count ?? 0
-//
-//        for _ in 0...countOfBasemaps {
-//            gridItems.append(GridItem(.flexible()))
-//        }
-//
-//        return gridItems
-//    }
-    
     var columns: [GridItem] =
         Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.configData?.basemaps.count ?? 0)
     
