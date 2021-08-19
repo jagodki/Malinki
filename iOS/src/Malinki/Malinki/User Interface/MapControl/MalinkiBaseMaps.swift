@@ -9,6 +9,12 @@ import SwiftUI
 
 struct MalinkiBasemaps: View {
     
+    @Binding private var basemapID: Int
+    
+    init(basemapID: Binding<Int>) {
+        self._basemapID = basemapID
+    }
+    
     var columns: [GridItem] =
         Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.configData?.basemaps.count ?? 0)
     
@@ -16,7 +22,7 @@ struct MalinkiBasemaps: View {
         LazyVGrid(columns: self.columns, spacing: 2, pinnedViews: []) {
             
             ForEach(MalinkiConfigurationProvider.sharedInstance.configData?.basemaps ?? [], id: \.id) { basemap in
-                MalinkiBasemapButton(isToggled: .constant(basemap.onStartUp), imageName: basemap.imageName, basemapName: basemap.externalNames.de)
+                MalinkiBasemapButton(toggledBasemapID: self.$basemapID, imageName: basemap.imageName, basemapName: basemap.externalNames.de, id: basemap.id)
             }
             
         }
@@ -26,6 +32,6 @@ struct MalinkiBasemaps: View {
 
 struct MalinkiButtonGroup_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiBasemaps()
+        MalinkiBasemaps(basemapID: .constant(0))
     }
 }

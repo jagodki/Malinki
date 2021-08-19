@@ -10,40 +10,43 @@ import SwiftUI
 /// A structure to create a Basemap Button.
 struct MalinkiBasemapButton: View {
     
-    @Binding private var isToggled: Bool
+    @Binding private var toggledBasemapID: Int
     private var imageName: String
     private var basemapName: String
+    private var id: Int
     
     /// The initialiser of this structure.
     /// - Parameters:
-    ///   - isToggled: a binding indicating, if the button is toggled or not
+    ///   - toggledBasemapID: a binding indicating the id of the toggled basemap
     ///   - imageName: the name of the image
     ///   - basemapName: the name of the basemap, presented at the bottom of the button
-    init(isToggled: Binding<Bool>, imageName: String, basemapName: String) {
-        self._isToggled = isToggled
+    ///   - id: the id of this basemap according to the configuration
+    init(toggledBasemapID: Binding<Int>, imageName: String, basemapName: String, id: Int) {
+        self._toggledBasemapID = toggledBasemapID
         self.imageName = imageName
         self.basemapName = basemapName
+        self.id = id
     }
     
     var body: some View {
         
         VStack {
             Button(action: {
-                print("Theme Button pressed")
+                self.toggledBasemapID = self.id
             }) {
                 VStack {
                     Image(self.imageName)
                         .frame(minWidth: 0, idealWidth: 100, maxWidth: 100, minHeight: 50, idealHeight: 50, maxHeight: 50, alignment: .center)
                         .cornerRadius(5)
                         .overlay(RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color.accentColor, lineWidth: self.isToggled ? 2 : 0))
+                                    .stroke(Color.accentColor, lineWidth: self.id == self.toggledBasemapID ? 2 : 0))
                 }
             }
             
             Text(self.basemapName)
                 .frame(width: 100, height: 20, alignment: .center)
-                .font(self.isToggled ? .footnote.bold() : .footnote)
-                .foregroundColor(self.isToggled ? .accentColor : .secondary)
+                .font(self.id == self.toggledBasemapID ? .footnote.bold() : .footnote)
+                .foregroundColor(self.id == self.toggledBasemapID ? .accentColor : .secondary)
         }
         
     }
@@ -51,6 +54,6 @@ struct MalinkiBasemapButton: View {
 
 struct MalinkiBasemapButton_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiBasemapButton(isToggled: .constant(true), imageName: "osm_basemap", basemapName: "OSM Street")
+        MalinkiBasemapButton(toggledBasemapID: .constant(0), imageName: "osm_basemap", basemapName: "OSM Street", id: 1)
     }
 }

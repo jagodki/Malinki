@@ -12,7 +12,8 @@ struct MalinkiMap: View {
     
     @State private var bottomSheetPosition: BottomSheetPosition = .bottom
     @State private var searchText: String = ""
-    @State private var isEditing = false
+    @State private var isEditing: Bool = false
+    @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.configData?.basemaps.filter({$0.onStartUp == true}).first?.id ?? 0
     
     var body: some View {
         GeometryReader { geo in
@@ -27,7 +28,7 @@ struct MalinkiMap: View {
                              }){
                     VStack {
                         Text("Content", comment: "Test Content")
-                        MalinkiBasemaps()
+                        MalinkiBasemaps(basemapID: self.$basemapID)
                             .padding()
                         Spacer()
                     }
