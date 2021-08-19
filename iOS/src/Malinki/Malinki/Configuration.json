@@ -17,7 +17,8 @@
                 "pl": "OpenStreetMap"
             },
             "url": "",
-            "imageName": "osm_basemap"
+            "imageName": "osm_basemap",
+            "onStartUp": true
         }, {
             "id": 2,
             "internalName": "apple_roads",
@@ -29,7 +30,8 @@
                 "pl": "Apple"
             },
             "url": "",
-            "imageName": "osm_basemap"
+            "imageName": "apple_roads_basemap",
+            "onStartUp": false
         }
     ]
 }

@@ -22,6 +22,7 @@ struct MalinkiConfigurationBasemap: Decodable {
     var externalNames: MalinkiConfigurationExternalName
     var url: String
     var imageName: String
+    var onStartUp: Bool
 }
 
 struct MalinkiConfigurationExternalName: Decodable {
