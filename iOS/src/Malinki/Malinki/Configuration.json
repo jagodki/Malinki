@@ -16,7 +16,10 @@
                 "sv": "OpenStreetMap",
                 "pl": "OpenStreetMap"
             },
-            "url": "",
+            "type": {
+                "name": "tms",
+                "url": ""
+            },
             "imageName": "osm_basemap",
             "onStartUp": true
         }, {
@@ -29,7 +32,10 @@
                 "sv": "Apple",
                 "pl": "Apple"
             },
-            "url": "",
+            "type": {
+                "name": "apple",
+                "url": ""
+            },
             "imageName": "apple_roads_basemap",
             "onStartUp": false
         }, {
@@ -42,7 +48,10 @@
                 "sv": "Aerial",
                 "pl": "Aerial"
             },
-            "url": "",
+            "type": {
+                "name": "apple",
+                "url": ""
+            },
             "imageName": "apple_aerial_basemap",
             "onStartUp": false
         }, {
@@ -55,7 +64,10 @@
                 "sv": "Hybrid",
                 "pl": "Hybrid"
             },
-            "url": "",
+            "type": {
+                "name": "apple",
+                "url": ""
+            },
             "imageName": "apple_hybrid_basemap",
             "onStartUp": false
         }

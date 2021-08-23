@@ -19,13 +19,18 @@ struct MalinkiConfigurationTheme: Decodable {
 struct MalinkiConfigurationBasemap: Decodable {
     var id: Int
     var internalName: String
-    var externalNames: MalinkiConfigurationExternalName
-    var url: String
+    var externalNames: MalinkiConfigurationBasemapExternalName
+    var type: MalinkiConfigurationBasemapType
     var imageName: String
     var onStartUp: Bool
 }
 
-struct MalinkiConfigurationExternalName: Decodable {
+struct MalinkiConfigurationBasemapType: Decodable {
+    var name: String
+    var url: String
+}
+
+struct MalinkiConfigurationBasemapExternalName: Decodable {
     var en: String
     var de: String
     var fr: String
