@@ -32,6 +32,32 @@
             "url": "",
             "imageName": "apple_roads_basemap",
             "onStartUp": false
+        }, {
+            "id": 2,
+            "internalName": "apple_aerial",
+            "externalNames": {
+                "en": "Aerial",
+                "de": "Aerial",
+                "fr": "Aerial",
+                "sv": "Aerial",
+                "pl": "Aerial"
+            },
+            "url": "",
+            "imageName": "apple_aerial_basemap",
+            "onStartUp": false
+        }, {
+            "id": 3,
+            "internalName": "apple_hybrid",
+            "externalNames": {
+                "en": "Hybrid",
+                "de": "Hybrid",
+                "fr": "Hybrid",
+                "sv": "Hybrid",
+                "pl": "Hybrid"
+            },
+            "url": "",
+            "imageName": "apple_hybrid_basemap",
+            "onStartUp": false
         }
     ]
 }
