@@ -9,14 +9,14 @@ import Foundation
 
 struct MalinkiConfiguration: Decodable {
     var mapThemes: [MalinkiConfigurationTheme]
-    var basemaps: [MalinkiConfigurationBasemap]
+    var basemaps: [MalinkiConfigurationMapData]
 }
 
 struct MalinkiConfigurationTheme: Decodable {
     var test: String
 }
 
-struct MalinkiConfigurationBasemap: Decodable {
+struct MalinkiConfigurationMapData: Decodable {
     var id: Int
     var internalName: String
     var externalNames: MalinkiConfigurationBasemapExternalName
