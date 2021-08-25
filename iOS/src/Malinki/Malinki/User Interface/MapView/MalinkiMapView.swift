@@ -10,14 +10,7 @@ import MapKit
 
 struct MalinkiMapView: UIViewRepresentable {
     
-    private var scaleXPosition: Int
-    private var compassXPosition: Int
-    private var scaleCompassYPosition: Int
-    
-    init(scaleXPosition: Int, compassXPosition: Int, scaleCompassYPosition: Int) {
-        self.scaleXPosition = scaleXPosition
-        self.compassXPosition = compassXPosition
-        self.scaleCompassYPosition = scaleCompassYPosition
+    init() {
     }
     
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
@@ -37,17 +30,6 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.showsScale = true
         mapView.showsUserLocation = true
         mapView.mapType = .mutedStandard
-        
-//        let scale = MKScaleView(mapView: mapView)
-//        scale.frame.origin = CGPoint(x: self.scaleXPosition, y: self.scaleCompassYPosition)
-//        scale.scaleVisibility = .adaptive
-//        mapView.addSubview(scale)
-//        
-//        //reposition the compass
-//        let compassButton = MKCompassButton(mapView:mapView)
-//        compassButton.frame.origin = CGPoint(x: self.compassXPosition, y: self.scaleCompassYPosition)
-//        compassButton.compassVisibility = .adaptive
-//        mapView.addSubview(compassButton)
         
         return mapView
     }
@@ -144,6 +126,6 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapView(scaleXPosition: 80, compassXPosition: 15, scaleCompassYPosition: 20)
+        MalinkiMapView()
     }
 }
