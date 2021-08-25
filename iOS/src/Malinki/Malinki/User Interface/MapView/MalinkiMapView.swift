@@ -10,7 +10,10 @@ import MapKit
 
 struct MalinkiMapView: UIViewRepresentable {
     
-    init() {
+    @Binding var basemapID: Int
+    
+    init(basemapID: Binding<Int>) {
+        self._basemapID = basemapID
     }
     
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
@@ -29,7 +32,6 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.showsBuildings = false
         mapView.showsScale = true
         mapView.showsUserLocation = true
-        mapView.mapType = .mutedStandard
         
         return mapView
     }
@@ -51,6 +53,23 @@ struct MalinkiMapView: UIViewRepresentable {
     private func updateOverlays(from mapView: MKMapView) {
         //remove all overlays from the map
         mapView.removeOverlays(mapView.overlays)
+        
+        //get the basemap
+        if let basemap = MalinkiConfigurationProvider.sharedInstance.configData?.basemaps.filter({$0.id == self.basemapID}).first {
+            
+            //create a layer from the given basemap
+            let baseLayer = MalinkiRasterData(from: basemap)
+            
+            //add the basemap to the mapview
+            if baseLayer.isAppleMaps {
+                mapView.mapType = baseLayer.getAppleMapType()
+            } else {
+                let overlay = baseLayer.getOverlay()
+                overlay.canReplaceMapContent = true
+                mapView.addOverlay(overlay)
+            }
+            
+        }
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -81,34 +100,15 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
-        if overlay is MKMultiPolyline {
-            let renderer = MKMultiPolylineRenderer(multiPolyline: overlay as! MKMultiPolyline)
-            switch overlay.title {
-            case "river":
-                renderer.strokeColor = UIColor.blue
-                renderer.lineWidth = 2
-            default:
-                renderer.strokeColor = UIColor.green
-                renderer.lineWidth = 2
-            }
-            
-            return renderer
-            
-        } else if overlay is MKMultiPolygon {
-            let renderer = MKMultiPolygonRenderer(multiPolygon: overlay as! MKMultiPolygon)
-            switch overlay.title {
-            case "countries":
-                renderer.strokeColor = UIColor.red
-                renderer.fillColor = UIColor.red.withAlphaComponent(0.5)
-                renderer.lineWidth = 2
-            default:
-                renderer.strokeColor = UIColor.blue
-                renderer.lineWidth = 2
-            }
-            return renderer
+        let overlayRender: MKOverlayRenderer
+        
+        if overlay is MKTileOverlay {
+            overlayRender = MKTileOverlayRenderer(tileOverlay: overlay as! MKTileOverlay)
+        } else {
+            overlayRender = MKOverlayRenderer()
         }
         
-        return MKOverlayRenderer()
+        return overlayRender
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -126,6 +126,6 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapView()
+        MalinkiMapView(basemapID: .constant(1))
     }
 }

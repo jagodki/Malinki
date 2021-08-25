@@ -18,7 +18,7 @@ struct MalinkiMap: View {
     var body: some View {
         GeometryReader { geo in
             //the map view
-            MalinkiMapView()
+            MalinkiMapView(basemapID: self.$basemapID)
                 .edgesIgnoringSafeArea(.all)
                 .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition,
                              //options: [],

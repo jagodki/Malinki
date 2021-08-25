@@ -18,7 +18,7 @@
             },
             "type": {
                 "name": "tms",
-                "url": ""
+                "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
             },
             "imageName": "osm_basemap",
             "onStartUp": true

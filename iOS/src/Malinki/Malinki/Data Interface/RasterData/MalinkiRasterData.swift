@@ -33,9 +33,11 @@ struct MalinkiRasterData {
         
         switch dataType {
         case "wms":
-            <#code#>
+            overlay = MKTileOverlay()
+            print("wms")
         case "wmts":
-            <#code#>
+            overlay = MKTileOverlay()
+            print("wmts")
         case "tms":
             overlay = MKTileOverlay(urlTemplate: self.mapDataConfiguration.type.url)
         default:
