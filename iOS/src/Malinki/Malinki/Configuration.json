@@ -16,12 +16,15 @@
                 "sv": "OpenStreetMap",
                 "pl": "OpenStreetMap"
             },
-            "type": {
-                "name": "tms",
-                "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+            "rasterTypes": {
+                "tms": {
+                    "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                },
+                "wms": null,
+                "wmts": null,
+                "apple": false
             },
-            "imageName": "osm_basemap",
-            "onStartUp": true
+            "imageName": "osm_basemap"
         }, {
             "id": 1,
             "internalName": "apple_roads",
@@ -32,12 +35,13 @@
                 "sv": "Apple",
                 "pl": "Apple"
             },
-            "type": {
-                "name": "apple",
-                "url": ""
+            "rasterTypes": {
+                "tms": null,
+                "wms": null,
+                "wmts": null,
+                "apple": true
             },
-            "imageName": "apple_roads_basemap",
-            "onStartUp": false
+            "imageName": "apple_roads_basemap"
         }, {
             "id": 2,
             "internalName": "apple_aerial",
@@ -48,12 +52,13 @@
                 "sv": "Aerial",
                 "pl": "Aerial"
             },
-            "type": {
-                "name": "apple",
-                "url": ""
+            "rasterTypes": {
+                "tms": null,
+                "wms": null,
+                "wmts": null,
+                "apple": true
             },
-            "imageName": "apple_aerial_basemap",
-            "onStartUp": false
+            "imageName": "apple_aerial_basemap"
         }, {
             "id": 3,
             "internalName": "apple_hybrid",
@@ -64,12 +69,17 @@
                 "sv": "Hybrid",
                 "pl": "Hybrid"
             },
-            "type": {
-                "name": "apple",
-                "url": ""
+            "rasterTypes": {
+                "tms": null,
+                "wms": null,
+                "wmts": null,
+                "apple": true
             },
-            "imageName": "apple_hybrid_basemap",
-            "onStartUp": false
+            "imageName": "apple_hybrid_basemap"
         }
-    ]
+    ],
+    "onStartUp": {
+        "theme": 0,
+        "basemap": 0
+    }
 }

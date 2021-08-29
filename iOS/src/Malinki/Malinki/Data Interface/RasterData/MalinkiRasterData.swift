@@ -21,26 +21,25 @@ struct MalinkiRasterData {
     
     /// This property returns true, if the current configuration object provides a map from apple, otherwise false.
     var isAppleMaps: Bool {
-        return self.mapDataConfiguration.type.name.starts(with: "apple")
+        return self.mapDataConfiguration.rasterTypes.apple
     }
     
     /// This function returns an object of MKTileOverlay for displaying raster data in an MKMapView.
     /// This function should be used to access the data of the current configuration object, if the property isAppleMaps is false.
     /// - Returns: an object of the type MKTIleOverlay
     func getOverlay() -> MKTileOverlay {
-        let dataType = self.mapDataConfiguration.type.name
+        let rasterTypes = self.mapDataConfiguration.rasterTypes
         var overlay: MKTileOverlay
         
-        switch dataType {
-        case "wms":
+        if self.mapDataConfiguration.rasterTypes.tms != nil {
+            overlay = MKTileOverlay(urlTemplate: rasterTypes.tms?.url)
+        } else if rasterTypes.wms != nil {
             overlay = MKTileOverlay()
             print("wms")
-        case "wmts":
+        } else if rasterTypes.wmts != nil {
             overlay = MKTileOverlay()
             print("wmts")
-        case "tms":
-            overlay = MKTileOverlay(urlTemplate: self.mapDataConfiguration.type.url)
-        default:
+        } else {
             overlay = MKTileOverlay()
         }
         
