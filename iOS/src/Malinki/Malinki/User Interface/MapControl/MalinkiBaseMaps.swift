@@ -16,12 +16,12 @@ struct MalinkiBasemaps: View {
     }
     
     var columns: [GridItem] =
-        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.configData?.basemaps.count ?? 0)
+        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getBasemaps().count)
     
     var body: some View {
         LazyVGrid(columns: self.columns, spacing: 2, pinnedViews: []) {
             
-            ForEach(MalinkiConfigurationProvider.sharedInstance.configData?.basemaps ?? [], id: \.id) { basemap in
+            ForEach(MalinkiConfigurationProvider.sharedInstance.getBasemaps(), id: \.id) { basemap in
                 MalinkiBasemapButton(toggledBasemapID: self.$basemapID, imageName: basemap.imageName, basemapName: basemap.externalNames.de, id: basemap.id)
             }
             

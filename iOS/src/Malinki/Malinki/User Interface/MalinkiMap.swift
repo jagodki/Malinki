@@ -13,7 +13,7 @@ struct MalinkiMap: View {
     @State private var bottomSheetPosition: BottomSheetPosition = .bottom
     @State private var searchText: String = ""
     @State private var isEditing: Bool = false
-    @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.configData?.onStartUp.basemap ?? 0
+    @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfBasemapOnStartUp()
     
     var body: some View {
         GeometryReader { geo in

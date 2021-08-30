@@ -55,7 +55,7 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.removeOverlays(mapView.overlays)
         
         //get the basemap
-        if let basemap = MalinkiConfigurationProvider.sharedInstance.configData?.basemaps.filter({$0.id == self.basemapID}).first {
+        if let basemap = MalinkiConfigurationProvider.sharedInstance.getBasemap(for: self.basemapID) {
             
             //create a layer from the given basemap
             let baseLayer = MalinkiRasterData(from: basemap)
