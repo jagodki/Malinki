@@ -18,7 +18,8 @@
             },
             "rasterTypes": {
                 "tms": {
-                    "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    "url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                    "invertedYAxis": false
                 },
                 "wms": null,
                 "wmts": null,

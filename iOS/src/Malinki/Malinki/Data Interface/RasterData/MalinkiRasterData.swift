@@ -31,12 +31,13 @@ struct MalinkiRasterData {
         let rasterTypes = self.mapDataConfiguration.rasterTypes
         var overlay: MKTileOverlay
         
-        if self.mapDataConfiguration.rasterTypes.tms != nil {
-            overlay = MKTileOverlay(urlTemplate: rasterTypes.tms?.url)
-        } else if rasterTypes.wms != nil {
+        if let tms = self.mapDataConfiguration.rasterTypes.tms {
+            overlay = MKTileOverlay(urlTemplate: tms.url)
+            overlay.isGeometryFlipped = tms.invertedYAxis
+        } else if let wms = rasterTypes.wms {
             overlay = MKTileOverlay()
             print("wms")
-        } else if rasterTypes.wmts != nil {
+        } else if let wmts = rasterTypes.wmts{
             overlay = MKTileOverlay()
             print("wmts")
         } else {

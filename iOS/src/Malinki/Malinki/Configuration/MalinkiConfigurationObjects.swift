@@ -34,6 +34,7 @@ struct MalinkiConfigurationRasterType: Decodable {
 
 struct MalinkiConfigurationTMS: Decodable {
     var url: String
+    var invertedYAxis: Bool
 }
 
 struct MalinkiConfigurationBasemapExternalName: Decodable {
