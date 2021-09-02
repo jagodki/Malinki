@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - Root Level
 struct MalinkiConfiguration: Decodable {
     var mapThemes: [MalinkiConfigurationTheme]
     var basemaps: [MalinkiConfigurationMapData]
@@ -14,9 +15,14 @@ struct MalinkiConfiguration: Decodable {
 }
 
 struct MalinkiConfigurationTheme: Decodable {
-    var test: String
+    var id: Int
+    var internalName: String
+    var externalNames: MalinkiConfigurationBasemapExternalName
+    var iconName: String
+    var layers: MalinkiConfigurationMapLayers
 }
 
+//MARK: - Map Data
 struct MalinkiConfigurationMapData: Decodable {
     var id: Int
     var internalName: String
@@ -25,9 +31,15 @@ struct MalinkiConfigurationMapData: Decodable {
     var imageName: String
 }
 
+struct MalinkiConfigurationMapLayers: Decodable {
+    var vectorLayers: String
+    var rasterLayers: [MalinkiConfigurationMapData]
+}
+
+//MARK: - Raster Types
 struct MalinkiConfigurationRasterType: Decodable {
     var tms: MalinkiConfigurationTMS?
-    var wms: String?
+    var wms: MalinkiConfigurationWMS?
     var wmts: String?
     var apple: Bool
 }
@@ -37,6 +49,19 @@ struct MalinkiConfigurationTMS: Decodable {
     var invertedYAxis: Bool
 }
 
+struct MalinkiConfigurationWMS: Decodable {
+    var baseURL: String
+    var crs: String
+    var layers: String
+    var styles: String
+    var format: String
+    var version: String
+    var width: String
+    var height: String
+    var opacity: Double
+}
+
+//MARK: - External Representations
 struct MalinkiConfigurationBasemapExternalName: Decodable {
     var en: String
     var de: String
@@ -45,6 +70,7 @@ struct MalinkiConfigurationBasemapExternalName: Decodable {
     var pl: String
 }
 
+//MARK: - Additional Configuration at Root Level
 struct MalinkiConfigurationStartUp: Decodable {
     var theme: Int
     var basemap: Int
