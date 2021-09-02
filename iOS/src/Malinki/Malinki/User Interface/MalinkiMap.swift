@@ -14,11 +14,12 @@ struct MalinkiMap: View {
     @State private var searchText: String = ""
     @State private var isEditing: Bool = false
     @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfBasemapOnStartUp()
+    @State private var mapThemeID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp()
     
     var body: some View {
         GeometryReader { geo in
             //the map view
-            MalinkiMapView(basemapID: self.$basemapID)
+            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID)
                 .edgesIgnoringSafeArea(.all)
                 .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition,
                              //options: [],

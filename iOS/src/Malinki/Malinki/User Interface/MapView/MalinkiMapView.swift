@@ -11,9 +11,11 @@ import MapKit
 struct MalinkiMapView: UIViewRepresentable {
     
     @Binding var basemapID: Int
+    @Binding var mapThemeID: Int
     
-    init(basemapID: Binding<Int>) {
+    init(basemapID: Binding<Int>, mapThemeID: Binding<Int>) {
         self._basemapID = basemapID
+        self._mapThemeID = mapThemeID
     }
     
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
@@ -68,7 +70,25 @@ struct MalinkiMapView: UIViewRepresentable {
                 overlay.canReplaceMapContent = true
                 mapView.addOverlay(overlay)
             }
-            
+        }
+        
+        //add raster layers from the map theme
+        if let mapTheme = MalinkiConfigurationProvider.sharedInstance.getMapTheme(for: self.mapThemeID) {
+            //iterate over all raster layers
+            for rasterLayer in mapTheme.layers.rasterLayers.sorted(by: {$0.id < $1.id}) {
+                
+                //get a layer according to the data source
+                let layer = MalinkiRasterData(from: rasterLayer)
+                
+                //add the layer to the map
+                if layer.isAppleMaps {
+                    mapView.mapType = layer.getAppleMapType()
+                } else {
+                    let overlay = layer.getOverlay()
+                    overlay.canReplaceMapContent = false
+                    mapView.addOverlay(overlay)
+                }
+            }
         }
     }
     
@@ -126,6 +146,6 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapView(basemapID: .constant(1))
+        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0))
     }
 }

@@ -32,7 +32,7 @@ class MalinkiConfigurationProvider {
 
     }
     
-    /// This function returns an array of all confifured basemaps.
+    /// This function returns an array of all configured basemaps.
     /// - Returns: an array of all available basemaps
     func getBasemaps() -> [MalinkiConfigurationMapData] {
         return self.configData?.basemaps ?? []
@@ -49,6 +49,25 @@ class MalinkiConfigurationProvider {
     /// - Returns: the ID of the after app launch visible basemap
     func getIDOfBasemapOnStartUp() -> Int {
         return self.configData?.onStartUp.basemap ?? 0
+    }
+    
+    /// This function returns an array of all configured map themes.
+    /// - Returns: an array of all available map themes
+    func getMapThemes() -> [MalinkiConfigurationTheme] {
+        return self.configData?.mapThemes ?? []
+    }
+    
+    /// This function returns a configured map theme for a given ID.
+    /// - Parameter id: an integer representing the ID of a map theme
+    /// - Returns: the configured map theme with the same ID as the given parameter
+    func getMapTheme(for id: Int) -> MalinkiConfigurationTheme? {
+        return self.configData?.mapThemes.filter({$0.id == id}).first
+    }
+    
+    /// This function returns the ID of the after app launch toggled map theme.
+    /// - Returns: the ID of the after app launch visible map theme
+    func getIDOfMapThemeOnStartUp() -> Int {
+        return self.configData?.onStartUp.theme ?? 0
     }
     
 }

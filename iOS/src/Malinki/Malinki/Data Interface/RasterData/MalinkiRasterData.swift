@@ -35,8 +35,16 @@ struct MalinkiRasterData {
             overlay = MKTileOverlay(urlTemplate: tms.url)
             overlay.isGeometryFlipped = tms.invertedYAxis
         } else if let wms = rasterTypes.wms {
-            overlay = MKTileOverlay()
-            print("wms")
+            let url = (wms.baseURL +
+                        "SERVICE=WMS&REQUEST=GetMap&TRANSPARENT=True" +
+                        "&VERSION=" + wms.version +
+                        "&CRS=" + wms.crs +
+                        "&FORMAT=" + wms.format +
+                        "&LAYERS=" + wms.layers +
+                        "&STYLES=" + wms.styles +
+                        "&HEIGHT=" + wms.height +
+                        "&WIDTH=" + wms.width)
+            overlay = MalinkiWMSOverlay(url: url, useMercator: false, wmsVersion: wms.version, alpha: CGFloat(wms.opacity))
         } else if let wmts = rasterTypes.wmts{
             overlay = MKTileOverlay()
             print("wmts")
