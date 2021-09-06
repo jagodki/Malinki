@@ -30,6 +30,7 @@
 		CECCE5C3269CC8FA00BA8B30 /* MalinkiSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */; };
 		CECCE5C5269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */; };
 		CEE9EA7126CC49C00025AF80 /* Configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = CE582B9D26B1E2C100BAA289 /* Configuration.json */; };
+		CEF570E626E69D8F0038B00D /* MalinkiTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF570E526E69D8F0038B00D /* MalinkiTileOverlay.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		CECCE5BE269CC8B500BA8B30 /* MalinkiSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSheetView.swift; sourceTree = "<group>"; };
 		CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSearchView.swift; sourceTree = "<group>"; };
 		CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiObjectDetailsView.swift; sourceTree = "<group>"; };
+		CEF570E526E69D8F0038B00D /* MalinkiTileOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiTileOverlay.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			children = (
 				CE085B2E26D41878005D7453 /* MalinkiWMSOverlay.swift */,
 				CE085B3126D41E17005D7453 /* MalinkiRasterData.swift */,
+				CEF570E526E69D8F0038B00D /* MalinkiTileOverlay.swift */,
 			);
 			path = RasterData;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				CE5B566A26C458B6008EA9BE /* MalinkiMapThemes.swift in Sources */,
 				CECCE5BF269CC8B500BA8B30 /* MalinkiSheetView.swift in Sources */,
 				CEB0B3F226C1A50600D15866 /* MalinkiMapLayer.swift in Sources */,
+				CEF570E626E69D8F0038B00D /* MalinkiTileOverlay.swift in Sources */,
 				CEC9FB4F268A4445005882E7 /* ContentView.swift in Sources */,
 				CE2299D4268D00EC002B16EA /* MalinkiMapControl.swift in Sources */,
 				CE0736A5269649DB00490383 /* MalinkiMap.swift in Sources */,

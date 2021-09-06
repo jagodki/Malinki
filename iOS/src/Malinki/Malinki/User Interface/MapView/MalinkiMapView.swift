@@ -101,6 +101,7 @@ struct MalinkiMapView: UIViewRepresentable {
     
 }
 
+//MARK: - Delegate for the Map View
 final class Coordinator: NSObject, MKMapViewDelegate {
     var control: MalinkiMapView
     
@@ -122,8 +123,10 @@ final class Coordinator: NSObject, MKMapViewDelegate {
         
         let overlayRender: MKOverlayRenderer
         
-        if overlay is MKTileOverlay {
-            overlayRender = MKTileOverlayRenderer(tileOverlay: overlay as! MKTileOverlay)
+        if overlay is MalinkiTileOverlay {
+            let mto = overlay as! MalinkiTileOverlay
+            overlayRender = MKTileOverlayRenderer(tileOverlay: mto)
+            overlayRender.alpha = mto.alpha
         } else {
             overlayRender = MKOverlayRenderer()
         }

@@ -70,4 +70,13 @@ class MalinkiConfigurationProvider {
         return self.configData?.onStartUp.theme ?? 0
     }
     
+    /// This function returns the opacity of a raster layer.
+    /// - Parameters:
+    ///   - layerID: the ID of the raster layer
+    ///   - mapThemeID: the ID of the map theme containing the raster layer
+    /// - Returns: the opacity of the specific layer or 1.0, if no layer could be found with the given parameters
+    func getOpacityForRasterLayer(with layerID: Int, from mapThemeID: Int) -> Double {
+        return self.configData?.mapThemes.filter({$0.id == mapThemeID}).first?.layers.rasterLayers.filter({$0.id == layerID}).first?.opacity ?? 1.0
+    }
+    
 }
