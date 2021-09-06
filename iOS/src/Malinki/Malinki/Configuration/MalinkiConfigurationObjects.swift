@@ -29,6 +29,7 @@ struct MalinkiConfigurationMapData: Decodable {
     var externalNames: MalinkiConfigurationBasemapExternalName
     var rasterTypes: MalinkiConfigurationRasterType
     var imageName: String
+    var opacity: Double
 }
 
 struct MalinkiConfigurationMapLayers: Decodable {
@@ -58,7 +59,6 @@ struct MalinkiConfigurationWMS: Decodable {
     var version: String
     var width: String
     var height: String
-    var opacity: Double
 }
 
 //MARK: - External Representations

@@ -34,13 +34,13 @@
                                 "format": "image/png",
                                 "version": "1.3.0",
                                 "width": "256",
-                                "height": "256",
-                                "opacity": 1.0
+                                "height": "256"
                             },
                             "wmts": null,
                             "apple": false
                         },
-                        "imageName": ""
+                        "imageName": "",
+                        "opacity": 1.0
                     },
                     {
                         "id": 1,
@@ -62,13 +62,13 @@
                                 "format": "image/png",
                                 "version": "1.3.0",
                                 "width": "256",
-                                "height": "256",
-                                "opacity": 1.0
+                                "height": "256"
                             },
                             "wmts": null,
                             "apple": false
                         },
-                        "imageName": ""
+                        "imageName": "",
+                        "opacity": 1.0
                     },
                     {
                         "id": 0,
@@ -90,13 +90,13 @@
                                 "format": "image/png",
                                 "version": "1.3.0",
                                 "width": "256",
-                                "height": "256",
-                                "opacity": 0.5
+                                "height": "256"
                             },
                             "wmts": null,
                             "apple": false
                         },
-                        "imageName": ""
+                        "imageName": "",
+                        "opacity": 0.5
                     }
                 ]
             }
@@ -123,7 +123,8 @@
                 "wmts": null,
                 "apple": false
             },
-            "imageName": "osm_basemap"
+            "imageName": "osm_basemap",
+            "opacity": 1.0
         }, {
             "id": 1,
             "internalName": "apple_roads",
@@ -140,7 +141,8 @@
                 "wmts": null,
                 "apple": true
             },
-            "imageName": "apple_roads_basemap"
+            "imageName": "apple_roads_basemap",
+            "opacity": 1.0
         }, {
             "id": 2,
             "internalName": "apple_aerial",
@@ -157,7 +159,8 @@
                 "wmts": null,
                 "apple": true
             },
-            "imageName": "apple_aerial_basemap"
+            "imageName": "apple_aerial_basemap",
+            "opacity": 1.0
         }, {
             "id": 3,
             "internalName": "apple_hybrid",
@@ -174,7 +177,8 @@
                 "wmts": null,
                 "apple": true
             },
-            "imageName": "apple_hybrid_basemap"
+            "imageName": "apple_hybrid_basemap",
+            "opacity": 1.0
         }
     ],
     "onStartUp": {
