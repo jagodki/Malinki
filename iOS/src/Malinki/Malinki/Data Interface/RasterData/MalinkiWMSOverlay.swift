@@ -16,21 +16,20 @@ extension String {
     }
 }
 
-public class MalinkiWMSOverlay: MKTileOverlay {
+public class MalinkiWMSOverlay: MalinkiTileOverlay {
     
     private let TILE_CACHE = "TILE_CACHE"
     
     private var url: String
     private var useMercator: Bool
     private let wmsVersion: String
-    private var alpha: CGFloat
+//    private var alpha: CGFloat
     
     init(url: String, useMercator: Bool, wmsVersion: String, alpha: CGFloat = 1.0) {
         self.url = url
         self.useMercator = useMercator
         self.wmsVersion = wmsVersion
-        self.alpha = alpha
-        super.init(urlTemplate: url)
+        super.init(urlTemplate: url, alpha: alpha)
     }
     
     private func xOfColumn(column: Int, zoom: Int) -> Double {
