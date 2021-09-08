@@ -28,7 +28,8 @@ struct MalinkiMap: View {
                                 MalinkiSearchBar(bottomSheetPosition: self.$bottomSheetPosition, searchText: self.$searchText, isEditing: self.$isEditing)
                              }){
                     VStack {
-                        Text("Content", comment: "Test Content")
+                        MalinkiMapThemes(mapThemeID: self.$mapThemeID)
+                        Text("Basemaps", comment: "Test Basemaps")
                         MalinkiBasemaps(basemapID: self.$basemapID)
                             .padding()
                         Spacer()

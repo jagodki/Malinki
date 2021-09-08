@@ -15,7 +15,7 @@ struct MalinkiBasemaps: View {
         self._basemapID = basemapID
     }
     
-    var columns: [GridItem] =
+    private var columns: [GridItem] =
         Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getBasemaps().count)
     
     var body: some View {
@@ -26,7 +26,6 @@ struct MalinkiBasemaps: View {
             }
             
         }
-        
     }
 }
 

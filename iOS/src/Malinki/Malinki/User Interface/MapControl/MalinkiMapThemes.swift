@@ -8,13 +8,29 @@
 import SwiftUI
 
 struct MalinkiMapThemes: View {
+    
+    @Binding private var mapThemeID: Int
+    
+    init(mapThemeID: Binding<Int>) {
+        self._mapThemeID = mapThemeID
+    }
+    
+    var columns: [GridItem] =
+        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getMapThemes().count)
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        LazyVGrid(columns: self.columns, spacing: 2, pinnedViews: []) {
+            
+            ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
+                MalinkiMapThemeButton(imageName: mapTheme.iconName, firstColour: Color.primary, secondColour: Color.primary, toggledMapThemeID: self.$mapThemeID, themeName: mapTheme.externalNames.en, id: mapTheme.id)
+            }
+            
+        }
     }
 }
 
 struct MalinkiMapThemes_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapThemes()
+        MalinkiMapThemes(mapThemeID: .constant(0))
     }
 }

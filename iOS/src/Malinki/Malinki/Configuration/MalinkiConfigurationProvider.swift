@@ -79,4 +79,11 @@ class MalinkiConfigurationProvider {
         return self.configData?.mapThemes.filter({$0.id == mapThemeID}).first?.layers.rasterLayers.filter({$0.id == layerID}).first?.opacity ?? 1.0
     }
     
+    /// This function returns all raster layers of a given map theme.
+    /// - Parameter mapTheme: the ID of a map theme
+    /// - Returns: an array of all raster layers of the given map theme
+    func getRasterLayers(of mapTheme: Int) -> [MalinkiConfigurationMapData] {
+        return self.configData?.mapThemes.filter({$0.id == mapTheme}).first?.layers.rasterLayers ?? []
+    }
+    
 }
