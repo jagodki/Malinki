@@ -19,13 +19,15 @@ struct MalinkiMapThemes: View {
         Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getMapThemes().count)
     
     var body: some View {
-        LazyVGrid(columns: self.columns, spacing: 2, pinnedViews: []) {
-            
-            ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
-                MalinkiMapThemeButton(imageName: mapTheme.iconName, firstColour: Color.primary, secondColour: Color.primary, toggledMapThemeID: self.$mapThemeID, themeName: mapTheme.externalNames.en, id: mapTheme.id)
+        
+        ScrollView(.horizontal) {
+            HStack(spacing: 20) {
+                ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
+                    MalinkiMapThemeButton(imageName: mapTheme.iconName, firstColour: Color.primary, secondColour: Color.primary, toggledMapThemeID: self.$mapThemeID, themeName: mapTheme.externalNames.en, id: mapTheme.id)
+                }
             }
-            
         }
+        .padding()
     }
 }
 
