@@ -7,14 +7,18 @@
 
 import SwiftUI
 
+/// A struture to create a row of basemap buttons.
 struct MalinkiBasemaps: View {
     
     @Binding private var basemapID: Int
     
+    /// The initialiser of this structure.
+    /// - Parameter basemapID: a binding containing the id of the toggled basemap
     init(basemapID: Binding<Int>) {
         self._basemapID = basemapID
     }
     
+    /// The columns for creating a lazy grid.
     private var columns: [GridItem] =
         Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getBasemaps().count)
     
