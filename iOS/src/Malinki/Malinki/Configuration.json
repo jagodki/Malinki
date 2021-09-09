@@ -39,7 +39,7 @@
                             "wmts": null,
                             "apple": false
                         },
-                        "imageName": "",
+                        "imageName": "cloud.drizzle",
                         "opacity": 1.0
                     },
                     {
@@ -67,7 +67,7 @@
                             "wmts": null,
                             "apple": false
                         },
-                        "imageName": "",
+                        "imageName": "cloud.drizzle",
                         "opacity": 1.0
                     },
                     {
@@ -95,7 +95,7 @@
                             "wmts": null,
                             "apple": false
                         },
-                        "imageName": "",
+                        "imageName": "cloud.drizzle",
                         "opacity": 0.5
                     }
                 ]
