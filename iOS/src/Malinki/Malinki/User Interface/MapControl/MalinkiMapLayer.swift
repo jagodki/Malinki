@@ -9,7 +9,14 @@ import SwiftUI
 
 /// A structure to descripe a map layer.
 struct MalinkiMapLayer {
+    let id: Int
     let name: String
     let image: Image
-    @State var isToggled: Bool
+    @State var isToggled: Bool = true
+    
+    init(id: Int, name: String, imageName: String) {
+        self.id = id
+        self.name = name
+        self.image = Image(systemName: imageName)
+    }
 }
