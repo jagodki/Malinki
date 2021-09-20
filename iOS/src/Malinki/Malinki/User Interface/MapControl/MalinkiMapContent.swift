@@ -19,29 +19,24 @@ struct MalinkiMapContent: View {
     }
     
     var body: some View {
-        List {
-            Section(header: Text("Map Layers", comment: "the name of the list with the map layers")
-                        .font(.headline)) {
-                ForEach(self.mapLayers, id: \.name) { mapLayer in
-                    Toggle(isOn: mapLayer.$isToggled) {
-                        HStack {
-                            mapLayer.image
-                                .clipShape(Circle())
-                            Text(mapLayer.name)
-                        }
+        
+        VStack {
+            ForEach(self.mapLayers.indices, id:\.self) { index in
+                Toggle(isOn: self.$mapLayers[index].isToggled) {
+                    HStack {
+                        self.mapLayers[index].image
+                            .clipShape(Circle())
+                        Text(self.mapLayers[index].name)
                     }
-                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 }
             }
-        }
-        .listStyle(InsetGroupedListStyle())
-        .padding()
+        }.padding()
     }
     
 }
 
 struct MalinkiMapContent_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapContent(mapLayers: .constant([MalinkiMapLayer(name: "Test", image: Image(systemName: "cloud.moon.fill"), isToggled: true), MalinkiMapLayer(name: "Test2", image: Image(systemName: "cloud.bolt.fill"), isToggled: false)]))
+        MalinkiMapContent(mapLayers: .constant([MalinkiMapLayer(id: 0, name: "Test", imageName: "cloud.moon.fill"), MalinkiMapLayer(id: 1, name: "Test2", imageName: "cloud.bolt.fill")]))
     }
 }
