@@ -9,6 +9,12 @@ import SwiftUI
 
 struct MalinkiMapControl: View {
     
+    private var mapThemeID: Int
+    
+    init(mapThemeID: Int) {
+        self.mapThemeID = mapThemeID
+    }
+    
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
@@ -21,6 +27,6 @@ struct MalinkiMapControl: View {
 
 struct MalinkiMapControl_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapControl()
+        MalinkiMapControl(mapThemeID: 0)
     }
 }
