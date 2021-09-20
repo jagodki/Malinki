@@ -101,4 +101,12 @@ class MalinkiConfigurationProvider {
         return mapLayers
     }
     
+    func getSortedRasterLayerIDs(of mapTheme: Int) -> [Int] {
+        return self.configData?.mapThemes.filter({$0.id == mapTheme}).first?.layers.rasterLayers.map({$0.id}).sorted(by: {$0 < $1}) ?? []
+    }
+    
+    func getRasterLayer(with layerID: Int, of mapTheme: Int) -> MalinkiConfigurationMapData? {
+        return self.configData?.mapThemes.filter({$0.id == mapTheme}).first?.layers.rasterLayers.filter({$0.id == layerID}).first
+    }
+    
 }
