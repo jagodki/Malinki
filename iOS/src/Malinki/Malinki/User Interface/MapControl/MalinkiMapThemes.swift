@@ -23,7 +23,7 @@ struct MalinkiMapThemes: View {
         ScrollView(.horizontal) {
             HStack(spacing: 20) {
                 ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
-                    MalinkiMapThemeButton(imageName: mapTheme.iconName, firstColour: Color.primary, secondColour: Color.primary, toggledMapThemeID: self.$mapThemeID, themeName: mapTheme.externalNames.en, id: mapTheme.id)
+                    MalinkiMapThemeButton(imageName: mapTheme.iconName, colour: Color.primary, toggledMapThemeID: self.$mapThemeID, themeName: mapTheme.externalNames.en, id: mapTheme.id)
                 }
             }
         }
