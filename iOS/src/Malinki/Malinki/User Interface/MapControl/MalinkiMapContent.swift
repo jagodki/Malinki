@@ -27,8 +27,8 @@ struct MalinkiMapContent: View {
                         self.mapLayers[index].image
                             .clipShape(Circle())
                         Text(self.mapLayers[index].name)
-                    }.toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                }
+                    }
+                }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
             }
         }.padding()
     }
