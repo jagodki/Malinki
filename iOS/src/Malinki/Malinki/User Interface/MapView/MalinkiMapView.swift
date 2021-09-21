@@ -10,12 +10,14 @@ import MapKit
 
 struct MalinkiMapView: UIViewRepresentable {
     
-    @Binding var basemapID: Int
-    @Binding var mapThemeID: Int
+    @Binding private var basemapID: Int
+    @Binding private var mapThemeID: Int
+    @Binding private var mapLayers: [MalinkiMapLayer]
     
-    init(basemapID: Binding<Int>, mapThemeID: Binding<Int>) {
+    init(basemapID: Binding<Int>, mapThemeID: Binding<Int>, mapLayers: Binding<[MalinkiMapLayer]>) {
         self._basemapID = basemapID
         self._mapThemeID = mapThemeID
+        self._mapLayers = mapLayers
     }
     
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
@@ -77,16 +79,22 @@ struct MalinkiMapView: UIViewRepresentable {
             //iterate over all raster layers
             for rasterLayer in mapTheme.layers.rasterLayers.sorted(by: {$0.id < $1.id}) {
                 
-                //get a layer according to the data source
-                let layer = MalinkiRasterData(from: rasterLayer)
+                //get the map layer corresponding to the current raster layer
+                guard let mapLayer = self.mapLayers.filter({$0.id == rasterLayer.id}).first else { continue }
                 
-                //add the layer to the map
-                if layer.isAppleMaps {
-                    mapView.mapType = layer.getAppleMapType()
-                } else {
-                    let overlay = layer.getOverlay()
-                    overlay.canReplaceMapContent = false
-                    mapView.addOverlay(overlay)
+                //check the visibility of the current layer
+                if mapLayer.isToggled {
+                    //get a layer according to the data source
+                    let layer = MalinkiRasterData(from: rasterLayer)
+                    
+                    //add the layer to the map
+                    if layer.isAppleMaps {
+                        mapView.mapType = layer.getAppleMapType()
+                    } else {
+                        let overlay = layer.getOverlay()
+                        overlay.canReplaceMapContent = false
+                        mapView.addOverlay(overlay)
+                    }
                 }
             }
         }
@@ -149,6 +157,6 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0))
+        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0), mapLayers: .constant([]))
     }
 }

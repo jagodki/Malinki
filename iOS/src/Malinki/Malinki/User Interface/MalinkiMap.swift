@@ -20,7 +20,7 @@ struct MalinkiMap: View {
     var body: some View {
         GeometryReader { geo in
             //the map view
-            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID)
+            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers)
                 .edgesIgnoringSafeArea(.all)
                 .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition,
                              //options: [],
