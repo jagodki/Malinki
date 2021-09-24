@@ -30,7 +30,7 @@ struct MalinkiMap: View {
                              }){
                     VStack {
                         Text("Themes", comment: "Test Themes")
-                        MalinkiMapThemes(mapThemeID: self.$mapThemeID)
+                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers)
                         Text("Layers", comment: "Test Layers")
                         MalinkiMapContent(mapLayers: self.$mapLayers)
                         Text("Basemaps", comment: "Test Basemaps")

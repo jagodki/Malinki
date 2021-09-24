@@ -11,6 +11,7 @@ import SwiftUI
 struct MalinkiMapThemeButton: View {
     
     @Binding private var toggledMapThemeID: Int
+    @Binding private var mapLayers: [MalinkiMapLayer]
     private var id: Int
     private var imageName: String
     private var colour: Color
@@ -23,18 +24,20 @@ struct MalinkiMapThemeButton: View {
     ///   - toggledMapThemeID: a binding indicating the toggled map theme
     ///   - themeName: the name of the theme, presented at the bottom of the button
     ///   - id: the id of the current map theme
-    init(imageName: String, colour: Color, toggledMapThemeID: Binding<Int>, themeName: String, id: Int) {
+    init(imageName: String, colour: Color, toggledMapThemeID: Binding<Int>, themeName: String, id: Int, mapLayers: Binding<[MalinkiMapLayer]>) {
         self.imageName = imageName
         self.colour = colour
         self._toggledMapThemeID = toggledMapThemeID
         self.themeName = themeName
         self.id = id
+        self._mapLayers = mapLayers
     }
     
     var body: some View {
         VStack {
             Button(action: {
                 self.toggledMapThemeID = self.id
+                self.mapLayers = MalinkiConfigurationProvider.sharedInstance.getMapLayers(of: self.id)
             }) {
                 Image(systemName: self.imageName)
                     .font(.system(size: 35, weight: .regular))
@@ -54,7 +57,7 @@ struct MalinkiMapThemeButton: View {
 
 struct MalinkiMapThemeButton_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapThemeButton(imageName: "map.fill", colour: .blue, toggledMapThemeID: .constant(1), themeName: "Test Theme", id: 0)
+        MalinkiMapThemeButton(imageName: "map.fill", colour: .blue, toggledMapThemeID: .constant(1), themeName: "Test Theme", id: 0, mapLayers: .constant([]))
             .environment(\.colorScheme, .dark)
             .background(Color.gray)
     }
