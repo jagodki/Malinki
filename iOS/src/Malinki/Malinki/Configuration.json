@@ -101,6 +101,75 @@
                 ]
             }
             
+        },
+        {
+            "id": 1,
+            "internalName": "topography",
+            "externalNames": {
+                "en": "Topography",
+                "de": "Topografie",
+                "fr": "Topographie",
+                "sv": "Topografi",
+                "pl": "Topografia"
+            },
+            "iconName": "globe",
+            "layers": {
+                "vectorLayers": "",
+                "rasterLayers": [
+                    {
+                        "id": 1,
+                        "internalName": "relief",
+                        "externalNames": {
+                            "en": "Relief",
+                            "de": "Relief",
+                            "fr": "Relief",
+                            "sv": "Relief",
+                            "pl": "Relief"
+                        },
+                        "rasterTypes": {
+                            "tms": null,
+                            "wms": null,
+                            "wmts": {
+                                "baseURL": "https://maps.dwd.de/geoserver/ows?",
+                                "tileMatrixSet": "GLOBAL_WEBMERCATOR",
+                                "layer": "GRAY_HR_SR_OB_DR",
+                                "version": "1.0.0",
+                                "style": "default",
+                                "format": "image/png"
+                            },
+                            "apple": false
+                        },
+                        "imageName": "waveform",
+                        "opacity": 1.0
+                    },
+                    {
+                        "id": 0,
+                        "internalName": "relief",
+                        "externalNames": {
+                            "en": "Cities",
+                            "de": "Städte",
+                            "fr": "Villes",
+                            "sv": "Städer",
+                            "pl": "Miasta"
+                        },
+                        "rasterTypes": {
+                            "tms": null,
+                            "wms": null,
+                            "wmts": {
+                                "baseURL": "https://maps.dwd.de/geoserver/ows?",
+                                "tileMatrixSet": "GLOBAL_WEBMERCATOR",
+                                "layer": "Siedlungspunkte_gs",
+                                "version": "1.0.0",
+                                "style": "default",
+                                "format": "image/png"
+                            },
+                            "apple": false
+                        },
+                        "imageName": "mappin",
+                        "opacity": 0.8
+                    }
+                ]
+            }
         }
     ],
     "basemaps": [
