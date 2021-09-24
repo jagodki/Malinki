@@ -41,7 +41,7 @@ struct MalinkiConfigurationMapLayers: Decodable {
 struct MalinkiConfigurationRasterType: Decodable {
     var tms: MalinkiConfigurationTMS?
     var wms: MalinkiConfigurationWMS?
-    var wmts: String?
+    var wmts: MalinkiConfigurationWMTS?
     var apple: Bool
 }
 
@@ -59,6 +59,15 @@ struct MalinkiConfigurationWMS: Decodable {
     var version: String
     var width: String
     var height: String
+}
+
+struct MalinkiConfigurationWMTS: Decodable {
+    var baseURL: String
+    var layer: String
+    var style: String
+    var format: String
+    var version: String
+    var tileMatrixSet: String
 }
 
 //MARK: - External Representations
