@@ -54,7 +54,6 @@ struct MalinkiRasterData {
                         "&STYLE=" + wmts.style +
                         "&TILEMATRIXSET=" + wmts.tileMatrixSet)
             overlay = MalinkiWMTSOverlay(url: url, alpha: CGFloat(self.mapDataConfiguration.opacity))
-            //overlay.isGeometryFlipped = true
         } else {
             overlay = MKTileOverlay()
         }
