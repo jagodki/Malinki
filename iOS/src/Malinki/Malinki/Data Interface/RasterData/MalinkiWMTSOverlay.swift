@@ -24,7 +24,7 @@ public class MalinkiWMTSOverlay: MalinkiTileOverlay {
         let row = path.y
         let col = path.x
         
-        let resolvedUrl = self.url + "&TILEMATRIX=\(matrix)&TILEROW=\(row)&TIELCOL=\(col)"
+        let resolvedUrl = self.url + "&TILEMATRIX=\(matrix)&TILEROW=\(row)&TIlECOL=\(col)"
 
         return URL(string: resolvedUrl)!
     }
