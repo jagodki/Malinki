@@ -1,7 +1,7 @@
 {
     "mapThemes": [
         {
-            "id": 0,
+            "id": 1,
             "internalName": "weather",
             "externalNames": {
                 "en": "Weather",
@@ -103,7 +103,7 @@
             
         },
         {
-            "id": 1,
+            "id": 0,
             "internalName": "topography",
             "externalNames": {
                 "en": "Topography",
@@ -130,7 +130,7 @@
                             "tms": null,
                             "wms": null,
                             "wmts": {
-                                "baseURL": "https://maps.dwd.de/geoserver/ows?",
+                                "baseURL": "https://maps.dwd.de/geoproxy/ows?",
                                 "tileMatrixSet": "GLOBAL_WEBMERCATOR",
                                 "layer": "GRAY_HR_SR_OB_DR",
                                 "version": "1.0.0",
@@ -156,7 +156,7 @@
                             "tms": null,
                             "wms": null,
                             "wmts": {
-                                "baseURL": "https://maps.dwd.de/geoserver/ows?",
+                                "baseURL": "https://maps.dwd.de/geoproxy/ows?",
                                 "tileMatrixSet": "GLOBAL_WEBMERCATOR",
                                 "layer": "Siedlungspunkte_gs",
                                 "version": "1.0.0",
