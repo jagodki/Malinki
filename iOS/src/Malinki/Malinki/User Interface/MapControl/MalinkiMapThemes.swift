@@ -17,19 +17,34 @@ struct MalinkiMapThemes: View {
         self._mapLayers = mapLayers
     }
     
-    var columns: [GridItem] =
-        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getMapThemes().count)
+//    var columns: [GridItem] =
+//        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getMapThemes().count)
     
     var body: some View {
         
-        ScrollView(.horizontal) {
-            HStack(spacing: 20) {
+        Menu {
+            Picker(selection: self.$mapThemeID, label: Text("Map Themes")) {
                 ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
-                    MalinkiMapThemeButton(imageName: mapTheme.iconName, colour: Color.primary, toggledMapThemeID: self.$mapThemeID, themeName: mapTheme.externalNames.en, id: mapTheme.id, mapLayers: self.$mapLayers)
+                    Button(action: {}) {
+                        Text(mapTheme.externalNames.en)
+                        Image(systemName: mapTheme.iconName)
+                    }.tag(mapTheme.id)
                 }
             }
+        } label: {
+            Image(systemName: "map.fill")
+                .foregroundColor(Color.primary)
+                .font(.title)
         }
-        .padding()
+        
+//        ScrollView(.horizontal) {
+//            HStack(spacing: 20) {
+//                ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
+//                    MalinkiMapThemeButton(imageName: mapTheme.iconName, colour: Color.primary, toggledMapThemeID: self.$mapThemeID, themeName: mapTheme.externalNames.en, id: mapTheme.id, mapLayers: self.$mapLayers)
+//                }
+//            }
+//        }
+//        .padding()
     }
 }
 
