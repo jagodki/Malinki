@@ -194,7 +194,8 @@
             },
             "imageName": "osm_basemap",
             "opacity": 1.0
-        }, {
+        },
+        {
             "id": 1,
             "internalName": "apple_roads",
             "externalNames": {
@@ -212,7 +213,8 @@
             },
             "imageName": "apple_roads_basemap",
             "opacity": 1.0
-        }, {
+        },
+        {
             "id": 2,
             "internalName": "apple_aerial",
             "externalNames": {
@@ -230,7 +232,8 @@
             },
             "imageName": "apple_aerial_basemap",
             "opacity": 1.0
-        }, {
+        },
+        {
             "id": 3,
             "internalName": "apple_hybrid",
             "externalNames": {
