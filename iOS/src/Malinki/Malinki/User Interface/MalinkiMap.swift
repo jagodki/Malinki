@@ -6,11 +6,11 @@
 //
 
 import SwiftUI
-import BottomSheet
+//import BottomSheet
 
 struct MalinkiMap: View {
     
-    @State private var bottomSheetPosition: BottomSheetPosition = .bottom
+//    @State private var bottomSheetPosition: BottomSheetPosition = .bottom
     @State private var searchText: String = ""
     @State private var isEditing: Bool = false
     @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfBasemapOnStartUp()
@@ -22,23 +22,23 @@ struct MalinkiMap: View {
             //the map view
             MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers)
                 .edgesIgnoringSafeArea(.all)
-                .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition,
-                             //options: [],
-                             options: [.appleScrollBehavior],
-                             headerContent: {
-                                MalinkiSearchBar(bottomSheetPosition: self.$bottomSheetPosition, searchText: self.$searchText, isEditing: self.$isEditing)
-                             }){
-                    VStack {
-                        Text("Themes", comment: "Test Themes")
-                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers)
-                        Text("Layers", comment: "Test Layers")
-                        MalinkiMapContent(mapLayers: self.$mapLayers)
-                        Text("Basemaps", comment: "Test Basemaps")
-                        MalinkiBasemaps(basemapID: self.$basemapID)
-                            .padding()
-                        Spacer()
-                    }
-                }
+//                .bottomSheet(bottomSheetPosition: self.$bottomSheetPosition,
+//                             //options: [],
+//                             options: [.appleScrollBehavior],
+//                             headerContent: {
+//                                MalinkiSearchBar(bottomSheetPosition: self.$bottomSheetPosition, searchText: self.$searchText, isEditing: self.$isEditing)
+//                             }){
+//                    VStack {
+//                        Text("Themes", comment: "Test Themes")
+//                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers)
+//                        Text("Layers", comment: "Test Layers")
+//                        MalinkiMapContent(mapLayers: self.$mapLayers)
+//                        Text("Basemaps", comment: "Test Basemaps")
+//                        MalinkiBasemaps(basemapID: self.$basemapID)
+//                            .padding()
+//                        Spacer()
+//                    }
+//                }
         }
         
     }
