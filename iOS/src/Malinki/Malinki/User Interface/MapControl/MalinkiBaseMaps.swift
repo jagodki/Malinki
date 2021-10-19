@@ -19,16 +19,29 @@ struct MalinkiBasemaps: View {
     }
     
     /// The columns for creating a lazy grid.
-    private var columns: [GridItem] =
-        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getBasemaps().count)
+    //    private var columns: [GridItem] =
+    //        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getBasemaps().count)
+    private var columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
-        LazyVGrid(columns: self.columns, spacing: 2, pinnedViews: []) {
+        VStack {
             
-            ForEach(MalinkiConfigurationProvider.sharedInstance.getBasemaps(), id: \.id) { basemap in
-                MalinkiBasemapButton(toggledBasemapID: self.$basemapID, imageName: basemap.imageName, basemapName: basemap.externalNames.de, id: basemap.id)
+            Rectangle()
+                .frame(width: 50, height: 5, alignment: .center)
+                .foregroundColor(Color.secondary)
+                .cornerRadius(20)
+            
+            Divider()
+            
+            ScrollView {
+                LazyVGrid(columns: self.columns, spacing: 2, pinnedViews: []) {
+                    
+                    ForEach(MalinkiConfigurationProvider.sharedInstance.getBasemaps(), id: \.id) { basemap in
+                        MalinkiBasemapButton(toggledBasemapID: self.$basemapID, imageName: basemap.imageName, basemapName: basemap.externalNames.de, id: basemap.id).padding()
+                    }
+                    
+                }
             }
-            
         }
     }
 }
