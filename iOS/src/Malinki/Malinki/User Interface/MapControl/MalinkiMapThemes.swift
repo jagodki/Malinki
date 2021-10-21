@@ -46,19 +46,10 @@ struct MalinkiMapThemes: View {
             Image(systemName: "map.fill")
                 .padding(.all, 10.0)
                 .foregroundColor(Color.primary)
-                .background(Color(UIColor.systemGray3).opacity(0.75))
+//                .background(Color(UIColor.systemGray3).opacity(0.75))
                 .font(.title)
-                .cornerRadius(10)
+//                .cornerRadius(10)
         }
-        
-//        ScrollView(.horizontal) {
-//            HStack(spacing: 20) {
-//                ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
-//                    MalinkiMapThemeButton(imageName: mapTheme.iconName, colour: Color.primary, toggledMapThemeID: self.$mapThemeID, themeName: mapTheme.externalNames.en, id: mapTheme.id, mapLayers: self.$mapLayers)
-//                }
-//            }
-//        }
-//        .padding()
     }
 }
 
