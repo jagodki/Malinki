@@ -11,25 +11,36 @@ import SwiftUI
 struct MalinkiBasemaps: View {
     
     @Binding private var basemapID: Int
+    @Binding private var showBasemapsSheet: Bool
     
     /// The initialiser of this structure.
     /// - Parameter basemapID: a binding containing the id of the toggled basemap
-    init(basemapID: Binding<Int>) {
+    init(basemapID: Binding<Int>, showBasemapsSheet: Binding<Bool>) {
         self._basemapID = basemapID
+        self._showBasemapsSheet = showBasemapsSheet
     }
     
     /// The columns for creating a lazy grid.
-    //    private var columns: [GridItem] =
-    //        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getBasemaps().count)
     private var columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         VStack {
             
-            Rectangle()
-                .frame(width: 50, height: 5, alignment: .center)
-                .foregroundColor(Color.secondary)
-                .cornerRadius(20)
+            HStack {
+                
+                Text(LocalizedStringKey("Basemaps"))
+                    .font(.headline)
+                    .padding(.leading)
+                
+                Spacer()
+                
+                Button(action: {self.showBasemapsSheet = false}) {
+                    Image(systemName: "xmark.circle.fill")
+                        .padding(.trailing)
+                        .foregroundColor(Color.secondary)
+                        .font(.system(size: 20))
+                }
+            }
             
             Divider()
             
@@ -48,6 +59,6 @@ struct MalinkiBasemaps: View {
 
 struct MalinkiButtonGroup_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiBasemaps(basemapID: .constant(0))
+        MalinkiBasemaps(basemapID: .constant(0), showBasemapsSheet: .constant(true))
     }
 }

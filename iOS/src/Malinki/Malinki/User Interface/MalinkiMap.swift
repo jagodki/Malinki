@@ -39,7 +39,7 @@ struct MalinkiMap: View {
                 
             }
         }.adaptiveSheet(isPresented: self.$showBasemapsSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
-            MalinkiBasemaps(basemapID: self.$basemapID)
+            MalinkiBasemaps(basemapID: self.$basemapID, showBasemapsSheet: self.$showBasemapsSheet)
                 .padding()
         }
     }
