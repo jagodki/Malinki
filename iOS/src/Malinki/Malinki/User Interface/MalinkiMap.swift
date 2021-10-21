@@ -15,9 +15,14 @@ struct MalinkiMap: View {
     @State private var searchText: String = ""
     @State private var isEditing: Bool = false
     @State private var showBasemapsSheet: Bool = false
+    @State private var showMapContentSheet: Bool = false
     @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfBasemapOnStartUp()
     @State private var mapThemeID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp()
     @State private var mapLayers: [MalinkiMapLayer] = MalinkiConfigurationProvider.sharedInstance.getMapLayers(of: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
+    
+    private var isSheetOpen: Bool {
+        return self.showMapContentSheet == true || self.showBasemapsSheet == true
+    }
     
     @available(iOS 15.0, *)
     var body: some View {
@@ -32,16 +37,32 @@ struct MalinkiMap: View {
                 HStack {
                     Spacer()
                     
-                    MalinkiMapThemes(mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers, showBasemapsSheet: self.$showBasemapsSheet)
-                        .padding()
-                        .shadow(radius: 1)
+                    VStack {
+                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers, showBasemapsSheet: self.$showBasemapsSheet)
+                            .frame(width: 50, height: 40, alignment: .center)
+                            .padding(.top, 10.0)
+                        
+                        Divider()
+                            .frame(width: 50, height: 10, alignment: .center)
+                        
+                        MalinkiMapContentButton(showMapContentSheet: self.$showMapContentSheet)
+                            .frame(width: 50, height: 40, alignment: .center)
+                            .padding(.bottom, 10.0)
+                    }
+                    .background(Color(UIColor.systemGray4).opacity(0.75))
+                    .cornerRadius(10)
+                    .shadow(radius: 1)
+                    .padding()
                 }
                 
             }
-        }.adaptiveSheet(isPresented: self.$showBasemapsSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
+        }.background(EmptyView().adaptiveSheet(isPresented: self.$showBasemapsSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
             MalinkiBasemaps(basemapID: self.$basemapID, showBasemapsSheet: self.$showBasemapsSheet)
                 .padding()
-        }
+        }.background(EmptyView().adaptiveSheet(isPresented: self.$showMapContentSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
+            MalinkiMapContent(mapLayers: self.$mapLayers, showMapContentSheet: self.$showMapContentSheet)
+                .padding()
+        }))
     }
 }
 
