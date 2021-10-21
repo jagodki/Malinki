@@ -15,6 +15,7 @@ struct MalinkiBasemaps: View {
     
     /// The initialiser of this structure.
     /// - Parameter basemapID: a binding containing the id of the toggled basemap
+    /// - Parameter showBasemapsSheet: a binding to close the basemap sheet
     init(basemapID: Binding<Int>, showBasemapsSheet: Binding<Bool>) {
         self._basemapID = basemapID
         self._showBasemapsSheet = showBasemapsSheet
