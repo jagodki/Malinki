@@ -8,6 +8,7 @@
 import SwiftUI
 
 /// A structure to present the show and control the map content/layers.
+@available(iOS 15.0, *)
 struct MalinkiMapContent: View {
     
     @Binding private var mapLayers: [MalinkiMapLayer]
@@ -35,6 +36,7 @@ struct MalinkiMapContent: View {
                     }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
                 }
             }
+//            .background(.thinMaterial)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
@@ -49,17 +51,17 @@ struct MalinkiMapContent: View {
                             Image(systemName: "xmark.circle.fill")
                                 .padding(.trailing)
                                 .foregroundColor(Color.secondary)
-                                .font(.system(size: 20))
+                                .font(.headline)
                         }
                     }
-                }
-                )
+                })
             })
         }
     }
     
 }
 
+@available(iOS 15.0, *)
 struct MalinkiMapContent_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiMapContent(mapLayers: .constant([MalinkiMapLayer(id: 0, name: "Test", imageName: "cloud.moon.fill"), MalinkiMapLayer(id: 1, name: "Test2", imageName: "cloud.bolt.fill")]), showMapContentSheet: .constant(true))
