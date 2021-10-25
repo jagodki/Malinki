@@ -61,7 +61,6 @@ struct MalinkiMap: View {
                 .padding()
         }.background(EmptyView().adaptiveSheet(isPresented: self.$showMapContentSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
             MalinkiMapContent(mapLayers: self.$mapLayers, showMapContentSheet: self.$showMapContentSheet)
-                .padding()
         }))
     }
 }

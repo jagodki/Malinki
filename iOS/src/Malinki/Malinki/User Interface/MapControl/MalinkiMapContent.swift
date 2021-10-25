@@ -22,27 +22,9 @@ struct MalinkiMapContent: View {
     
     var body: some View {
         
-        VStack {
-            
-            HStack {
-                Text(LocalizedStringKey("Map Content"))
-                    .font(.headline)
-                    .padding(.leading)
-                
-                Spacer()
-                
-                Button(action: {self.showMapContentSheet = false}) {
-                    Image(systemName: "xmark.circle.fill")
-                        .padding(.trailing)
-                        .foregroundColor(Color.secondary)
-                        .font(.system(size: 20))
-                }
-            }
-            
-            Divider()
+        NavigationView {
             
             List {
-                
                 ForEach(self.mapLayers.indices, id:\.self) { index in
                     Toggle(isOn: self.$mapLayers[index].isToggled) {
                         HStack {
@@ -53,7 +35,26 @@ struct MalinkiMapContent: View {
                     }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
                 }
             }
-            
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(content: {
+                ToolbarItem(placement: .principal, content: {
+                    HStack {
+                        Text(LocalizedStringKey("Map Content"))
+                            .font(.headline)
+                            .padding(.leading)
+                        
+                        Spacer()
+                        
+                        Button(action: {self.showMapContentSheet = false}) {
+                            Image(systemName: "xmark.circle.fill")
+                                .padding(.trailing)
+                                .foregroundColor(Color.secondary)
+                                .font(.system(size: 20))
+                        }
+                    }
+                }
+                )
+            })
         }
     }
     
