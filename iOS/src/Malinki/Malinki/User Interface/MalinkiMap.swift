@@ -49,7 +49,7 @@ struct MalinkiMap: View {
                             .frame(width: 50, height: 40, alignment: .center)
                             .padding(.bottom, 10.0)
                     }
-                    .background(Color(UIColor.systemGray4).opacity(0.75))
+                    .background(.regularMaterial)
                     .cornerRadius(10)
                     .shadow(radius: 1)
                     .padding()
@@ -58,7 +58,6 @@ struct MalinkiMap: View {
             }
         }.background(EmptyView().adaptiveSheet(isPresented: self.$showBasemapsSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
             MalinkiBasemaps(basemapID: self.$basemapID, showBasemapsSheet: self.$showBasemapsSheet)
-                .padding()
         }.background(EmptyView().adaptiveSheet(isPresented: self.$showMapContentSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
             MalinkiMapContent(mapLayers: self.$mapLayers, showMapContentSheet: self.$showMapContentSheet)
         }))
