@@ -8,6 +8,7 @@
 import SwiftUI
 
 /// A struture to create a row of basemap buttons.
+@available(iOS 15.0, *)
 struct MalinkiBasemaps: View {
     
     @Binding private var basemapID: Int
@@ -25,39 +26,41 @@ struct MalinkiBasemaps: View {
     private var columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
-        VStack {
-            
-            HStack {
-                
-                Text(LocalizedStringKey("Basemaps"))
-                    .font(.headline)
-                    .padding(.leading)
-                
-                Spacer()
-                
-                Button(action: {self.showBasemapsSheet = false}) {
-                    Image(systemName: "xmark.circle.fill")
-                        .padding(.trailing)
-                        .foregroundColor(Color.secondary)
-                        .font(.system(size: 20))
-                }
-            }
-            
-            Divider()
-            
+        
+        NavigationView {
             ScrollView {
                 LazyVGrid(columns: self.columns, spacing: 2, pinnedViews: []) {
                     
                     ForEach(MalinkiConfigurationProvider.sharedInstance.getBasemaps(), id: \.id) { basemap in
                         MalinkiBasemapButton(toggledBasemapID: self.$basemapID, imageName: basemap.imageName, basemapName: basemap.externalNames.de, id: basemap.id).padding()
                     }
-                    
                 }
             }
+            .background(Color(uiColor: .systemGray6))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(content: {
+                ToolbarItem(placement: .principal, content: {
+                    HStack {
+                        Text(LocalizedStringKey("Basemaps"))
+                            .font(.headline)
+                            .padding(.leading)
+                        
+                        Spacer()
+                        
+                        Button(action: {self.showBasemapsSheet = false}) {
+                            Image(systemName: "xmark.circle.fill")
+                                .padding(.trailing)
+                                .foregroundColor(Color.secondary)
+                                .font(.headline)
+                        }
+                    }
+                })
+            })
         }
     }
 }
 
+@available(iOS 15.0, *)
 struct MalinkiButtonGroup_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiBasemaps(basemapID: .constant(0), showBasemapsSheet: .constant(true))
