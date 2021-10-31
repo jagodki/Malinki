@@ -35,7 +35,7 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.showsTraffic = false
         mapView.showsBuildings = false
         mapView.showsScale = true
-        mapView.showsUserLocation = true
+//        mapView.showsUserLocation = true
         
         return mapView
     }
@@ -76,8 +76,8 @@ struct MalinkiMapView: UIViewRepresentable {
         
         //add raster layers from the map theme
         for rasterLayer in self.mapLayers.layers.filter({$0.themeID == self.mapThemeID}).sorted(by: {$0.id < $1.id}) {
-            //check the visibility of the current layer
-            if rasterLayer.isToggled.wrappedValue {
+            //che(ck the visibility of the current layer
+            if rasterLayer.isToggled {
                 //get a layer according to the data source
                 let layer = MalinkiRasterData(from: MalinkiConfigurationProvider.sharedInstance.getRasterLayer(with: rasterLayer.id, of: rasterLayer.themeID)!)
                 

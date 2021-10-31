@@ -58,7 +58,7 @@ struct MalinkiMap: View {
             MalinkiBasemaps(basemapID: self.$basemapID, showBasemapsSheet: self.$showBasemapsSheet)
                 .environmentObject(self.mapLayers)
         }.background(EmptyView().adaptiveSheet(isPresented: self.$showMapContentSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
-            MalinkiMapContent(showMapContentSheet: self.$showMapContentSheet, mapThemeID: self.mapThemeID)
+            MalinkiMapContent(showMapContentSheet: self.$showMapContentSheet, mapThemeID: self.$mapThemeID)
                 .environmentObject(self.mapLayers)
         }))
     }

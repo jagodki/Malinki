@@ -14,9 +14,9 @@ final class MalinkiMapLayer: Hashable, Identifiable, ObservableObject {
     let id: Int
     let name: String
     let image: Image
-    var isToggled: Binding<Bool>
-//    @Published var isToggled: Bool = true
-    let themeID: Int
+//    var isToggled: Binding<Bool>
+    @Published var isToggled: Bool = true
+    var themeID: Int
     let uuid: UUID
     
     /// The initialiser of this structure.
@@ -31,11 +31,11 @@ final class MalinkiMapLayer: Hashable, Identifiable, ObservableObject {
         self.image = Image(systemName: imageName)
         self.uuid = UUID()
         self.themeID = themeID
-        let toggled = CurrentValueSubject<Bool, Never>(true)
-        self.isToggled = Binding<Bool> (
-            get: {toggled.value},
-            set: {toggled.value = $0}
-        )
+//        let toggled = CurrentValueSubject<Bool, Never>(true)
+//        self.isToggled = Binding<Bool> (
+//            get: {toggled.value},
+//            set: {toggled.value = $0}
+//        )
     }
     
     static func == (lhs: MalinkiMapLayer, rhs: MalinkiMapLayer) -> Bool {
