@@ -7,17 +7,17 @@
 
 import SwiftUI
 import MapKit
+import CoreLocation
 
 struct MalinkiMapView: UIViewRepresentable {
     
     @Binding private var basemapID: Int
     @Binding private var mapThemeID: Int
-    @Binding private var mapLayers: [MalinkiMapLayer]
+    @EnvironmentObject var mapLayers: MalinkiLayers
     
-    init(basemapID: Binding<Int>, mapThemeID: Binding<Int>, mapLayers: Binding<[MalinkiMapLayer]>) {
+    init(basemapID: Binding<Int>, mapThemeID: Binding<Int>) {
         self._basemapID = basemapID
         self._mapThemeID = mapThemeID
-        self._mapLayers = mapLayers
     }
     
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
@@ -75,29 +75,46 @@ struct MalinkiMapView: UIViewRepresentable {
         }
         
         //add raster layers from the map theme
-        if let mapTheme = MalinkiConfigurationProvider.sharedInstance.getMapTheme(for: self.mapThemeID) {
-            //iterate over all raster layers
-            for rasterLayer in mapTheme.layers.rasterLayers.sorted(by: {$0.id < $1.id}) {
+        for rasterLayer in self.mapLayers.layers.filter({$0.themeID == self.mapThemeID}).sorted(by: {$0.id < $1.id}) {
+            //check the visibility of the current layer
+            if rasterLayer.isToggled.wrappedValue {
+                //get a layer according to the data source
+                let layer = MalinkiRasterData(from: MalinkiConfigurationProvider.sharedInstance.getRasterLayer(with: rasterLayer.id, of: rasterLayer.themeID)!)
                 
-                //get the map layer corresponding to the current raster layer
-                guard let mapLayer = self.mapLayers.filter({$0.id == rasterLayer.id}).first else { continue }
-                
-                //check the visibility of the current layer
-                if mapLayer.isToggled {
-                    //get a layer according to the data source
-                    let layer = MalinkiRasterData(from: rasterLayer)
-                    
-                    //add the layer to the map
-                    if layer.isAppleMaps {
-                        mapView.mapType = layer.getAppleMapType()
-                    } else {
-                        let overlay = layer.getOverlay()
-                        overlay.canReplaceMapContent = false
-                        mapView.addOverlay(overlay)
-                    }
+                //add the layer to the map
+                if layer.isAppleMaps {
+                    mapView.mapType = layer.getAppleMapType()
+                } else {
+                    let overlay = layer.getOverlay()
+                    overlay.canReplaceMapContent = false
+                    mapView.addOverlay(overlay)
                 }
             }
         }
+        
+//        if let mapTheme = MalinkiConfigurationProvider.sharedInstance.getMapTheme(for: self.mapThemeID) {
+//            //iterate over all raster layers
+//            for rasterLayer in mapTheme.layers.rasterLayers.sorted(by: {$0.id < $1.id}) {
+//
+//                //get the map layer corresponding to the current raster layer
+//                guard let mapLayer = self.mapLayers.filter({$0.id == rasterLayer.id}).first else { continue }
+//
+//                //check the visibility of the current layer
+//                if mapLayer.isToggled {
+//                    //get a layer according to the data source
+//                    let layer = MalinkiRasterData(from: rasterLayer)
+//
+//                    //add the layer to the map
+//                    if layer.isAppleMaps {
+//                        mapView.mapType = layer.getAppleMapType()
+//                    } else {
+//                        let overlay = layer.getOverlay()
+//                        overlay.canReplaceMapContent = false
+//                        mapView.addOverlay(overlay)
+//                    }
+//                }
+//            }
+//        }
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -157,6 +174,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0), mapLayers: .constant([]))
+        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0))
+            .environmentObject(MalinkiLayers(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
     }
 }

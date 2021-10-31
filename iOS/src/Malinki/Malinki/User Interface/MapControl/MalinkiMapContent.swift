@@ -11,32 +11,33 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct MalinkiMapContent: View {
     
-    @Binding private var mapLayers: [MalinkiMapLayer]
+//    @Binding private var mapLayers: [Int: [MalinkiMapLayer]]
+    @EnvironmentObject var mapLayers: MalinkiLayers
     @Binding private var showMapContentSheet: Bool
+    private var mapThemeID: Int
     
     /// The initialiser of this sctructure.
-    /// - Parameter mapLayers: an array of map layers, that should be presented in a list
-    init(mapLayers: Binding<[MalinkiMapLayer]>, showMapContentSheet: Binding<Bool>) {
-        self._mapLayers = mapLayers
+    /// - Parameter mapLayers: a dictionary of map layers, that should be presented in a list
+    /// - Parameter mapThemeID: the ID of the current map theme
+    init(showMapContentSheet: Binding<Bool>, mapThemeID: Int) {
         self._showMapContentSheet = showMapContentSheet
+        self.mapThemeID = mapThemeID
     }
     
     var body: some View {
         
         NavigationView {
-            
-            List {
-                ForEach(self.mapLayers.indices, id:\.self) { index in
-                    Toggle(isOn: self.$mapLayers[index].isToggled) {
+            Form {
+                List(self.mapLayers.layers.filter({$0.themeID == self.mapThemeID})) { layer in
+                    Toggle(isOn: layer.isToggled) {
                         HStack {
-                            self.mapLayers[index].image
+                            layer.image
                                 .clipShape(Circle())
-                            Text(self.mapLayers[index].name)
+                            Text(layer.name)
                         }
                     }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
                 }
             }
-//            .background(.thinMaterial)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
@@ -64,6 +65,7 @@ struct MalinkiMapContent: View {
 @available(iOS 15.0, *)
 struct MalinkiMapContent_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapContent(mapLayers: .constant([MalinkiMapLayer(id: 0, name: "Test", imageName: "cloud.moon.fill"), MalinkiMapLayer(id: 1, name: "Test2", imageName: "cloud.bolt.fill")]), showMapContentSheet: .constant(true))
+        MalinkiMapContent(showMapContentSheet: .constant(true), mapThemeID: 0)
+            .environmentObject(MalinkiLayers(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
     }
 }

@@ -18,17 +18,15 @@ struct MalinkiMap: View {
     @State private var showMapContentSheet: Bool = false
     @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfBasemapOnStartUp()
     @State private var mapThemeID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp()
-    @State private var mapLayers: [MalinkiMapLayer] = MalinkiConfigurationProvider.sharedInstance.getMapLayers(of: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
-    
-    private var isSheetOpen: Bool {
-        return self.showMapContentSheet == true || self.showBasemapsSheet == true
-    }
+//    @State private var mapLayers: [MalinkiMapLayer] = MalinkiConfigurationProvider.sharedInstance.getMapLayers(of: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
+    @StateObject var mapLayers: MalinkiLayers = MalinkiLayers(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray())
     
     @available(iOS 15.0, *)
     var body: some View {
         
         ZStack {
-            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers)
+            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID)
+                .environmentObject(self.mapLayers)
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -38,7 +36,7 @@ struct MalinkiMap: View {
                     Spacer()
                     
                     VStack {
-                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, mapLayers: self.$mapLayers, showBasemapsSheet: self.$showBasemapsSheet)
+                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, showBasemapsSheet: self.$showBasemapsSheet)
                             .frame(width: 50, height: 40, alignment: .center)
                             .padding(.top, 10.0)
                         
@@ -58,8 +56,10 @@ struct MalinkiMap: View {
             }
         }.background(EmptyView().adaptiveSheet(isPresented: self.$showBasemapsSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
             MalinkiBasemaps(basemapID: self.$basemapID, showBasemapsSheet: self.$showBasemapsSheet)
+                .environmentObject(self.mapLayers)
         }.background(EmptyView().adaptiveSheet(isPresented: self.$showMapContentSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
-            MalinkiMapContent(mapLayers: self.$mapLayers, showMapContentSheet: self.$showMapContentSheet)
+            MalinkiMapContent(showMapContentSheet: self.$showMapContentSheet, mapThemeID: self.mapThemeID)
+                .environmentObject(self.mapLayers)
         }))
     }
 }
