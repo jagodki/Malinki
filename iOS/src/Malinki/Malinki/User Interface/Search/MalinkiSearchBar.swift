@@ -6,12 +6,10 @@
 //
 
 import SwiftUI
-import BottomSheet
 
 /// A structure to present a SearchBar written in pure SwiftUI for integration into a BottomSheet.
 struct MalinkiSearchBar: View {
     
-    @Binding private var bottomSheetPosition: BottomSheetPosition
     @Binding private var searchText: String
     @Binding private var isEditing: Bool
     
@@ -20,9 +18,8 @@ struct MalinkiSearchBar: View {
     ///   - bottomSheetPosition: a binding to the position of the BottomSheet where the SearchBar is located in
     ///   - searchText: a binding to the text presented in the SearchBar
     ///   - isEditing: a binding to a Bool, if the SearchBar is in editing mode
-    init(bottomSheetPosition: Binding<BottomSheetPosition>, searchText: Binding<String>, isEditing: Binding<Bool>) {
+    init(searchText: Binding<String>, isEditing: Binding<Bool>) {
         self._searchText = searchText
-        self._bottomSheetPosition = bottomSheetPosition
         self._isEditing = isEditing
     }
     
@@ -49,7 +46,6 @@ struct MalinkiSearchBar: View {
             .padding(.bottom)
             //When you tap the SearchBar, the BottomSheet moves to the .top position to make room for the keyboard.
             .onTapGesture {
-                self.bottomSheetPosition = .top
                 self.isEditing = true
             }
 
@@ -57,7 +53,6 @@ struct MalinkiSearchBar: View {
                 Button(action: {
                     self.isEditing = false
                     self.searchText = ""
-                    self.bottomSheetPosition = .middle
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
 
                 }) {
@@ -74,6 +69,6 @@ struct MalinkiSearchBar: View {
 
 struct MalinkiSearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiSearchBar(bottomSheetPosition: .constant(BottomSheetPosition.middle), searchText: .constant(""), isEditing: .constant(true))
+        MalinkiSearchBar(searchText: .constant(""), isEditing: .constant(true))
     }
 }
