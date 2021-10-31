@@ -10,17 +10,12 @@ import SwiftUI
 struct MalinkiMapThemes: View {
     
     @Binding private var mapThemeID: Int
-    @Binding private var mapLayers: [MalinkiMapLayer]
     @Binding private var showBasemapsSheet: Bool
     
-    init(mapThemeID: Binding<Int>, mapLayers: Binding<[MalinkiMapLayer]>, showBasemapsSheet: Binding<Bool>) {
+    init(mapThemeID: Binding<Int>, showBasemapsSheet: Binding<Bool>) {
         self._mapThemeID = mapThemeID
-        self._mapLayers = mapLayers
         self._showBasemapsSheet = showBasemapsSheet
     }
-    
-//    var columns: [GridItem] =
-//        Array(repeating: .init(.flexible()), count: MalinkiConfigurationProvider.sharedInstance.getMapThemes().count)
     
     var body: some View {
         
@@ -46,15 +41,13 @@ struct MalinkiMapThemes: View {
             Image(systemName: "map.fill")
                 .padding(.all, 10.0)
                 .foregroundColor(Color.primary)
-//                .background(Color(UIColor.systemGray3).opacity(0.75))
                 .font(.title)
-//                .cornerRadius(10)
         }
     }
 }
 
 struct MalinkiMapThemes_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapThemes(mapThemeID: .constant(0), mapLayers: .constant([]), showBasemapsSheet: .constant(false))
+        MalinkiMapThemes(mapThemeID: .constant(0), showBasemapsSheet: .constant(false))
     }
 }
