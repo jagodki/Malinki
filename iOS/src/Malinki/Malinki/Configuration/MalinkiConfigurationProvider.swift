@@ -95,22 +95,22 @@ class MalinkiConfigurationProvider {
     /// This function returns an array of all layers of the given map theme.
     /// - Parameter mapTheme: the id of the map theme
     /// - Returns: an array of MalinkiMapLayer with all layers of the given map theme
-    func getMapLayers(of mapTheme: Int) -> [MalinkiMapLayer] {
-        var mapLayers: [MalinkiMapLayer] = []
-        mapLayers.append(contentsOf: self.getRasterLayers(of: mapTheme).map({MalinkiMapLayer(id: $0.id, name: $0.externalNames.en, imageName: $0.imageName, themeID: mapTheme)}))
+    func getMapLayers(of mapTheme: Int) -> [MalinkiLayer] {
+        var mapLayers: [MalinkiLayer] = []
+        mapLayers.append(contentsOf: self.getRasterLayers(of: mapTheme).map({MalinkiLayer(id: $0.id, name: $0.externalNames.en, imageName: $0.imageName, themeID: mapTheme)}))
         return mapLayers
     }
     
     /// This function returns a dictionary of all layers.
     /// The ID of the map themes are the keys, the correspdoning map layers as an array are the values.
     /// - Returns: a dictionary containing all layers and their corresponding map themes
-    func getAllMapLayersDictionary() -> [Int: [MalinkiMapLayer]] {
-        var mapLayers: [Int: [MalinkiMapLayer]] = [:]
+    func getAllMapLayersDictionary() -> [Int: [MalinkiLayer]] {
+        var mapLayers: [Int: [MalinkiLayer]] = [:]
         mapLayers = self.getMapThemes().map({$0.id}).reduce(into: [:], {result, next in result[next] = self.getMapLayers(of: next)})
         return mapLayers
     }
     
-    func getAllMapLayersArray() -> [MalinkiMapLayer] {
+    func getAllMapLayersArray() -> [MalinkiLayer] {
         let layers = self.getAllMapLayersDictionary().map({$0.value})
         return layers.flatMap({$0})
     }

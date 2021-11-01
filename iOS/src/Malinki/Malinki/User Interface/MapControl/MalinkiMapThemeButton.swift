@@ -11,7 +11,7 @@ import SwiftUI
 struct MalinkiMapThemeButton: View {
     
     @Binding private var toggledMapThemeID: Int
-    @Binding private var mapLayers: [MalinkiMapLayer]
+    @Binding private var mapLayers: [MalinkiLayer]
     private var id: Int
     private var imageName: String
     private var colour: Color
@@ -24,7 +24,7 @@ struct MalinkiMapThemeButton: View {
     ///   - toggledMapThemeID: a binding indicating the toggled map theme
     ///   - themeName: the name of the theme, presented at the bottom of the button
     ///   - id: the id of the current map theme
-    init(imageName: String, colour: Color, toggledMapThemeID: Binding<Int>, themeName: String, id: Int, mapLayers: Binding<[MalinkiMapLayer]>) {
+    init(imageName: String, colour: Color, toggledMapThemeID: Binding<Int>, themeName: String, id: Int, mapLayers: Binding<[MalinkiLayer]>) {
         self.imageName = imageName
         self.colour = colour
         self._toggledMapThemeID = toggledMapThemeID

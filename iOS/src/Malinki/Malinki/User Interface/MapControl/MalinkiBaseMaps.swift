@@ -12,14 +12,14 @@ import SwiftUI
 struct MalinkiBasemaps: View {
     
     @Binding private var basemapID: Int
-    @Binding private var showBasemapsSheet: Bool
+    @Binding private var sheetState: MalinkiSheet.State?
     
     /// The initialiser of this structure.
     /// - Parameter basemapID: a binding containing the id of the toggled basemap
     /// - Parameter showBasemapsSheet: a binding to close the basemap sheet
-    init(basemapID: Binding<Int>, showBasemapsSheet: Binding<Bool>) {
+    init(basemapID: Binding<Int>, sheetState: Binding<MalinkiSheet.State?>) {
         self._basemapID = basemapID
-        self._showBasemapsSheet = showBasemapsSheet
+        self._sheetState = sheetState
     }
     
     /// The columns for creating a lazy grid.
@@ -47,7 +47,7 @@ struct MalinkiBasemaps: View {
                         
                         Spacer()
                         
-                        Button(action: {self.showBasemapsSheet = false}) {
+                        Button(action: {self.sheetState = nil}) {
                             Image(systemName: "xmark.circle.fill")
                                 .padding(.trailing)
                                 .foregroundColor(Color.secondary)
@@ -63,6 +63,6 @@ struct MalinkiBasemaps: View {
 @available(iOS 15.0, *)
 struct MalinkiButtonGroup_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiBasemaps(basemapID: .constant(0), showBasemapsSheet: .constant(true))
+        MalinkiBasemaps(basemapID: .constant(0), sheetState: .constant(MalinkiSheet.State?.none))
     }
 }

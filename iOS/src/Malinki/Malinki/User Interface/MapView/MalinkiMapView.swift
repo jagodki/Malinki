@@ -13,7 +13,7 @@ struct MalinkiMapView: UIViewRepresentable {
     
     @Binding private var basemapID: Int
     @Binding private var mapThemeID: Int
-    @EnvironmentObject var mapLayers: MalinkiLayers
+    @EnvironmentObject var mapLayers: MalinkiLayerContainer
     
     init(basemapID: Binding<Int>, mapThemeID: Binding<Int>) {
         self._basemapID = basemapID
@@ -75,7 +75,7 @@ struct MalinkiMapView: UIViewRepresentable {
         }
         
         //add raster layers from the map theme
-        for rasterLayer in self.mapLayers.layers.filter({$0.themeID == self.mapThemeID}).sorted(by: {$0.id < $1.id}) {
+        for rasterLayer in self.mapLayers.rasterLayers.filter({$0.themeID == self.mapThemeID}).sorted(by: {$0.id < $1.id}) {
             //che(ck the visibility of the current layer
             if rasterLayer.isToggled {
                 //get a layer according to the data source
@@ -175,6 +175,6 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0))
-            .environmentObject(MalinkiLayers(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
+            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
     }
 }

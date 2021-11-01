@@ -11,16 +11,15 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct MalinkiMapContent: View {
     
-    //    @Binding private var mapLayers: [Int: [MalinkiMapLayer]]
-    @EnvironmentObject var mapLayers: MalinkiLayers
-    @Binding private var showMapContentSheet: Bool
+    @EnvironmentObject var mapLayers: MalinkiLayerContainer
+    @Binding private var sheetState: MalinkiSheet.State?
     @Binding private var mapThemeID: Int
     
     /// The initialiser of this sctructure.
     /// - Parameter mapLayers: a dictionary of map layers, that should be presented in a list
     /// - Parameter mapThemeID: the ID of the current map theme
-    init(showMapContentSheet: Binding<Bool>, mapThemeID: Binding<Int>) {
-        self._showMapContentSheet = showMapContentSheet
+    init(sheetState: Binding<MalinkiSheet.State?>, mapThemeID: Binding<Int>) {
+        self._sheetState = sheetState
         self._mapThemeID = mapThemeID
     }
     
@@ -28,7 +27,7 @@ struct MalinkiMapContent: View {
         
         NavigationView {
             Form {
-                List(self.$mapLayers.layers.filter({$0.themeID.wrappedValue == self.mapThemeID})) { $layer in
+                List(self.$mapLayers.rasterLayers.filter({$0.themeID.wrappedValue == self.mapThemeID})) { $layer in
                     Toggle(isOn: $layer.isToggled) {
                         HStack {
                             layer.image
@@ -48,7 +47,7 @@ struct MalinkiMapContent: View {
                         
                         Spacer()
                         
-                        Button(action: {self.showMapContentSheet = false}) {
+                        Button(action: {self.sheetState = nil}) {
                             Image(systemName: "xmark.circle.fill")
                                 .padding(.trailing)
                                 .foregroundColor(Color.secondary)
@@ -65,7 +64,7 @@ struct MalinkiMapContent: View {
 @available(iOS 15.0, *)
 struct MalinkiMapContent_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapContent(showMapContentSheet: .constant(true), mapThemeID: .constant(0))
-            .environmentObject(MalinkiLayers(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
+        MalinkiMapContent(sheetState: .constant(MalinkiSheet.State?.none), mapThemeID: .constant(0))
+            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
     }
 }

@@ -10,11 +10,11 @@ import SwiftUI
 struct MalinkiMapThemes: View {
     
     @Binding private var mapThemeID: Int
-    @Binding private var showBasemapsSheet: Bool
+    @Binding private var sheetState: MalinkiSheet.State?
     
-    init(mapThemeID: Binding<Int>, showBasemapsSheet: Binding<Bool>) {
+    init(mapThemeID: Binding<Int>, sheetState: Binding<MalinkiSheet.State?>) {
         self._mapThemeID = mapThemeID
-        self._showBasemapsSheet = showBasemapsSheet
+        self._sheetState = sheetState
     }
     
     var body: some View {
@@ -32,7 +32,7 @@ struct MalinkiMapThemes: View {
             }
             
             Button(action: {
-                self.showBasemapsSheet = true
+                self.sheetState = .basemaps
             }) {
                 Text(LocalizedStringKey("Basemaps"))
                 Image(systemName: "square.2.stack.3d.bottom.filled")
@@ -48,6 +48,6 @@ struct MalinkiMapThemes: View {
 
 struct MalinkiMapThemes_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapThemes(mapThemeID: .constant(0), showBasemapsSheet: .constant(false))
+        MalinkiMapThemes(mapThemeID: .constant(0), sheetState: .constant(MalinkiSheet.State?.none))
     }
 }

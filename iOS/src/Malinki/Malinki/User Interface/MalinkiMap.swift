@@ -11,15 +11,12 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct MalinkiMap: View {
     
-    //    @State private var bottomSheetPosition: BottomSheetPosition = .bottom
     @State private var searchText: String = ""
     @State private var isEditing: Bool = false
-    @State private var showBasemapsSheet: Bool = false
-    @State private var showMapContentSheet: Bool = false
     @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfBasemapOnStartUp()
     @State private var mapThemeID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp()
-//    @State private var mapLayers: [MalinkiMapLayer] = MalinkiConfigurationProvider.sharedInstance.getMapLayers(of: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
-    @StateObject var mapLayers: MalinkiLayers = MalinkiLayers(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray())
+    @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray())
+    @ObservedObject var sheet: MalinkiSheet = MalinkiSheet()
     
     @available(iOS 15.0, *)
     var body: some View {
@@ -36,14 +33,14 @@ struct MalinkiMap: View {
                     Spacer()
                     
                     VStack {
-                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, showBasemapsSheet: self.$showBasemapsSheet)
+                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, sheetState: self.$sheet.state)
                             .frame(width: 50, height: 40, alignment: .center)
                             .padding(.top, 10.0)
                         
                         Divider()
                             .frame(width: 50, height: 10, alignment: .center)
                         
-                        MalinkiMapContentButton(showMapContentSheet: self.$showMapContentSheet)
+                        MalinkiMapContentButton(sheetState: self.$sheet.state)
                             .frame(width: 50, height: 40, alignment: .center)
                             .padding(.bottom, 10.0)
                     }
@@ -54,13 +51,30 @@ struct MalinkiMap: View {
                 }
                 
             }
-        }.background(EmptyView().adaptiveSheet(isPresented: self.$showBasemapsSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
-            MalinkiBasemaps(basemapID: self.$basemapID, showBasemapsSheet: self.$showBasemapsSheet)
+        }
+        .sheet(isPresented: self.$sheet.isShowing, onDismiss: {self.sheet.state = nil}, content: {self.sheetContent()})
+//        .adaptiveSheet(isPresented: self.$sheet.isShowing, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
+//            self.sheetContent()
+//        }
+//        .background(EmptyView().adaptiveSheet(isPresented: self.$sheet.isShowing, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
+//            self.sheetContent()
+//        })
+    }
+    
+    @ViewBuilder
+    private func sheetContent() -> some View {
+        switch self.sheet.state {
+        case .basemaps:
+            MalinkiBasemaps(basemapID: self.$basemapID, sheetState: self.$sheet.state)
                 .environmentObject(self.mapLayers)
-        }.background(EmptyView().adaptiveSheet(isPresented: self.$showMapContentSheet, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
-            MalinkiMapContent(showMapContentSheet: self.$showMapContentSheet, mapThemeID: self.$mapThemeID)
+        case .layers:
+            MalinkiMapContent(sheetState: self.$sheet.state, mapThemeID: self.$mapThemeID)
                 .environmentObject(self.mapLayers)
-        }))
+        case .details:
+            EmptyView()
+        default:
+            EmptyView()
+        }
     }
 }
 
