@@ -117,7 +117,7 @@
                 "vectorLayers": "",
                 "rasterLayers": [
                     {
-                        "id": 1,
+                        "id": 0,
                         "internalName": "relief",
                         "externalNames": {
                             "en": "Relief",
@@ -143,8 +143,8 @@
                         "opacity": 1.0
                     },
                     {
-                        "id": 0,
-                        "internalName": "relief",
+                        "id": 1,
+                        "internalName": "cities",
                         "externalNames": {
                             "en": "Cities",
                             "de": "Städte",
