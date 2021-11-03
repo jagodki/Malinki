@@ -9,9 +9,9 @@ import SwiftUI
 
 struct MalinkiMapContentButton: View {
     
-    @Binding private var sheetState: MalinkiSheet.State?
+    @Binding private var sheetState: MalinkiSheetState?
     
-    init(sheetState: Binding<MalinkiSheet.State?>) {
+    init(sheetState: Binding<MalinkiSheetState?>) {
         self._sheetState = sheetState
     }
     
@@ -31,6 +31,6 @@ struct MalinkiMapContentButton: View {
 
 struct MalinkiMapContentButton_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapContentButton(sheetState: .constant(MalinkiSheet.State?.none))
+        MalinkiMapContentButton(sheetState: .constant(.layers))
     }
 }

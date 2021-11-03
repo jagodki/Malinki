@@ -12,15 +12,15 @@ import SwiftUI
 struct MalinkiMapContent: View {
     
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
-    @Binding private var sheetState: MalinkiSheet.State?
     @Binding private var mapThemeID: Int
+    @Binding private var isSheetShowing: Bool
     
     /// The initialiser of this sctructure.
     /// - Parameter mapLayers: a dictionary of map layers, that should be presented in a list
     /// - Parameter mapThemeID: the ID of the current map theme
-    init(sheetState: Binding<MalinkiSheet.State?>, mapThemeID: Binding<Int>) {
-        self._sheetState = sheetState
+    init(mapThemeID: Binding<Int>, isSheetShowing: Binding<Bool>) {
         self._mapThemeID = mapThemeID
+        self._isSheetShowing = isSheetShowing
     }
     
     var body: some View {
@@ -47,7 +47,9 @@ struct MalinkiMapContent: View {
                         
                         Spacer()
                         
-                        Button(action: {self.sheetState = nil}) {
+                        Button(action: {
+                            self.isSheetShowing = false
+                        }) {
                             Image(systemName: "xmark.circle.fill")
                                 .padding(.trailing)
                                 .foregroundColor(Color.secondary)
@@ -64,7 +66,7 @@ struct MalinkiMapContent: View {
 @available(iOS 15.0, *)
 struct MalinkiMapContent_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapContent(sheetState: .constant(MalinkiSheet.State?.none), mapThemeID: .constant(0))
+        MalinkiMapContent(mapThemeID: .constant(0), isSheetShowing: .constant(false))
             .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-//import BottomSheet
+import SheeKit
 
 @available(iOS 15.0, *)
 struct MalinkiMap: View {
@@ -16,7 +16,7 @@ struct MalinkiMap: View {
     @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfBasemapOnStartUp()
     @State private var mapThemeID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp()
     @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray())
-    @ObservedObject var sheet: MalinkiSheet = MalinkiSheet()
+    @StateObject private var sheet: MalinkiSheet = MalinkiSheet()
     
     @available(iOS 15.0, *)
     var body: some View {
@@ -52,23 +52,17 @@ struct MalinkiMap: View {
                 
             }
         }
-        .sheet(isPresented: self.$sheet.isShowing, onDismiss: {self.sheet.state = nil}, content: {self.sheetContent()})
-//        .adaptiveSheet(isPresented: self.$sheet.isShowing, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
-//            self.sheetContent()
-//        }
-//        .background(EmptyView().adaptiveSheet(isPresented: self.$sheet.isShowing, detents: [.medium(), .large()], smallestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false) {
-//            self.sheetContent()
-//        })
+        .shee(isPresented: self.$sheet.isShowing, presentationStyle: .formSheet(properties: SheetProperties(prefersEdgeAttachedInCompactHeight: true, prefersGrabberVisible: true, detents: [.medium(), .large()], largestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false)), content: {self.sheetContent()})
     }
     
     @ViewBuilder
     private func sheetContent() -> some View {
         switch self.sheet.state {
         case .basemaps:
-            MalinkiBasemaps(basemapID: self.$basemapID, sheetState: self.$sheet.state)
+            MalinkiBasemaps(basemapID: self.$basemapID, isSheetShowing: self.$sheet.isShowing)
                 .environmentObject(self.mapLayers)
         case .layers:
-            MalinkiMapContent(sheetState: self.$sheet.state, mapThemeID: self.$mapThemeID)
+            MalinkiMapContent(mapThemeID: self.$mapThemeID, isSheetShowing: self.$sheet.isShowing)
                 .environmentObject(self.mapLayers)
         case .details:
             EmptyView()

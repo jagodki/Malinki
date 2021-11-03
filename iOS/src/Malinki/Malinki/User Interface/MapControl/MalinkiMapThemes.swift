@@ -10,9 +10,9 @@ import SwiftUI
 struct MalinkiMapThemes: View {
     
     @Binding private var mapThemeID: Int
-    @Binding private var sheetState: MalinkiSheet.State?
+    @Binding private var sheetState: MalinkiSheetState?
     
-    init(mapThemeID: Binding<Int>, sheetState: Binding<MalinkiSheet.State?>) {
+    init(mapThemeID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
         self._mapThemeID = mapThemeID
         self._sheetState = sheetState
     }
@@ -48,6 +48,6 @@ struct MalinkiMapThemes: View {
 
 struct MalinkiMapThemes_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapThemes(mapThemeID: .constant(0), sheetState: .constant(MalinkiSheet.State?.none))
+        MalinkiMapThemes(mapThemeID: .constant(0), sheetState: .constant(.basemaps))
     }
 }
