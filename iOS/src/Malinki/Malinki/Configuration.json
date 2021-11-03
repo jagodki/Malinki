@@ -140,7 +140,7 @@
                             "apple": false
                         },
                         "imageName": "waveform",
-                        "opacity": 1.0
+                        "opacity": 0.75
                     },
                     {
                         "id": 1,
@@ -166,7 +166,7 @@
                             "apple": false
                         },
                         "imageName": "mappin",
-                        "opacity": 0.8
+                        "opacity": 1.0
                     }
                 ]
             }
