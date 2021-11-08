@@ -11,15 +11,16 @@
 		CE085B2F26D41878005D7453 /* MalinkiWMSOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085B2E26D41878005D7453 /* MalinkiWMSOverlay.swift */; };
 		CE085B3226D41E17005D7453 /* MalinkiRasterData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE085B3126D41E17005D7453 /* MalinkiRasterData.swift */; };
 		CE09C10E26BC5ECE0077177F /* MalinkiBasemapButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE09C10D26BC5ECE0077177F /* MalinkiBasemapButton.swift */; };
+		CE0FC2182739718500846042 /* SheeKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE0FC2172739718500846042 /* SheeKit */; };
 		CE10D500272AB3590025084A /* MalinkiLayerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10D4FF272AB3590025084A /* MalinkiLayerContainer.swift */; };
 		CE2299D2268D00B4002B16EA /* MalinkiMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */; };
 		CE2299D4268D00EC002B16EA /* MalinkiMapControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */; };
-		CE26379727331DFF00679F0B /* SheeKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE26379627331DFF00679F0B /* SheeKit */; };
 		CE2A348326977693009E4148 /* MalinkiBasemaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2A348226977693009E4148 /* MalinkiBasemaps.swift */; };
 		CE2D6EEA2731E333001F5E67 /* MalinkiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D6EE92731E333001F5E67 /* MalinkiSheet.swift */; };
 		CE44B0AD26C985FC00298DC3 /* MalinkiConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B0AC26C985FC00298DC3 /* MalinkiConfigurationProvider.swift */; };
 		CE44B0AF26C9867700298DC3 /* MalinkiConfigurationObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B0AE26C9867700298DC3 /* MalinkiConfigurationObjects.swift */; };
 		CE47C2E02721EF9D00034C38 /* MalinkiMapContentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47C2DF2721EF9D00034C38 /* MalinkiMapContentButton.swift */; };
+		CE4845CA273972AE00E3AC72 /* SheeKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = CE0FC2172739718500846042 /* SheeKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE582BA026B1E64800BAA289 /* MalinkiMapThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE582B9F26B1E64800BAA289 /* MalinkiMapThemeButton.swift */; };
 		CE5B566A26C458B6008EA9BE /* MalinkiMapThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B566926C458B6008EA9BE /* MalinkiMapThemes.swift */; };
 		CE8695D626FBAA8100A0A916 /* MalinkiWMTSOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8695D526FBAA8100A0A916 /* MalinkiWMTSOverlay.swift */; };
@@ -35,6 +36,20 @@
 		CEE9EA7126CC49C00025AF80 /* Configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = CE582B9D26B1E2C100BAA289 /* Configuration.json */; };
 		CEF570E626E69D8F0038B00D /* MalinkiTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF570E526E69D8F0038B00D /* MalinkiTileOverlay.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CE4845CB273972AE00E3AC72 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CE4845CA273972AE00E3AC72 /* SheeKit in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CE0736A4269649DB00490383 /* MalinkiMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMap.swift; sourceTree = "<group>"; };
@@ -72,13 +87,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE26379727331DFF00679F0B /* SheeKit in Frameworks */,
+				CE0FC2182739718500846042 /* SheeKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE00616627387F7500155A9A /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		CE085B3026D41B4B005D7453 /* RasterData */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +194,7 @@
 		CEC9FB40268A4445005882E7 = {
 			isa = PBXGroup;
 			children = (
+				CE00616627387F7500155A9A /* Packages */,
 				CEC9FB4B268A4445005882E7 /* Malinki */,
 				CEC9FB4A268A4445005882E7 /* Products */,
 			);
@@ -219,6 +242,7 @@
 				CEC9FB45268A4445005882E7 /* Sources */,
 				CEC9FB46268A4445005882E7 /* Frameworks */,
 				CEC9FB47268A4445005882E7 /* Resources */,
+				CE4845CB273972AE00E3AC72 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -226,7 +250,7 @@
 			);
 			name = Malinki;
 			packageProductDependencies = (
-				CE26379627331DFF00679F0B /* SheeKit */,
+				CE0FC2172739718500846042 /* SheeKit */,
 			);
 			productName = Malinki;
 			productReference = CEC9FB49268A4445005882E7 /* Malinki.app */;
@@ -260,7 +284,7 @@
 			);
 			mainGroup = CEC9FB40268A4445005882E7;
 			packageReferences = (
-				CE26379527331DFF00679F0B /* XCRemoteSwiftPackageReference "SheeKit" */,
+				CE0FC2162739718500846042 /* XCRemoteSwiftPackageReference "SheeKit" */,
 			);
 			productRefGroup = CEC9FB4A268A4445005882E7 /* Products */;
 			projectDirPath = "";
@@ -502,20 +526,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CE26379527331DFF00679F0B /* XCRemoteSwiftPackageReference "SheeKit" */ = {
+		CE0FC2162739718500846042 /* XCRemoteSwiftPackageReference "SheeKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/edudnyk/SheeKit.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.3;
+				kind = exactVersion;
+				version = 0.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CE26379627331DFF00679F0B /* SheeKit */ = {
+		CE0FC2172739718500846042 /* SheeKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = CE26379527331DFF00679F0B /* XCRemoteSwiftPackageReference "SheeKit" */;
+			package = CE0FC2162739718500846042 /* XCRemoteSwiftPackageReference "SheeKit" */;
 			productName = SheeKit;
 		};
 /* End XCSwiftPackageProductDependency section */
