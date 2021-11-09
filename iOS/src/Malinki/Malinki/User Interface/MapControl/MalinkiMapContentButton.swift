@@ -7,10 +7,13 @@
 
 import SwiftUI
 
+/// A structure with a button to show all layers/the map content.
 struct MalinkiMapContentButton: View {
     
     @Binding private var sheetState: MalinkiSheetState?
     
+    /// The initialiser of the struct.
+    /// - Parameter sheetState: a binding of the sheet state
     init(sheetState: Binding<MalinkiSheetState?>) {
         self._sheetState = sheetState
     }

@@ -14,14 +14,12 @@
 		CE0FC2182739718500846042 /* SheeKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE0FC2172739718500846042 /* SheeKit */; };
 		CE10D500272AB3590025084A /* MalinkiLayerContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE10D4FF272AB3590025084A /* MalinkiLayerContainer.swift */; };
 		CE2299D2268D00B4002B16EA /* MalinkiMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */; };
-		CE2299D4268D00EC002B16EA /* MalinkiMapControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */; };
 		CE2A348326977693009E4148 /* MalinkiBasemaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2A348226977693009E4148 /* MalinkiBasemaps.swift */; };
 		CE2D6EEA2731E333001F5E67 /* MalinkiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D6EE92731E333001F5E67 /* MalinkiSheet.swift */; };
 		CE44B0AD26C985FC00298DC3 /* MalinkiConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B0AC26C985FC00298DC3 /* MalinkiConfigurationProvider.swift */; };
 		CE44B0AF26C9867700298DC3 /* MalinkiConfigurationObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B0AE26C9867700298DC3 /* MalinkiConfigurationObjects.swift */; };
 		CE47C2E02721EF9D00034C38 /* MalinkiMapContentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47C2DF2721EF9D00034C38 /* MalinkiMapContentButton.swift */; };
 		CE4845CA273972AE00E3AC72 /* SheeKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = CE0FC2172739718500846042 /* SheeKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CE582BA026B1E64800BAA289 /* MalinkiMapThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE582B9F26B1E64800BAA289 /* MalinkiMapThemeButton.swift */; };
 		CE5B566A26C458B6008EA9BE /* MalinkiMapThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B566926C458B6008EA9BE /* MalinkiMapThemes.swift */; };
 		CE8695D626FBAA8100A0A916 /* MalinkiWMTSOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8695D526FBAA8100A0A916 /* MalinkiWMTSOverlay.swift */; };
 		CEB0B3F026C1A44500D15866 /* MalinkiMapContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0B3EF26C1A44500D15866 /* MalinkiMapContent.swift */; };
@@ -58,14 +56,12 @@
 		CE09C10D26BC5ECE0077177F /* MalinkiBasemapButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiBasemapButton.swift; sourceTree = "<group>"; };
 		CE10D4FF272AB3590025084A /* MalinkiLayerContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiLayerContainer.swift; sourceTree = "<group>"; };
 		CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapView.swift; sourceTree = "<group>"; };
-		CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapControl.swift; sourceTree = "<group>"; };
 		CE2A348226977693009E4148 /* MalinkiBasemaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiBasemaps.swift; sourceTree = "<group>"; };
 		CE2D6EE92731E333001F5E67 /* MalinkiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSheet.swift; sourceTree = "<group>"; };
 		CE44B0AC26C985FC00298DC3 /* MalinkiConfigurationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiConfigurationProvider.swift; sourceTree = "<group>"; };
 		CE44B0AE26C9867700298DC3 /* MalinkiConfigurationObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiConfigurationObjects.swift; sourceTree = "<group>"; };
 		CE47C2DF2721EF9D00034C38 /* MalinkiMapContentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapContentButton.swift; sourceTree = "<group>"; };
 		CE582B9D26B1E2C100BAA289 /* Configuration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Configuration.json; sourceTree = "<group>"; };
-		CE582B9F26B1E64800BAA289 /* MalinkiMapThemeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapThemeButton.swift; sourceTree = "<group>"; };
 		CE5B566926C458B6008EA9BE /* MalinkiMapThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapThemes.swift; sourceTree = "<group>"; };
 		CE8695D526FBAA8100A0A916 /* MalinkiWMTSOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiWMTSOverlay.swift; sourceTree = "<group>"; };
 		CEB0B3EF26C1A44500D15866 /* MalinkiMapContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapContent.swift; sourceTree = "<group>"; };
@@ -154,8 +150,6 @@
 		CE5A7B7526B1D62C00D423E9 /* MapControl */ = {
 			isa = PBXGroup;
 			children = (
-				CE2299D3268D00EC002B16EA /* MalinkiMapControl.swift */,
-				CE582B9F26B1E64800BAA289 /* MalinkiMapThemeButton.swift */,
 				CE5B566926C458B6008EA9BE /* MalinkiMapThemes.swift */,
 				CE09C10D26BC5ECE0077177F /* MalinkiBasemapButton.swift */,
 				CE2A348226977693009E4148 /* MalinkiBasemaps.swift */,
@@ -317,14 +311,12 @@
 				CE2299D2268D00B4002B16EA /* MalinkiMapView.swift in Sources */,
 				CEB0B3F026C1A44500D15866 /* MalinkiMapContent.swift in Sources */,
 				CE2A348326977693009E4148 /* MalinkiBasemaps.swift in Sources */,
-				CE582BA026B1E64800BAA289 /* MalinkiMapThemeButton.swift in Sources */,
 				CE2D6EEA2731E333001F5E67 /* MalinkiSheet.swift in Sources */,
 				CE5B566A26C458B6008EA9BE /* MalinkiMapThemes.swift in Sources */,
 				CEB0B3F226C1A50600D15866 /* MalinkiLayer.swift in Sources */,
 				CEF570E626E69D8F0038B00D /* MalinkiTileOverlay.swift in Sources */,
 				CEC9FB4F268A4445005882E7 /* ContentView.swift in Sources */,
 				CE10D500272AB3590025084A /* MalinkiLayerContainer.swift in Sources */,
-				CE2299D4268D00EC002B16EA /* MalinkiMapControl.swift in Sources */,
 				CE0736A5269649DB00490383 /* MalinkiMap.swift in Sources */,
 				CEB2A15D26AF40C9002F2D52 /* MalinkiSearchBar.swift in Sources */,
 				CE47C2E02721EF9D00034C38 /* MalinkiMapContentButton.swift in Sources */,

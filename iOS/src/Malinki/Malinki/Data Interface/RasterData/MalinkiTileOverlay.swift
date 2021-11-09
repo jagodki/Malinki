@@ -16,11 +16,16 @@ extension String {
     }
 }
 
+/// A class for loading a TMS as a MKTileOverlay.
 public class MalinkiTileOverlay: MKTileOverlay {
     
     private let TILE_CACHE = "TILE_CACHE"
     var alpha: CGFloat = 1.0
     
+    /// The initialiser of this class.
+    /// - Parameters:
+    ///   - urlTemplate: the url of the services with placeholders
+    ///   - alpha: the opacity of the received image for displaying
     init(urlTemplate: String?, alpha: CGFloat = 1.0) {
         self.alpha = alpha
         super.init(urlTemplate: urlTemplate)

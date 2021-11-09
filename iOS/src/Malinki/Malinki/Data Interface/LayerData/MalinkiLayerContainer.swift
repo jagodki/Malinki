@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// An observable class containing map layers as a published array.
 final class MalinkiLayerContainer: ObservableObject {
     
     @Published var rasterLayers: [MalinkiLayer]

@@ -7,11 +7,16 @@
 
 import SwiftUI
 
+/// A struct to display a button for choosing the map themes.
 struct MalinkiMapThemes: View {
     
     @Binding private var mapThemeID: Int
     @Binding private var sheetState: MalinkiSheetState?
     
+    /// The initialiser of this struct.
+    /// - Parameters:
+    ///   - mapThemeID: a binding indicating the current map theme
+    ///   - sheetState: a binding of the sheet state
     init(mapThemeID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
         self._mapThemeID = mapThemeID
         self._sheetState = sheetState

@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+/// A class to store the state of a sheet.
 class MalinkiSheet: ObservableObject {
     @Published var isShowing: Bool = false
     @Published var state: MalinkiSheetState? = nil {
@@ -17,6 +18,7 @@ class MalinkiSheet: ObservableObject {
     }
 }
 
+/// An enum with all states a sheet can have.
 enum MalinkiSheetState {
     case basemaps
     case layers

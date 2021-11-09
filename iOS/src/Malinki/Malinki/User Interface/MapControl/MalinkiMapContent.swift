@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// A structure to present the show and control the map content/layers.
+/// A structure to present and control the map content/layers.
 @available(iOS 15.0, *)
 struct MalinkiMapContent: View {
     
@@ -16,8 +16,8 @@ struct MalinkiMapContent: View {
     @Binding private var isSheetShowing: Bool
     
     /// The initialiser of this sctructure.
-    /// - Parameter mapLayers: a dictionary of map layers, that should be presented in a list
-    /// - Parameter mapThemeID: the ID of the current map theme
+    /// - Parameter mapThemeID: the ID of the current map theme as binding
+    /// - Parameter isSheetShowing: a binding to control the presentation of a sheet
     init(mapThemeID: Binding<Int>, isSheetShowing: Binding<Bool>) {
         self._mapThemeID = mapThemeID
         self._isSheetShowing = isSheetShowing
