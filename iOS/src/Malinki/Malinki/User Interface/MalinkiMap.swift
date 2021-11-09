@@ -34,14 +34,14 @@ struct MalinkiMap: View {
                     
                     VStack {
                         MalinkiMapThemes(mapThemeID: self.$mapThemeID, sheetState: self.$sheet.state)
-                            .frame(width: 50, height: 40, alignment: .center)
+                            .frame(width: 40, height: 30, alignment: .center)
                             .padding(.top, 10.0)
                         
                         Divider()
                             .frame(width: 50, height: 10, alignment: .center)
                         
                         MalinkiMapContentButton(sheetState: self.$sheet.state)
-                            .frame(width: 50, height: 40, alignment: .center)
+                            .frame(width: 40, height: 30, alignment: .center)
                             .padding(.bottom, 10.0)
                     }
                     .background(.regularMaterial)

@@ -40,6 +40,7 @@ struct MalinkiBasemapButton: View {
                         .cornerRadius(5)
                         .overlay(RoundedRectangle(cornerRadius: 5)
                                     .stroke(Color.accentColor, lineWidth: self.id == self.toggledBasemapID ? 2 : 0))
+                        .shadow(radius: self.id == self.toggledBasemapID ? 0 : 1)
                 }
             }
             

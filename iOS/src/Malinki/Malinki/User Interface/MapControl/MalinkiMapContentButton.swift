@@ -21,7 +21,7 @@ struct MalinkiMapContentButton: View {
             self.sheetState = .layers
         }) {
             Image(systemName: "list.bullet")
-                .padding(.all, 10.0)
+                .font(.title2)
                 .foregroundColor(Color.primary)
                 .font(.title)
         }
