@@ -112,7 +112,7 @@ class MalinkiConfigurationProvider {
     
     func getAllMapLayersArray() -> [MalinkiLayer] {
         let layers = self.getAllMapLayersDictionary().map({$0.value})
-        return layers.flatMap({$0})
+        return layers.flatMap({$0}).sorted(by: {$0.id > $1.id})
     }
     
     func getSortedRasterLayerIDs(of mapTheme: Int) -> [Int] {

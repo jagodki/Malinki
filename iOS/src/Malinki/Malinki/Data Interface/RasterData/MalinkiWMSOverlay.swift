@@ -18,7 +18,7 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
     /// The initialiser of this class
     /// - Parameters:
     ///   - url: the base URL of the service without any parameters
-    ///   - useMercator: true if service should be queried as web mercator
+    ///   - useMercator: true if service should be queried as web mercator, i.e. EPSG:3857
     ///   - wmsVersion: the version of the service
     ///   - alpha: the opacity of the received image for displaying
     init(url: String, useMercator: Bool, wmsVersion: String, alpha: CGFloat = 1.0) {
@@ -28,13 +28,13 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
         super.init(urlTemplate: url, alpha: alpha)
     }
     
-    private func xOfColumn(column: Int, zoom: Int) -> Double {
+    private func longitudeOfColumn(column: Int, zoom: Int) -> Double {
         let x = Double(column)
         let z = Double(zoom)
         return x / pow(2.0, z) * 360.0 - 180
     }
     
-    private func yOfRow(row: Int, zoom: Int) -> Double {
+    private func latitudeOfRow(row: Int, zoom: Int) -> Double {
         let y = Double(row)
         let z = Double(zoom)
         let n = Double.pi - 2.0 * Double.pi * y / pow(2.0, z)
@@ -59,24 +59,32 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
     }
     
     public override func url(forTilePath path: MKTileOverlayPath) -> URL {
-        var left = xOfColumn(column: path.x, zoom: path.z)
-        var right = xOfColumn(column: path.x+1, zoom: path.z)
-        var bottom = yOfRow(row: path.y+1, zoom: path.z)
-        var top = yOfRow(row: path.y, zoom: path.z)
-        if(useMercator){
-            left   = mercatorXofLongitude(lon: left) // minX
-            right  = mercatorXofLongitude(lon: right) // maxX
-            bottom = mercatorYofLatitude(lat: bottom) // minY
-            top    = mercatorYofLatitude(lat: top) // maxY
+        
+        //get latitude and longitude in EPSG:4326
+        //BE AWARE: in EPSG:4326 the x-value represents the latitude and the y-value represents the longitude
+        var yMin = longitudeOfColumn(column: path.x, zoom: path.z)
+        var yMax = longitudeOfColumn(column: path.x+1, zoom: path.z)
+        var xMin = latitudeOfRow(row: path.y+1, zoom: path.z)
+        var xMax = latitudeOfRow(row: path.y, zoom: path.z)
+        
+        //if EPSG:3857 is used
+        if self.useMercator {
+            //caching of the precalculated values
+            let lonMin = yMin
+            let lonMax = yMax
+            let latMin = xMin
+            let latMax = xMax
+            
+            //x and y will be flipped, because of the order of coordinates in EPSG: 3857:
+            //x = easting, y = northing
+            xMin = mercatorXofLongitude(lon: lonMin)
+            xMax = mercatorXofLongitude(lon: lonMax)
+            yMin = mercatorYofLatitude(lat: latMin)
+            yMax = mercatorYofLatitude(lat: latMax)
         }
-
-        var resolvedUrl = "\(self.url)"
-        if(wmsVersion.contains("1.3")) {
-            resolvedUrl += "&BBOX=\(bottom),\(left),\(top),\(right)"
-        } else {
-            resolvedUrl += "&BBOX=\(left),\(bottom),\(right),\(top)"
-        }
-
+        
+        let resolvedUrl = "\(self.url)" + "&BBOX=\(xMin),\(yMin),\(xMax),\(yMax)"
+        
         return URL(string: resolvedUrl)!
     }
     
