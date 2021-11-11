@@ -44,7 +44,7 @@ struct MalinkiRasterData {
                         "&STYLES=" + wms.styles +
                         "&HEIGHT=" + wms.height +
                         "&WIDTH=" + wms.width)
-            overlay = MalinkiWMSOverlay(url: url, useMercator: false, wmsVersion: wms.version, alpha: CGFloat(self.mapDataConfiguration.opacity))
+            overlay = MalinkiWMSOverlay(url: url, useMercator: wms.crs == "EPSG:3857", wmsVersion: wms.version, alpha: CGFloat(self.mapDataConfiguration.opacity))
         } else if let wmts = rasterTypes.wmts {
             let url = (wmts.baseURL +
                         "SERVICE=WMTS&REQUEST=GetTile" +

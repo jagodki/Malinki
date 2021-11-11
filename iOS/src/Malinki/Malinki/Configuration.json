@@ -28,7 +28,7 @@
                             "tms": null,
                             "wms": {
                                 "baseURL": "https://maps.dwd.de/geoserver/ows?",
-                                "crs": "EPSG:4326",
+                                "crs": "EPSG:3857",
                                 "layers": "dwd:Gewaesser",
                                 "styles": "",
                                 "format": "image/png",
@@ -56,7 +56,7 @@
                             "tms": null,
                             "wms": {
                                 "baseURL": "https://maps.dwd.de/geoserver/ows?",
-                                "crs": "EPSG:4326",
+                                "crs": "EPSG:3857",
                                 "layers": "dwd:WMO_REGIONS",
                                 "styles": "",
                                 "format": "image/png",
@@ -84,7 +84,7 @@
                             "tms": null,
                             "wms": {
                                 "baseURL": "https://maps.dwd.de/geoserver/ows?",
-                                "crs": "EPSG:4326",
+                                "crs": "EPSG:3857",
                                 "layers": "dwd:WAWFOR_ieu_temperature_2m",
                                 "styles": "",
                                 "format": "image/png",
@@ -96,7 +96,7 @@
                             "apple": false
                         },
                         "imageName": "cloud.drizzle",
-                        "opacity": 0.5
+                        "opacity": 0.75
                     }
                 ]
             }
