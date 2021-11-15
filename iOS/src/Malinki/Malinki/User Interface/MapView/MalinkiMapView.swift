@@ -14,6 +14,7 @@ struct MalinkiMapView: UIViewRepresentable {
     @Binding private var basemapID: Int
     @Binding private var mapThemeID: Int
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
+    @StateObject private var annotation: MalinkiAnnotation = MalinkiAnnotation(title: "Title", subtitle: "Subtitle", coordinate: CLLocationCoordinate2D(latitude: 66.8, longitude: 22.5))
     
     init(basemapID: Binding<Int>, mapThemeID: Binding<Int>) {
         self._basemapID = basemapID
@@ -28,7 +29,7 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.setCameraZoomRange(zoomRange, animated: true)
         
         //register the annotations
-        //...
+        mapView.register(MalinkiAnnotationView.self, forAnnotationViewWithReuseIdentifier: "test")
         
         //configure the map view
         mapView.showsCompass = true
@@ -52,6 +53,7 @@ struct MalinkiMapView: UIViewRepresentable {
     private func updateAnnotations(from mapView: MKMapView) {
         //remove all annotations from the map
         mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotation(self.annotation)
     }
     
     private func updateOverlays(from mapView: MKMapView) {
@@ -91,30 +93,6 @@ struct MalinkiMapView: UIViewRepresentable {
                 }
             }
         }
-        
-//        if let mapTheme = MalinkiConfigurationProvider.sharedInstance.getMapTheme(for: self.mapThemeID) {
-//            //iterate over all raster layers
-//            for rasterLayer in mapTheme.layers.rasterLayers.sorted(by: {$0.id < $1.id}) {
-//
-//                //get the map layer corresponding to the current raster layer
-//                guard let mapLayer = self.mapLayers.filter({$0.id == rasterLayer.id}).first else { continue }
-//
-//                //check the visibility of the current layer
-//                if mapLayer.isToggled {
-//                    //get a layer according to the data source
-//                    let layer = MalinkiRasterData(from: rasterLayer)
-//
-//                    //add the layer to the map
-//                    if layer.isAppleMaps {
-//                        mapView.mapType = layer.getAppleMapType()
-//                    } else {
-//                        let overlay = layer.getOverlay()
-//                        overlay.canReplaceMapContent = false
-//                        mapView.addOverlay(overlay)
-//                    }
-//                }
-//            }
-//        }
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
@@ -138,10 +116,19 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        var annotationView: MKAnnotationView? = nil
+        
+        //check for user location
         if annotation is MKUserLocation {
-            return nil
+            annotationView = nil
         }
-        return nil
+        
+        //create a view for annotations of MalinkiAnnotation
+        if annotation is MalinkiAnnotation {
+            annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "test", for: annotation)
+        }
+        
+        return annotationView
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
