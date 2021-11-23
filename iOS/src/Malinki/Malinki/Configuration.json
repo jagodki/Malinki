@@ -12,7 +12,119 @@
             },
             "iconName": "cloud.sun.rain",
             "layers": {
-                "vectorLayers": "",
+                "vectorLayers": [
+                    {
+                        "id": 100,
+                        "internalName": "2m_temperature",
+                        "externalNames": {
+                            "en": "Temperature",
+                            "de": "Temperatur",
+                            "fr": "Température",
+                            "sv": "Temperatur",
+                            "pl": "Temperatura"
+                        },
+                        "vectorTypes": {
+                            "localFile": "LocalData/2m_temp_places.geojson",
+                            "remoteFile": null,
+                            "wfs": null
+                        },
+                        "attributes": {
+                            "id": "OBJECTID",
+                            "title": "NAME"
+                        },
+                        "featureInfo": {
+                            "wms": {
+                                "baseURL": "https://maps.dwd.de/geoserver/ows?",
+                                "version": "1.3.0",
+                                "crs": "EPSG:4326",
+                                "layers": "dwd:WAWFOR_ieu_temperature_2m",
+                                "styles": "",
+                                "format": "image/png",
+                                "queryLayers": "dwd:WAWFOR_ieu_temperature_2m",
+                                "infoFormat": "application/json",
+                                "featureCount": 10,
+                                "fields": [
+                                    {
+                                        "name": "GRAY_INDEX",
+                                        "externalNames": {
+                                            "en": "Temperature in Kelvin",
+                                            "de": "Temperatur in Kelvin",
+                                            "fr": "Température en kelvin",
+                                            "sv": "Temperatur i Kelvin",
+                                            "pl": "Temperatura w Kelwinach"
+                                        }
+                                    }, {
+                                        "name": "TIME",
+                                        "externalNames": {
+                                            "en": "Time",
+                                            "de": "Zeit",
+                                            "fr": "Temps",
+                                            "sv": "Tid",
+                                            "pl": "Czas"
+                                        }
+                                    }
+                                ]
+                            },
+                            "wfs": null
+                        },
+                        "style": {
+                            "annotationStyle": {
+                                "colour": "AccentColor",
+                                "glyph": "thermometer"
+                            },
+                            "featureStyle": {
+                                "outline": {
+                                    "colour": "AccentColor",
+                                    "width": 1.0
+                                },
+                                "fill": {
+                                    "colour": "AccentColor",
+                                    "opacity": 0.5
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": 101,
+                        "internalName": "warnings_sea_centroids",
+                        "externalNames": {
+                            "en": "Warnings at Sea",
+                            "de": "Warnungen auf See",
+                            "fr": "Alertes en mer",
+                            "sv": "Varningar till sjöss",
+                            "pl": "Ostrzeżenia na morzu"
+                        },
+                        "vectorTypes": {
+                            "localFile": "LocalData/warngebiete_see_centroids.geojson",
+                            "remoteFile": null,
+                            "wfs": null
+                        },
+                        "attributes": {
+                            "id": "ne_id",
+                            "title": "name"
+                        },
+                        "featureInfo": {
+                            "wms": null,
+                            "wfs": null
+                        },
+                        "style": {
+                            "annotationStyle": {
+                                "colour": "AccentColor",
+                                "glyph": "cloud.drizzle"
+                            },
+                            "featureStyle": {
+                                "outline": {
+                                    "colour": "AccentColor",
+                                    "width": 1
+                                },
+                                "fill": {
+                                    "colour": "AccentColor",
+                                    "opacity": 0.5
+                                }
+                            }
+                        }
+                    }
+                ],
                 "rasterLayers": [
                     {
                         "id": 3,
@@ -142,7 +254,7 @@
             },
             "iconName": "globe",
             "layers": {
-                "vectorLayers": "",
+                "vectorLayers": [],
                 "rasterLayers": [
                     {
                         "id": 0,
