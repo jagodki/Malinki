@@ -33,8 +33,78 @@ struct MalinkiConfigurationMapData: Decodable {
 }
 
 struct MalinkiConfigurationMapLayers: Decodable {
-    var vectorLayers: String
+    var vectorLayers: [MalinkiConfigurationVectorData]
     var rasterLayers: [MalinkiConfigurationMapData]
+}
+
+//MARK: - Vector Layers
+struct MalinkiConfigurationVectorData: Decodable {
+    var id: Int
+    var internalName: String
+    var externalNames: MalinkiConfigurationBasemapExternalName
+    var vectorTypes: MalinkiConfigurationVectorTypes
+    var attributes: MalinkiConfigurationVectorAttributes
+    var featureInfo: MalinkiConfigurationVectorFeatureInfo
+    var style: MalinkiConfigurationVectorStyle
+}
+
+struct MalinkiConfigurationVectorTypes: Decodable {
+    var localFile: String?
+    var remoteFile: String?
+    var wfs: String?
+}
+
+struct MalinkiConfigurationVectorAttributes: Decodable {
+    var id: String
+    var title: String
+}
+
+struct MalinkiConfigurationVectorFeatureInfo: Decodable {
+    var wms: MalinkiConfigurationVectorFeatureInfoWMS?
+    var wfs: String?
+}
+
+struct MalinkiConfigurationVectorFeatureInfoWMS: Decodable {
+    var baseURL: String
+    var version: String
+    var crs: String
+    var layers: String
+    var styles: String
+    var format: String
+    var queryLayers: String
+    var infoFormat: String
+    var featureCount: Int
+    var fields: [MalinkiConfigurationVectorFields]
+}
+
+struct MalinkiConfigurationVectorFields: Decodable {
+    var name: String
+    var externalNames: MalinkiConfigurationBasemapExternalName
+}
+
+struct MalinkiConfigurationVectorStyle: Decodable {
+    var annotationStyle: MalinkiConfigurationVectorAnnotationStyle
+    var featureStyle: MalinkiConfigurationVectorFeatureStyle
+}
+
+struct MalinkiConfigurationVectorAnnotationStyle: Decodable {
+    var colour: String
+    var glyph: String
+}
+
+struct MalinkiConfigurationVectorFeatureStyle: Decodable {
+    var outline: MalinkiConfigurationVectorStyleOutline
+    var fill: MalinkiConfigurationVectorStyleFill
+}
+
+struct MalinkiConfigurationVectorStyleOutline: Decodable {
+    var colour: String
+    var width: Double
+}
+
+struct MalinkiConfigurationVectorStyleFill: Decodable {
+    var colour: String
+    var opacity: Double
 }
 
 //MARK: - Raster Types
