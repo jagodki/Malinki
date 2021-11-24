@@ -110,15 +110,25 @@ class MalinkiConfigurationProvider {
         return mapLayers
     }
     
+    /// This function returns all raster layers, sorted by their ID.
+    /// - Returns: an array of all layers
     func getAllMapLayersArray() -> [MalinkiLayer] {
         let layers = self.getAllMapLayersDictionary().map({$0.value})
         return layers.flatMap({$0}).sorted(by: {$0.id > $1.id})
     }
     
+    /// This function returns the IDs of all raster layers of a given map theme.
+    /// - Parameter mapTheme: the ID of the map theme
+    /// - Returns: an array of IDs
     func getSortedRasterLayerIDs(of mapTheme: Int) -> [Int] {
         return self.configData?.mapThemes.filter({$0.id == mapTheme}).first?.layers.rasterLayers.map({$0.id}).sorted(by: {$0 < $1}) ?? []
     }
     
+    /// This function returns a specific raster layer.
+    /// - Parameters:
+    ///   - layerID: the ID of the needed layer
+    ///   - mapTheme: the ID of the corresponding map theme
+    /// - Returns: an object of MalinkiConfigurationMapData
     func getRasterLayer(with layerID: Int, of mapTheme: Int) -> MalinkiConfigurationMapData? {
         return self.configData?.mapThemes.filter({$0.id == mapTheme}).first?.layers.rasterLayers.filter({$0.id == layerID}).first
     }
