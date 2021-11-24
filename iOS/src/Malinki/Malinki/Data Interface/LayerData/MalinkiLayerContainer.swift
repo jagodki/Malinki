@@ -10,10 +10,12 @@ import Foundation
 /// An observable class containing map layers as a published array.
 final class MalinkiLayerContainer: ObservableObject {
     
-    @Published var rasterLayers: [MalinkiLayer]
+    @Published var rasterLayers: [MalinkiRasterLayer]
+    @Published var mapThemes: [MalinkiTheme]
     
-    init(layers: [MalinkiLayer]) {
+    init(layers: [MalinkiRasterLayer], themes: [MalinkiTheme]) {
         self.rasterLayers = layers
+        self.mapThemes = themes
     }
     
 }
