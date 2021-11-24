@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 /// A structure to descripe a map layer.
-final class MalinkiRasterLayer: Hashable, Identifiable, ObservableObject {
+final class MalinkiLayer: Hashable, Identifiable, ObservableObject {
     
     let id: Int
     let name: String
@@ -38,7 +38,7 @@ final class MalinkiRasterLayer: Hashable, Identifiable, ObservableObject {
 //        )
     }
     
-    static func == (lhs: MalinkiRasterLayer, rhs: MalinkiRasterLayer) -> Bool {
+    static func == (lhs: MalinkiLayer, rhs: MalinkiLayer) -> Bool {
         return lhs.id == rhs.id && lhs.uuid == rhs.uuid
     }
     
