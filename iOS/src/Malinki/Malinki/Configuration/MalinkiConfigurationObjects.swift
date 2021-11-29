@@ -42,6 +42,7 @@ struct MalinkiConfigurationVectorData: Decodable {
     var id: Int
     var internalName: String
     var externalNames: MalinkiConfigurationBasemapExternalName
+    var correspondingRasterLayer: Int
     var vectorTypes: MalinkiConfigurationVectorTypes
     var attributes: MalinkiConfigurationVectorAttributes
     var featureInfo: MalinkiConfigurationVectorFeatureInfo

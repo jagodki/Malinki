@@ -23,6 +23,7 @@
                             "sv": "Temperatur",
                             "pl": "Temperatura"
                         },
+                        "correspondingRasterLayer": 0,
                         "vectorTypes": {
                             "localFile": "LocalData/2m_temp_places.geojson",
                             "remoteFile": null,
@@ -94,6 +95,7 @@
                             "sv": "Varningar till sjöss",
                             "pl": "Ostrzeżenia na morzu"
                         },
+                        "correspondingRasterLayer": 2,
                         "vectorTypes": {
                             "localFile": "LocalData/warngebiete_see_centroids.geojson",
                             "remoteFile": null,
@@ -240,7 +242,6 @@
                     }
                 ]
             }
-            
         },
         {
             "id": 0,
