@@ -67,6 +67,6 @@ struct MalinkiMapContent: View {
 struct MalinkiMapContent_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiMapContent(mapThemeID: .constant(0), isSheetShowing: .constant(false))
-            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
+            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
     }
 }
