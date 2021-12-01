@@ -14,7 +14,7 @@ struct MalinkiMapView: UIViewRepresentable {
     @Binding private var basemapID: Int
     @Binding private var mapThemeID: Int
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
-    @StateObject private var annotation: MalinkiAnnotation = MalinkiAnnotation(title: "Title", subtitle: "Subtitle", coordinate: CLLocationCoordinate2D(latitude: 66.8, longitude: 22.5))
+//    @StateObject private var annotation: MalinkiAnnotation = MalinkiAnnotation(title: "Title", subtitle: "Subtitle", coordinate: CLLocationCoordinate2D(latitude: 66.8, longitude: 22.5))
     
     init(basemapID: Binding<Int>, mapThemeID: Binding<Int>) {
         self._basemapID = basemapID
@@ -53,7 +53,16 @@ struct MalinkiMapView: UIViewRepresentable {
     private func updateAnnotations(from mapView: MKMapView) {
         //remove all annotations from the map
         mapView.removeAnnotations(mapView.annotations)
-        mapView.addAnnotation(self.annotation)
+        
+        if self.mapLayers.mapThemes[self.mapThemeID].annotationsAreToggled {
+            let vectorData = MalinkiVectorData()
+            
+            //get the IDs of all visible raster layers
+            let visibleRasterLayerIDs = self.mapLayers.rasterLayers.filter({$0.isToggled && $0.themeID == self.mapThemeID}).map({$0.id})
+            
+            //add annotations to the map
+            mapView.addAnnotations(MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.mapThemeID).filter({visibleRasterLayerIDs.contains($0.correspondingRasterLayer)}).map({vectorData.getAnnotationFeatures(for: $0.id, in: self.mapThemeID)}).flatMap({$0}))
+        }
     }
     
     private func updateOverlays(from mapView: MKMapView) {
@@ -162,6 +171,6 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0))
-            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray()))
+            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
     }
 }
