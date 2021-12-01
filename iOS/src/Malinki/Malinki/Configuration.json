@@ -25,13 +25,13 @@
                         },
                         "correspondingRasterLayer": 0,
                         "vectorTypes": {
-                            "localFile": "LocalData/2m_temp_places.geojson",
+                            "localFile": "2m_temp_places",
                             "remoteFile": null,
                             "wfs": null
                         },
                         "attributes": {
-                            "id": "OBJECTID",
-                            "title": "NAME"
+                            "id": "ne_id",
+                            "title": "name"
                         },
                         "featureInfo": {
                             "wms": {
@@ -97,13 +97,13 @@
                         },
                         "correspondingRasterLayer": 2,
                         "vectorTypes": {
-                            "localFile": "LocalData/warngebiete_see_centroids.geojson",
+                            "localFile": "warngebiete_see_centroids",
                             "remoteFile": null,
                             "wfs": null
                         },
                         "attributes": {
-                            "id": "ne_id",
-                            "title": "name"
+                            "id": "OBJECTID",
+                            "title": "NAME"
                         },
                         "featureInfo": {
                             "wms": null,
