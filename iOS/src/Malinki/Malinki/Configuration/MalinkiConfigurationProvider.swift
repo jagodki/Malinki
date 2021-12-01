@@ -133,4 +133,20 @@ class MalinkiConfigurationProvider {
         return self.configData?.mapThemes.filter({$0.id == mapTheme}).first?.layers.rasterLayers.filter({$0.id == layerID}).first
     }
     
+    func getAllMapThemes() -> [MalinkiTheme] {
+        return self.configData?.mapThemes.map({MalinkiTheme(themeID: $0.id)}) ?? []
+    }
+    
+    func getVectorLayer(id: Int, theme: Int) -> MalinkiConfigurationVectorData? {
+        return self.getMapTheme(for: theme)?.layers.vectorLayers.filter({$0.id == id}).first
+    }
+    
+    func getExternalVectorName(id: Int, theme: Int) -> String {
+        return self.getVectorLayer(id: id, theme: theme)?.externalNames.en ?? ""
+    }
+    
+    func getAllVectorLayers(for mapTheme: Int) -> [MalinkiConfigurationVectorData] {
+        return self.getMapTheme(for: mapTheme)?.layers.vectorLayers ?? []
+    }
+    
 }
