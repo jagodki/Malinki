@@ -9,6 +9,9 @@ import Foundation
 import MapKit
 import SwiftUI
 
+
+/// A class representing an annotation view.
+/// The styling of the view will be taken from the underlying annotation.
 class MalinkiAnnotationView: MKMarkerAnnotationView {
     
     override var annotation: MKAnnotation? {

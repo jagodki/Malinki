@@ -9,6 +9,8 @@ import Foundation
 import MapKit
 import Combine
 
+/// A class representing an annotation.
+/// The class is extended by additional attributes to query the configuration.
 class MalinkiAnnotation: NSObject, MKAnnotation, ObservableObject {
     
     var title: String?
