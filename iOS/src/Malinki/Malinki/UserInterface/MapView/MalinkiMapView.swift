@@ -14,7 +14,6 @@ struct MalinkiMapView: UIViewRepresentable {
     @Binding private var basemapID: Int
     @Binding private var mapThemeID: Int
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
-//    @StateObject private var annotation: MalinkiAnnotation = MalinkiAnnotation(title: "Title", subtitle: "Subtitle", coordinate: CLLocationCoordinate2D(latitude: 66.8, longitude: 22.5))
     
     init(basemapID: Binding<Int>, mapThemeID: Binding<Int>) {
         self._basemapID = basemapID
@@ -29,7 +28,7 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.setCameraZoomRange(zoomRange, animated: true)
         
         //register the annotations
-        mapView.register(MalinkiAnnotationView.self, forAnnotationViewWithReuseIdentifier: "test")
+        mapView.register(MalinkiAnnotationView.self, forAnnotationViewWithReuseIdentifier: "annotations")
         
         //configure the map view
         mapView.showsCompass = true
@@ -134,7 +133,15 @@ final class Coordinator: NSObject, MKMapViewDelegate {
         
         //create a view for annotations of MalinkiAnnotation
         if annotation is MalinkiAnnotation {
-            annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "test", for: annotation)
+            annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "annotations", for: annotation)
+        }
+        
+        if let cluster = annotation as? MKClusterAnnotation {
+            let marker = MKMarkerAnnotationView()
+            marker.glyphText = String(cluster.memberAnnotations.count)
+            marker.markerTintColor = UIColor(Color.accentColor)
+            marker.canShowCallout = false
+            annotationView = marker
         }
         
         return annotationView
