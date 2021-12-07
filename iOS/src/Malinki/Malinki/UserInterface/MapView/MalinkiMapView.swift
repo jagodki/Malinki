@@ -53,7 +53,7 @@ struct MalinkiMapView: UIViewRepresentable {
         //remove all annotations from the map
         mapView.removeAnnotations(mapView.annotations)
         
-        if self.mapLayers.mapThemes[self.mapThemeID].annotationsAreToggled {
+        if self.mapLayers.mapThemes.filter({$0.annotationsAreToggled && $0.themeID == self.mapThemeID}).count != 0 {
             let vectorData = MalinkiVectorData()
             
             //get the IDs of all visible raster layers

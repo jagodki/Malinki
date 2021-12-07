@@ -27,14 +27,31 @@ struct MalinkiMapContent: View {
         
         NavigationView {
             Form {
-                List(self.$mapLayers.rasterLayers.filter({$0.themeID.wrappedValue == self.mapThemeID})) { $layer in
-                    Toggle(isOn: $layer.isToggled) {
-                        HStack {
-                            layer.image
-                                .clipShape(Circle())
-                            Text(layer.name)
+                List {
+                    
+                    //marker layer
+                    if self.mapLayers.mapThemes.filter({$0.hasAnnotations && $0.themeID == self.mapThemeID}).count != 0 {
+                        Section {
+                            Toggle(isOn: self.$mapLayers.mapThemes.filter({$0.themeID.wrappedValue == self.mapThemeID}).first!.annotationsAreToggled) {
+                                HStack {
+                                    Image(systemName: "mappin.circle.fill")
+                                    Text(LocalizedStringKey("Marker to query data"))
+                                }
+                            }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
                         }
-                    }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
+                    }
+                    
+                    //all overlay layers of the map
+                    Section {
+                        List(self.$mapLayers.rasterLayers.filter({$0.themeID.wrappedValue == self.mapThemeID})) { $layer in
+                            Toggle(isOn: $layer.isToggled) {
+                                HStack {
+                                    layer.image
+                                    Text(layer.name)
+                                }
+                            }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
+                        }
+                    }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
