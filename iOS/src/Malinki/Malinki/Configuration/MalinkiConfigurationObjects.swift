@@ -63,6 +63,8 @@ struct MalinkiConfigurationVectorAttributes: Decodable {
 struct MalinkiConfigurationVectorFeatureInfo: Decodable {
     var wms: MalinkiConfigurationVectorFeatureInfoWMS?
     var wfs: String?
+    var localFile: String?
+    var remoteFile: String?
 }
 
 struct MalinkiConfigurationVectorFeatureInfoWMS: Decodable {
