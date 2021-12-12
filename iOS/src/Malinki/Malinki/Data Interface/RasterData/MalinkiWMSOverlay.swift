@@ -14,6 +14,7 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
     private var url: String
     private var useMercator: Bool
     private let wmsVersion: String
+    private let tmsConverter: MalinkiTMSConverter = MalinkiTMSConverter()
     
     /// The initialiser of this class
     /// - Parameters:
@@ -28,44 +29,14 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
         super.init(urlTemplate: url, alpha: alpha)
     }
     
-    private func longitudeOfColumn(column: Int, zoom: Int) -> Double {
-        let x = Double(column)
-        let z = Double(zoom)
-        return x / pow(2.0, z) * 360.0 - 180
-    }
-    
-    private func latitudeOfRow(row: Int, zoom: Int) -> Double {
-        let y = Double(row)
-        let z = Double(zoom)
-        let n = Double.pi - 2.0 * Double.pi * y / pow(2.0, z)
-        return 180.0 / Double.pi * atan(0.5 * (exp(n) - exp(-n)))
-    }
-    
-    private func mercatorXofLongitude(lon: Double) -> Double {
-        return lon * 20037508.34 / 180
-    }
-
-    private func mercatorYofLatitude(lat: Double) -> Double {
-        var y = log(tan((90 + lat) * Double.pi / 360)) / (Double.pi / 180)
-        y = y * 20037508.34 / 180
-        return y
-    }
-    
-    private func tileZ(zoomScale: MKZoomScale) -> Int {
-        let numTilesAt1_0 = MKMapSize.world.width / 256.0
-        let zoomLevelAt1_0 = log2(Float(numTilesAt1_0))
-        let zoomLevel = max(0, zoomLevelAt1_0 + floor(log2f(Float(zoomScale)) + 0.5))
-        return Int(zoomLevel)
-    }
-    
     public override func url(forTilePath path: MKTileOverlayPath) -> URL {
         
         //get latitude and longitude in EPSG:4326
         //BE AWARE: in EPSG:4326 the x-value represents the latitude and the y-value represents the longitude
-        var yMin = longitudeOfColumn(column: path.x, zoom: path.z)
-        var yMax = longitudeOfColumn(column: path.x+1, zoom: path.z)
-        var xMin = latitudeOfRow(row: path.y+1, zoom: path.z)
-        var xMax = latitudeOfRow(row: path.y, zoom: path.z)
+        var yMin = self.tmsConverter.longitudeOfColumn(column: path.x, zoom: path.z)
+        var yMax = self.tmsConverter.longitudeOfColumn(column: path.x+1, zoom: path.z)
+        var xMin = self.tmsConverter.latitudeOfRow(row: path.y+1, zoom: path.z)
+        var xMax = self.tmsConverter.latitudeOfRow(row: path.y, zoom: path.z)
         
         //if EPSG:3857 is used
         if self.useMercator {
@@ -77,10 +48,10 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
             
             //x and y will be flipped, because of the order of coordinates in EPSG: 3857:
             //x = easting, y = northing
-            xMin = mercatorXofLongitude(lon: lonMin)
-            xMax = mercatorXofLongitude(lon: lonMax)
-            yMin = mercatorYofLatitude(lat: latMin)
-            yMax = mercatorYofLatitude(lat: latMax)
+            xMin = self.tmsConverter.mercatorXofLongitude(lon: lonMin)
+            xMax = self.tmsConverter.mercatorXofLongitude(lon: lonMax)
+            yMin = self.tmsConverter.mercatorYofLatitude(lat: latMin)
+            yMax = self.tmsConverter.mercatorYofLatitude(lat: latMax)
         }
         
         let resolvedUrl = "\(self.url)" + "&BBOX=\(xMin),\(yMin),\(xMax),\(yMax)"
