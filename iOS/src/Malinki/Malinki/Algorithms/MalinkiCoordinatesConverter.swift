@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-struct MalinkiTMSConverter {
+struct MalinkiCoordinatesConverter {
     
     func longitudeOfColumn(column: Int, zoom: Int) -> Double {
         let x = Double(column)
