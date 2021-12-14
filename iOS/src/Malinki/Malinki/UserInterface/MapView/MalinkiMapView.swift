@@ -103,18 +103,12 @@ struct MalinkiMapView: UIViewRepresentable {
         }
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let coordinates = view.annotation?.coordinate else { return }
-        let span = mapView.region.span
-        let region = MKCoordinateRegion(center: coordinates, span: span)
-        mapView.setRegion(region, animated: true)
-    }
-    
 }
 
 //MARK: - Delegate for the Map View
 final class Coordinator: NSObject, MKMapViewDelegate {
     var control: MalinkiMapView
+    var rotation: Double = 0.0
     
     init(_ control: MalinkiMapView) {
         self.control = control
@@ -162,17 +156,25 @@ final class Coordinator: NSObject, MKMapViewDelegate {
         return overlayRender
     }
     
+    func mapView(_ mapView: MKMapView, rotationDidChange rotation: Double) {
+        self.rotation = rotation
+    }
+    
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         //focus the map on the selected annotation
         guard let coordinates = view.annotation?.coordinate else { return }
         let span = mapView.region.span
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: coordinates.latitude - span.latitudeDelta / 4, longitude: coordinates.longitude), span: span)
+        let region = MKCoordinateRegion(center: coordinates, span: span)
         mapView.setRegion(region, animated: true)
+
+        //get feature data
+        if let annotation = view.annotation as? MalinkiAnnotation {
+            let mvd = MalinkiVectorData()
+            mvd.getFeatureData(featureID: annotation.layerID, mapThemeID: annotation.themeID, annotation: annotation, span: mapView.region.span)
+        }
+        
     }
     
-//    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
-//        
-//    }
 }
 
 struct MalinkiMapView_Previews: PreviewProvider {
