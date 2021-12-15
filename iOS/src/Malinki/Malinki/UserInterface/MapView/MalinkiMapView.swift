@@ -9,6 +9,7 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
+@available(iOS 15.0.0, *)
 struct MalinkiMapView: UIViewRepresentable {
     
     @Binding private var basemapID: Int
@@ -106,6 +107,7 @@ struct MalinkiMapView: UIViewRepresentable {
 }
 
 //MARK: - Delegate for the Map View
+@available(iOS 15.0.0, *)
 final class Coordinator: NSObject, MKMapViewDelegate {
     var control: MalinkiMapView
     var rotation: Double = 0.0
@@ -177,6 +179,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     
 }
 
+@available(iOS 15.0.0, *)
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0))
