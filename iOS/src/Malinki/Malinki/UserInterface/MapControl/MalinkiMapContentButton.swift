@@ -26,7 +26,6 @@ struct MalinkiMapContentButton: View {
             Image(systemName: "list.bullet")
                 .font(.title2)
                 .foregroundColor(Color.primary)
-                .font(.title)
         }
     }
     

@@ -46,7 +46,6 @@ struct MalinkiMapThemes: View {
             Image(systemName: "map.fill")
                 .font(.title2)
                 .foregroundColor(Color.primary)
-                .font(.title)
         }
     }
 }
