@@ -7,11 +7,16 @@
 
 import SwiftUI
 
+/// A structure to present the header of a bottom sheet.
 struct MalinkiSheetHeader: View {
     
     @Binding private var isSheetShowing: Bool
     private var title: String
     
+    /// The initialiser of this struct.
+    /// - Parameters:
+    ///   - title: the title of the bottom sheet
+    ///   - isSheetShowing: a binding indicating, whether the sheet is open or not
     init(title: String, isSheetShowing: Binding<Bool>) {
         self.title = title
         self._isSheetShowing = isSheetShowing

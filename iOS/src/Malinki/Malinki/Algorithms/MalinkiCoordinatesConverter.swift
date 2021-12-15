@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 
+/// A struct containing functions for converting coordinates.
 struct MalinkiCoordinatesConverter {
     
     func longitudeOfColumn(column: Int, zoom: Int) -> Double {
