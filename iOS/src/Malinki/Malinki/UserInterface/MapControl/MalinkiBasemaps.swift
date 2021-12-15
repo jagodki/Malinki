@@ -40,22 +40,7 @@ struct MalinkiBasemaps: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
-                    HStack {
-                        Text(LocalizedStringKey("Basemaps"))
-                            .font(.headline)
-                            .padding(.leading)
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            self.isSheetShowing = false
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .padding(.trailing)
-                                .foregroundColor(Color.secondary)
-                                .font(.headline)
-                        }
-                    }
+                    MalinkiSheetHeader(title: "Basemaps", isSheetShowing: self.$isSheetShowing)
                 })
             })
         }

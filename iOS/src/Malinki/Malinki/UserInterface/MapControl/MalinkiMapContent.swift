@@ -57,22 +57,7 @@ struct MalinkiMapContent: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
-                    HStack {
-                        Text(LocalizedStringKey("Map Content"))
-                            .font(.headline)
-                            .padding(.leading)
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            self.isSheetShowing = false
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .padding(.trailing)
-                                .foregroundColor(Color.secondary)
-                                .font(.headline)
-                        }
-                    }
+                    MalinkiSheetHeader(title: "Map Content", isSheetShowing: self.$isSheetShowing)
                 })
             })
         }
