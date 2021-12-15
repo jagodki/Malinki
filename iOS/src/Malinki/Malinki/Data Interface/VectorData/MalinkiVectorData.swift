@@ -12,7 +12,7 @@ import CoreGraphics
 @available(iOS 15.0.0, *)
 class MalinkiVectorData {
     
-    private var featureData: [String: String] = [:]
+    private var featureData: [[String: String]] = [[:]]
     
     enum MalinkiVectorDataError: Error {
         case invalidURLString
@@ -112,7 +112,7 @@ class MalinkiVectorData {
         return features
     }
     
-    func getFeatureData(featureID: Int, mapThemeID: Int, annotation: MKAnnotation?, span: MKCoordinateSpan) -> [String: String] {
+    func getFeatureData(featureID: Int, mapThemeID: Int, annotation: MKAnnotation?, span: MKCoordinateSpan) -> [[String: String]] {
         //get the layer data from the config file
         let featureLayer = self.configuration.getVectorLayer(id: featureID, theme: mapThemeID)
         let featureInfo = featureLayer?.featureInfo
@@ -198,27 +198,34 @@ class MalinkiVectorData {
                 //parse data depending on info format
                 if config.infoFormat == "application/json" {
                     
-                    //get geojson object
-                    let geojson = self.decodeGeoJSON(from: data)
+                    //get geojson object and its data
+                    self.getFeatureData(from: self.decodeGeoJSON(from: data))
                     
-                    //iterate over features
-                    for feature in geojson {
-                        //get the properties as a dictionary
-                        if let properties = feature.properties {
-                            
-                            //get a dictionary from the json data and append the feature data
-                            let property = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
-                            for (key, value) in property ?? ["": ""] {
-                                self.appendFeatureData(key: key, value: String(describing: value))
-                            }
-                        }
-                    }
                 } else if config.infoFormat == "plain/text" {
-                    self.setFeatureData(dict: ["test": "test"])
+                    let text = String(data: data, encoding: .utf8) ?? ""
+                    self.setFeatureData(dict: [["Data": text]])
                 }
                 
             } catch {
-                self.setFeatureData(dict: ["Error": "not able to get data from webservice"])
+                self.setFeatureData(dict: [["Error": "not able to get data from webservice"]])
+            }
+        }
+    }
+    
+    private func getFeatureData(from geojsonFeatures: [MKGeoJSONFeature]) {
+        //iterate over features
+        for feature in geojsonFeatures {
+            //get the properties as a dictionary
+            if let properties = feature.properties {
+                var attributes: [String: String] = [:]
+                
+                //get a dictionary from the json data and append the feature data
+                let property = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
+                for (key, value) in property ?? ["": ""] {
+                    attributes[key] = String(describing: value)
+                }
+                
+                self.appendFeatureData(dict: attributes)
             }
         }
     }
@@ -232,11 +239,11 @@ class MalinkiVectorData {
         return data
     }
     
-    private func setFeatureData(dict: [String: String]) {
+    private func setFeatureData(dict: [[String: String]]) {
         self.featureData = dict
     }
     
-    private func appendFeatureData(key: String, value: String) {
-        self.featureData[key] = value
+    private func appendFeatureData(dict: [String: String]) {
+        self.featureData.append(dict)
     }
 }
