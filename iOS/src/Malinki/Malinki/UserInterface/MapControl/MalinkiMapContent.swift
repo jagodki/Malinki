@@ -6,21 +6,26 @@
 //
 
 import SwiftUI
+import SheeKit
 
 /// A structure to present and control the map content/layers.
 @available(iOS 15.0, *)
 struct MalinkiMapContent: View {
     
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
+    @Binding private var sheetDetent: UISheetPresentationController.Detent.Identifier?
     @Binding private var mapThemeID: Int
     @Binding private var isSheetShowing: Bool
     
     /// The initialiser of this sctructure.
-    /// - Parameter mapThemeID: the ID of the current map theme as binding
-    /// - Parameter isSheetShowing: a binding to control the presentation of a sheet
-    init(mapThemeID: Binding<Int>, isSheetShowing: Binding<Bool>) {
+    /// - Parameters:
+    ///   - mapThemeID: the ID of the current map theme as binding
+    ///   - isSheetShowing: a binding to control the presentation of a sheet
+    ///   - sheetDetent: a binding to control the selected detent of a sheet   
+    init(mapThemeID: Binding<Int>, isSheetShowing: Binding<Bool>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>) {
         self._mapThemeID = mapThemeID
         self._isSheetShowing = isSheetShowing
+        self._sheetDetent = sheetDetent
     }
     
     var body: some View {
@@ -57,7 +62,7 @@ struct MalinkiMapContent: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
-                    MalinkiSheetHeader(title: "Map Content", isSheetShowing: self.$isSheetShowing)
+                    MalinkiSheetHeader(title: "Map Content", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent)
                 })
             })
         }
@@ -68,7 +73,7 @@ struct MalinkiMapContent: View {
 @available(iOS 15.0, *)
 struct MalinkiMapContent_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapContent(mapThemeID: .constant(0), isSheetShowing: .constant(false))
+        MalinkiMapContent(mapThemeID: .constant(0), isSheetShowing: .constant(false), sheetDetent: .constant(UISheetPresentationController.Detent.Identifier.medium))
             .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SheeKit
 
 /// A struture to create a row of basemap buttons.
 @available(iOS 15.0, *)
@@ -13,13 +14,17 @@ struct MalinkiBasemaps: View {
     
     @Binding private var basemapID: Int
     @Binding private var isSheetShowing: Bool
+    @Binding private var sheetDetent: UISheetPresentationController.Detent.Identifier?
     
     /// The initialiser of this structure.
-    /// - Parameter basemapID: a binding containing the id of the toggled basemap
-    /// - Parameter isSheetShowing: a binding to control the visibility of a sheet
-    init(basemapID: Binding<Int>, isSheetShowing: Binding<Bool>) {
+    /// - Parameters:
+    ///   - basemapID: a binding containing the id of the toggled basemap
+    ///   - isSheetShowing: a binding to control the visibility of a sheet
+    ///   - sheetDetent: a binding to control the selected detent of a sheet
+    init(basemapID: Binding<Int>, isSheetShowing: Binding<Bool>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>) {
         self._basemapID = basemapID
         self._isSheetShowing = isSheetShowing
+        self._sheetDetent = sheetDetent
     }
     
     /// The columns for creating a lazy grid.
@@ -40,7 +45,7 @@ struct MalinkiBasemaps: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
-                    MalinkiSheetHeader(title: "Basemaps", isSheetShowing: self.$isSheetShowing)
+                    MalinkiSheetHeader(title: "Basemaps", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent)
                 })
             })
         }
@@ -50,6 +55,6 @@ struct MalinkiBasemaps: View {
 @available(iOS 15.0, *)
 struct MalinkiButtonGroup_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiBasemaps(basemapID: .constant(0), isSheetShowing: .constant(false))
+        MalinkiBasemaps(basemapID: .constant(0), isSheetShowing: .constant(false), sheetDetent: .constant(UISheetPresentationController.Detent.Identifier.medium))
     }
 }
