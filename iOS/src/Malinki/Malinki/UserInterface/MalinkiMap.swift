@@ -23,7 +23,7 @@ struct MalinkiMap: View {
     var body: some View {
         
         ZStack {
-            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID)
+            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID, sheetState: self.$sheet.state)
                 .environmentObject(self.mapLayers)
                 .edgesIgnoringSafeArea(.all)
             
