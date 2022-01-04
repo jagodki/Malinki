@@ -13,7 +13,6 @@ import MapKit
 struct MalinkiObjectDetailsView: View {
     
     @Binding private var isSheetShowing: Bool
-    //    @Binding private var data: [MalinkiFeatureData]
     @Binding private var sheetDetent: UISheetPresentationController.Detent.Identifier?
     @EnvironmentObject var features: MalinkiFeatureDataContainer
     
