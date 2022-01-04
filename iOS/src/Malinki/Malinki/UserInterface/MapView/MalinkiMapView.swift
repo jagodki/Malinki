@@ -170,13 +170,14 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     }
     
     @MainActor func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        //get the coordinates of the annotation
-        guard var coordinates = view.annotation?.coordinate else { return }
-        let span = mapView.region.span
-
         //get feature data
         if let annotation = view.annotation as? MalinkiAnnotation {
-            coordinates = CLLocationCoordinate2D(latitude: coordinates.latitude - span.latitudeDelta / 4, longitude: coordinates.longitude)
+            //focus the map on the selected annotation
+            let span = mapView.region.span
+            let coordinates = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude - span.latitudeDelta / 4, longitude: annotation.coordinate.longitude)
+            let region = MKCoordinateRegion(center: coordinates, span: span)
+            mapView.setRegion(region, animated: true)
+            
             
             self.control.features.annotation = annotation
             self.control.features.span = mapView.region.span
@@ -185,10 +186,6 @@ final class Coordinator: NSObject, MKMapViewDelegate {
         } else {
             self.control.closeSheet()
         }
-        
-        //focus the map on the selected annotation, map center equals annotation for cluster, otherwise annotation at the top half of the map
-        let region = MKCoordinateRegion(center: coordinates, span: span)
-        mapView.setRegion(region, animated: true)
         
     }
     
