@@ -6,15 +6,58 @@
 //
 
 import SwiftUI
+import SheeKit
+import MapKit
 
+@available(iOS 15.0, *)
 struct MalinkiObjectDetailsView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    
+    @Binding private var isSheetShowing: Bool
+    //    @Binding private var data: [MalinkiFeatureData]
+    @Binding private var sheetDetent: UISheetPresentationController.Detent.Identifier?
+    @EnvironmentObject var features: MalinkiFeatureDataContainer
+    
+    init(isSheetShowing: Binding<Bool>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>) {
+        self._isSheetShowing = isSheetShowing
+        self._sheetDetent = sheetDetent
     }
+    
+    var body: some View {
+        
+        if self.features.featureData.count == 0 {
+            ProgressView("Loading...")
+                .progressViewStyle(CircularProgressViewStyle())
+        } else {
+            NavigationView {
+                List(self.$features.featureData) { $feature in
+                    Section(header: Text(self.features.featureData.count > 1 ? feature.name : "Object Data")) {
+                        ForEach(feature.data.sorted(by: >), id: \.key) { key, value in
+                            VStack {
+                                Text(key)
+                                    .font(.headline)
+                                    .foregroundColor(.secondary)
+                                Text(value)
+                            }
+                        }
+                    }
+                }
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar(content: {
+                    ToolbarItem(placement: .principal, content: {
+                        MalinkiSheetHeader(title: self.features.featureData.count > 1 ? "\(self.features.featureData[0].name) +\(self.features.featureData.count - 1)" : self.features.featureData.first?.name ?? "", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent)
+                    })
+                })
+            }
+        }
+        
+    }
+    
 }
 
+@available(iOS 15.0, *)
 struct MalinkiObjectDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiObjectDetailsView()
+        MalinkiObjectDetailsView(isSheetShowing: .constant(true), sheetDetent: .constant(UISheetPresentationController.Detent.Identifier.medium))
+            .environmentObject(MalinkiFeatureDataContainer())
     }
 }
