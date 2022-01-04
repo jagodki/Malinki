@@ -15,6 +15,7 @@ struct MalinkiMapView: UIViewRepresentable {
     @Binding private var basemapID: Int
     @Binding private var mapThemeID: Int
     @Binding private var sheetState: MalinkiSheetState?
+    @EnvironmentObject var features: MalinkiFeatureDataContainer
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     
     init(basemapID: Binding<Int>, mapThemeID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
@@ -61,13 +62,13 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
         
         if self.mapLayers.mapThemes.filter({$0.annotationsAreToggled && $0.themeID == self.mapThemeID}).count != 0 {
-            let vectorData = MalinkiVectorData()
+            let vectorAnnotations = MalinkiVectorAnnotation()
             
             //get the IDs of all visible raster layers
             let visibleRasterLayerIDs = self.mapLayers.rasterLayers.filter({$0.isToggled && $0.themeID == self.mapThemeID}).map({$0.id})
             
             //add annotations to the map
-            mapView.addAnnotations(MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.mapThemeID).filter({visibleRasterLayerIDs.contains($0.correspondingRasterLayer)}).map({vectorData.getAnnotationFeatures(for: $0.id, in: self.mapThemeID)}).flatMap({$0}))
+            mapView.addAnnotations(MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.mapThemeID).filter({visibleRasterLayerIDs.contains($0.correspondingRasterLayer)}).map({vectorAnnotations.getAnnotationFeatures(for: $0.id, in: self.mapThemeID)}).flatMap({$0}))
         }
     }
     
@@ -116,6 +117,7 @@ struct MalinkiMapView: UIViewRepresentable {
 @available(iOS 15.0.0, *)
 final class Coordinator: NSObject, MKMapViewDelegate {
     var control: MalinkiMapView
+//    var features: MalinkiFeatureDataContainer
     
     init(_ control: MalinkiMapView) {
         self.control = control
@@ -163,7 +165,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
         return overlayRender
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    @MainActor func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         //focus the map on the selected annotation
         guard let coordinates = view.annotation?.coordinate else { return }
         let span = mapView.region.span
@@ -172,20 +174,21 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 
         //get feature data
         if let annotation = view.annotation as? MalinkiAnnotation {
-            let mvd = MalinkiVectorData()
-            mvd.getFeatureData(featureID: annotation.layerID, mapThemeID: annotation.themeID, annotation: annotation, span: mapView.region.span)
+            self.control.features.annotation = annotation
+            self.control.features.span = mapView.region.span
+            self.control.features.getFeatureData()
+            self.control.showDetailSheet()
         }
-        
-        self.control.showDetailSheet()
         
     }
     
 }
 
-@available(iOS 15.0.0, *)
-struct MalinkiMapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0), sheetState: .constant(nil))
-            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
-    }
-}
+//@available(iOS 15.0.0, *)
+//struct MalinkiMapView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0), sheetState: .constant(nil))
+//            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
+//            .environmentObject(MalinkiFeatureDataContainer())
+//    }
+//}
