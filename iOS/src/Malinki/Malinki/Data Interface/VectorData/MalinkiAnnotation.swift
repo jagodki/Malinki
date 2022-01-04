@@ -11,14 +11,14 @@ import Combine
 
 /// A class representing an annotation.
 /// The class is extended by additional attributes to query the configuration.
-class MalinkiAnnotation: NSObject, MKAnnotation, ObservableObject {
+public class MalinkiAnnotation: NSObject, MKAnnotation, ObservableObject {
     
-    var title: String?
-    var subtitle: String?
-    var coordinate: CLLocationCoordinate2D
-    var themeID: Int
-    var layerID: Int
-    var featureID: Int
+    public var title: String?
+    public var subtitle: String?
+    public var coordinate: CLLocationCoordinate2D
+    public var themeID: Int
+    public var layerID: Int
+    public var featureID: Int
     
     init(title: String?, subtitle: String?, coordinate: CLLocationCoordinate2D, themeID: Int, layerID: Int, featureID: Int) {
         self.title = title
