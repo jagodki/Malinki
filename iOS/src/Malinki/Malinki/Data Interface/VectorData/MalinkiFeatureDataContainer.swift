@@ -78,8 +78,14 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         let i = Int(width / 2) + 1
         let j = Int(height / 2) + 1
         
+        //create the bbox
+        //change x and y for EPSG:4326 because of its definition (north, east, up)
+        var bbox: String = "\(x0),\(y0),\(x1),\(y1)"
+        if config.crs == "EPSG:4326" {
+            bbox = "\(y0),\(x0),\(y1),\(x1)"
+        }
+        
         //create request
-        let bbox: String = "\(x0),\(y0),\(x1),\(y1)"
         let fc: String = String(config.featureCount)
         let request: String = (config.baseURL +
                                "SERVICE=WMS&REQUEST=GetFeatureInfo" +
@@ -96,7 +102,6 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                                "&I=" + String(i) +
                                "&J=" + String(j) +
                                "&FEATURE_COUNT=" + fc)
-        print(request)
         
         //get data and parse it, depending on the info format
         Task {
