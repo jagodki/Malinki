@@ -28,6 +28,10 @@ struct MalinkiMapView: UIViewRepresentable {
         self.sheetState = .details
     }
     
+    func closeSheet() {
+        self.sheetState = .none
+    }
+    
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
@@ -166,29 +170,35 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     }
     
     @MainActor func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        //focus the map on the selected annotation
-        guard let coordinates = view.annotation?.coordinate else { return }
+        //get the coordinates of the annotation
+        guard var coordinates = view.annotation?.coordinate else { return }
         let span = mapView.region.span
-        let region = MKCoordinateRegion(center: coordinates, span: span)
-        mapView.setRegion(region, animated: true)
 
         //get feature data
         if let annotation = view.annotation as? MalinkiAnnotation {
+            coordinates = CLLocationCoordinate2D(latitude: coordinates.latitude - span.latitudeDelta / 4, longitude: coordinates.longitude)
+            
             self.control.features.annotation = annotation
             self.control.features.span = mapView.region.span
             self.control.features.getFeatureData()
             self.control.showDetailSheet()
+        } else {
+            self.control.closeSheet()
         }
+        
+        //focus the map on the selected annotation, map center equals annotation for cluster, otherwise annotation at the top half of the map
+        let region = MKCoordinateRegion(center: coordinates, span: span)
+        mapView.setRegion(region, animated: true)
         
     }
     
 }
 
-//@available(iOS 15.0.0, *)
-//struct MalinkiMapView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0), sheetState: .constant(nil))
-//            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
-//            .environmentObject(MalinkiFeatureDataContainer())
-//    }
-//}
+@available(iOS 15.0.0, *)
+struct MalinkiMapView_Previews: PreviewProvider {
+    static var previews: some View {
+        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0), sheetState: .constant(nil))
+            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
+            .environmentObject(MalinkiFeatureDataContainer())
+    }
+}
