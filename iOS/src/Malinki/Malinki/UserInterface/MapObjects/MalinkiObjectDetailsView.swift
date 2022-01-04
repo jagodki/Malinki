@@ -32,9 +32,9 @@ struct MalinkiObjectDetailsView: View {
                 List(self.$features.featureData) { $feature in
                     Section(header: Text(self.features.featureData.count > 1 ? feature.name : "Object Data")) {
                         ForEach(feature.data.sorted(by: >), id: \.key) { key, value in
-                            VStack {
+                            VStack(alignment: .leading) {
                                 Text(key)
-                                    .font(.headline)
+                                    .font(.subheadline)
                                     .foregroundColor(.secondary)
                                 Text(value)
                             }
