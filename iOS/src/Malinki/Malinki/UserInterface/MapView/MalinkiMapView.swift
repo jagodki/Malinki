@@ -29,7 +29,9 @@ struct MalinkiMapView: UIViewRepresentable {
     }
     
     func closeSheet() {
-        self.sheetState = .none
+        if self.sheetState != .none {
+            self.sheetState = .none
+        }
     }
     
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
