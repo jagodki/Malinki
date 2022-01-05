@@ -15,23 +15,33 @@ struct MalinkiSheetHeader: View {
     @Binding private var isSheetShowing: Bool
     @Binding private var sheetDetent: UISheetPresentationController.Detent.Identifier?
     private var title: String
+    private var subtitle: String
     
     /// The initialiser of this struct.
     /// - Parameters:
     ///   - title: the title of the bottom sheet
     ///   - isSheetShowing: a binding indicating, whether the sheet is open or not
     ///   - sheetDetent: a binding to control the selected detent of a sheet
-    init(title: String, isSheetShowing: Binding<Bool>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>) {
+    init(title: String, isSheetShowing: Binding<Bool>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>, subtitle: String = "") {
         self.title = title
         self._isSheetShowing = isSheetShowing
         self._sheetDetent = sheetDetent
+        self.subtitle = subtitle
     }
     
     var body: some View {
         HStack {
-            Text(LocalizedStringKey(self.title))
-                .font(.headline)
-                .padding(.leading)
+            VStack(alignment: .leading) {
+                Text(LocalizedStringKey(self.title))
+                    .font(.headline)
+                
+                if self.subtitle != "" {
+                    Text(self.subtitle)
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                }
+            }
+            .padding(.leading)
             
             Spacer()
             
