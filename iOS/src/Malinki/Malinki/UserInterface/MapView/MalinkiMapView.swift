@@ -17,11 +17,13 @@ struct MalinkiMapView: UIViewRepresentable {
     @Binding private var sheetState: MalinkiSheetState?
     @EnvironmentObject var features: MalinkiFeatureDataContainer
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
+    private var vectorAnnotations: MalinkiVectorAnnotation
     
-    init(basemapID: Binding<Int>, mapThemeID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
+    init(basemapID: Binding<Int>, mapThemeID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>, vectorAnnotations: MalinkiVectorAnnotation) {
         self._basemapID = basemapID
         self._mapThemeID = mapThemeID
         self._sheetState = sheetState
+        self.vectorAnnotations = vectorAnnotations
     }
     
     func showDetailSheet() {
@@ -51,7 +53,46 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.showsScale = true
 //        mapView.showsUserLocation = true
         
+        self.setCurrentAnnotations()
+        
         return mapView
+    }
+    
+    /// This function edits a dictionary containing information about the current layers represented by annotations.
+    private func setCurrentAnnotations() {
+        self.vectorAnnotations.currentAnnotations = ["mapTheme": String(self.mapThemeID),
+                                                     "isThemeToggled": String(self.isThemeToggled()),
+                                                     "layers": self.getVisibleVectorLayers().map({String($0.id)}).joined(separator: "-")]
+    }
+    
+    private func isThemeToggled() -> Bool {
+        return self.mapLayers.mapThemes.filter({$0.annotationsAreToggled && $0.themeID == self.mapThemeID}).count != 0
+    }
+    
+    private func shouldUpdateAnnotations() -> Bool {
+        let checkMapTheme = self.vectorAnnotations.currentAnnotations["mapTheme"] != String(self.mapThemeID)
+        let checkIsThemeToggled = self.vectorAnnotations.currentAnnotations["isThemeToggled"] != String(self.isThemeToggled())
+        let checkLayers = self.vectorAnnotations.currentAnnotations["layers"] != self.getVisibleVectorLayers().map({String($0.id)}).joined(separator: "-")
+        
+        return checkMapTheme || checkIsThemeToggled || checkLayers
+    }
+    
+    /// Get all visible raster layers.
+    /// - Returns: <#description#>
+    private func getVisibleRasterLayerIDs() -> [Int] {
+        return self.mapLayers.rasterLayers.filter({$0.isToggled && $0.themeID == self.mapThemeID}).map({$0.id})
+    }
+    
+    /// Get all vector/annotation layers corresponding to the map theme.
+    /// - Returns: <#description#>
+    private func getVectorLayers() -> [MalinkiConfigurationVectorData] {
+        return MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.mapThemeID)
+    }
+    
+    /// Get all visible vector/annotation layers (getVectorLayers() - getVisibleRasterLayerIDs()).
+    /// - Returns: <#description#>
+    private func getVisibleVectorLayers() -> [MalinkiConfigurationVectorData] {
+        return self.getVectorLayers().filter({self.getVisibleRasterLayerIDs().contains($0.correspondingRasterLayer)})
     }
     
     func updateUIView(_ view: MKMapView, context: UIViewRepresentableContext<MalinkiMapView>) {
@@ -64,18 +105,22 @@ struct MalinkiMapView: UIViewRepresentable {
     }
     
     private func updateAnnotations(from mapView: MKMapView) {
-        //remove all annotations from the map
-        mapView.removeAnnotations(mapView.annotations)
-        
-        if self.mapLayers.mapThemes.filter({$0.annotationsAreToggled && $0.themeID == self.mapThemeID}).count != 0 {
-            let vectorAnnotations = MalinkiVectorAnnotation()
+        //first to check, whether annotations have to be updated or redraw does not affect the annotations
+        if self.shouldUpdateAnnotations() {
             
-            //get the IDs of all visible raster layers
-            let visibleRasterLayerIDs = self.mapLayers.rasterLayers.filter({$0.isToggled && $0.themeID == self.mapThemeID}).map({$0.id})
+            //remove all not selected annotations from the map
+            mapView.removeAnnotations(mapView.annotations)
             
-            //add annotations to the map
-            mapView.addAnnotations(MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.mapThemeID).filter({visibleRasterLayerIDs.contains($0.correspondingRasterLayer)}).map({vectorAnnotations.getAnnotationFeatures(for: $0.id, in: self.mapThemeID)}).flatMap({$0}))
+            //add annotations, if theme is toggled
+            if self.isThemeToggled() {
+                let vectorAnnotations = MalinkiVectorAnnotation()
+                mapView.addAnnotations(self.getVisibleVectorLayers().map({vectorAnnotations.getAnnotationFeatures(for: $0.id, in: self.mapThemeID)}).flatMap({$0}))
+            }
+            
+            self.setCurrentAnnotations()
+            
         }
+        
     }
     
     private func updateOverlays(from mapView: MKMapView) {
@@ -196,7 +241,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 @available(iOS 15.0.0, *)
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0), sheetState: .constant(nil))
+        MalinkiMapView(basemapID: .constant(0), mapThemeID: .constant(0), sheetState: .constant(nil), vectorAnnotations: MalinkiVectorAnnotation())
             .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
             .environmentObject(MalinkiFeatureDataContainer())
     }

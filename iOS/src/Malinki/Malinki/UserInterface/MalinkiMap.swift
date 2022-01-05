@@ -23,11 +23,13 @@ struct MalinkiMap: View {
     @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes())
     @StateObject private var features: MalinkiFeatureDataContainer = MalinkiFeatureDataContainer()
     
+    private var vectorAnnotations: MalinkiVectorAnnotation = MalinkiVectorAnnotation()
+    
     @available(iOS 15.0, *)
     var body: some View {
         
         ZStack {
-            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID, sheetState: self.$sheet.state)
+            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID, sheetState: self.$sheet.state, vectorAnnotations: self.vectorAnnotations)
                 .environmentObject(self.mapLayers)
                 .environmentObject(self.features)
                 .edgesIgnoringSafeArea(.all)

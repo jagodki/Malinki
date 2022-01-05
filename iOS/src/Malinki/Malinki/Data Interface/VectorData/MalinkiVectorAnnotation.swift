@@ -11,6 +11,8 @@ import MapKit
 @available(iOS 15.0.0, *)
 public class MalinkiVectorAnnotation: MalinkiVectorData {
     
+    var currentAnnotations: [String: String] = [:]
+    
     func getAnnotationFeatures(for layerID: Int, in mapThemeID: Int) -> [MalinkiAnnotation] {
         //get config data
         let configuration = MalinkiConfigurationProvider.sharedInstance
