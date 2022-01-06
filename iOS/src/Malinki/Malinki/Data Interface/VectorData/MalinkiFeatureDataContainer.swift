@@ -14,8 +14,16 @@ import SwiftUI
 public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     
     @Published public var featureData: [MalinkiFeatureData] = []
+    @Published public var geometries: [MalinkiVectorGeometry] = []
     public var annotation: MalinkiAnnotation? = nil
     public var span: MKCoordinateSpan? = nil
+    
+    public func clearAll() {
+        self.featureData = []
+        self.geometries = []
+        self.annotation = nil
+        self.span = nil
+    }
     
     public func getFeatureData() {
         //clear the current data
@@ -114,7 +122,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                     //get geojson object and its data
                     await self.getFeatureData(name: annotation?.title ?? "", from: self.decodeGeoJSON(from: data))
                     
-                } else if config.infoFormat == "plain/text" {
+                } else if config.infoFormat == "text/plain" {
                     let text = String(data: data, encoding: .utf8) ?? ""
                     self.addFeature(name: annotation?.title ?? "", data: ["Data": text])
                 }
@@ -147,6 +155,11 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                     }
 
                     self.addFeature(name: name, data: attributes)
+                }
+                
+                //get the geometry
+                if let geometry = feature.geometry.first {
+                    self.geometries.append(MalinkiVectorGeometry(mapThemeID: self.annotation?.themeID ?? -99, layerID: self.annotation?.layerID ?? -99, geometry: geometry))
                 }
             }
         }
