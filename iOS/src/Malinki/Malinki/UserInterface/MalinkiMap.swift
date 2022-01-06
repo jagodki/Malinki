@@ -75,6 +75,10 @@ struct MalinkiMap: View {
         case .details:
             MalinkiObjectDetailsView(isSheetShowing: self.$sheet.isShowing, sheetDetent: self.$selectedDetentIdentifier)
                 .environmentObject(self.features)
+                .onDisappear(perform: {
+                    self.features.clearAll()
+                    self.vectorAnnotations.deselectAnnotations = true
+                })
         default:
             EmptyView()
         }
