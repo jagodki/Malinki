@@ -54,6 +54,7 @@ struct MalinkiMapView: UIViewRepresentable {
 //        mapView.showsUserLocation = true
         
         self.setCurrentAnnotations()
+        self.setCurrentRasterLayers(for: mapView.region)
         
         return mapView
     }
@@ -65,8 +66,28 @@ struct MalinkiMapView: UIViewRepresentable {
                                                      "layers": self.getVisibleVectorLayers().map({String($0.id)}).joined(separator: "-")]
     }
     
+    private func setCurrentRasterLayers(for region: MKCoordinateRegion) {
+        self.mapLayers.currentRasterLayers = ["mapTheme": String(self.mapThemeID),
+                                              "baseMap": String(self.basemapID),
+                                              "layers": self.getVisibleRasterLayerIDs().map({String($0)}).joined(separator: "-")]
+        self.mapLayers.currentMapRegion = region
+    }
+    
     private func isThemeToggled() -> Bool {
         return self.mapLayers.mapThemes.filter({$0.annotationsAreToggled && $0.themeID == self.mapThemeID}).count != 0
+    }
+    
+    private func shouldUpdateRasterOverlays(for region: MKCoordinateRegion) -> Bool {
+        let checkMapTheme = self.mapLayers.currentRasterLayers["mapTheme"] != String(self.mapThemeID)
+        let checkBaseMap = self.mapLayers.currentRasterLayers["baseMap"] != String(self.basemapID)
+        let checkLayers = self.mapLayers.currentRasterLayers["layers"] != self.getVisibleRasterLayerIDs().map({String($0)}).joined(separator: "-")
+        let precision = 10000000.0
+        let checkLat = round(Double(self.mapLayers.currentMapRegion?.center.latitude ?? 0) * precision) != round(Double(region.center.latitude) * precision)
+        let checkLon = round(Double(self.mapLayers.currentMapRegion?.center.longitude ?? 0) * precision) != round(Double(region.center.longitude) * precision)
+        let checkLatDelta = round(Double(self.mapLayers.currentMapRegion?.span.latitudeDelta ?? 0) * precision) != round(Double(region.span.latitudeDelta) * precision)
+        let checkLonDelta = round(Double(self.mapLayers.currentMapRegion?.span.longitudeDelta ?? 0) * precision) != round(Double(region.span.longitudeDelta) * precision)
+        
+        return checkMapTheme || checkBaseMap || checkLayers || checkLat || checkLon || checkLatDelta || checkLonDelta
     }
     
     private func shouldUpdateAnnotations() -> Bool {
@@ -96,8 +117,14 @@ struct MalinkiMapView: UIViewRepresentable {
     }
     
     func updateUIView(_ view: MKMapView, context: UIViewRepresentableContext<MalinkiMapView>) {
+        if self.vectorAnnotations.deselectAnnotations{
+            view.selectedAnnotations.filter({!($0 is MKClusterAnnotation)}).map({view.deselectAnnotation($0, animated: true)})
+            self.vectorAnnotations.deselectAnnotations = false
+        }
+        
         self.updateAnnotations(from: view)
         self.updateOverlays(from: view)
+        
     }
     
     func makeCoordinator() -> Coordinator {
@@ -115,50 +142,81 @@ struct MalinkiMapView: UIViewRepresentable {
             if self.isThemeToggled() {
                 let vectorAnnotations = MalinkiVectorAnnotation()
                 mapView.addAnnotations(self.getVisibleVectorLayers().map({vectorAnnotations.getAnnotationFeatures(for: $0.id, in: self.mapThemeID)}).flatMap({$0}))
+                
+                self.setCurrentAnnotations()
             }
-            
-            self.setCurrentAnnotations()
             
         }
         
     }
     
     private func updateOverlays(from mapView: MKMapView) {
-        //remove all overlays from the map
-        mapView.removeOverlays(mapView.overlays)
         
-        //get the basemap
-        if let basemap = MalinkiConfigurationProvider.sharedInstance.getBasemap(for: self.basemapID) {
+        if self.shouldUpdateRasterOverlays(for: mapView.region) {
+            //remove all overlays from the map
+            mapView.removeOverlays(mapView.overlays)
             
-            //create a layer from the given basemap
-            let baseLayer = MalinkiRasterData(from: basemap)
-            
-            //add the basemap to the mapview
-            if baseLayer.isAppleMaps {
-                mapView.mapType = baseLayer.getAppleMapType()
-            } else {
-                let overlay = baseLayer.getOverlay()
-                overlay.canReplaceMapContent = true
-                mapView.addOverlay(overlay)
-            }
-        }
-        
-        //add raster layers from the map theme
-        for rasterLayer in self.mapLayers.rasterLayers.filter({$0.themeID == self.mapThemeID}).sorted(by: {$0.id < $1.id}) {
-            //che(ck the visibility of the current layer
-            if rasterLayer.isToggled {
-                //get a layer according to the data source
-                let layer = MalinkiRasterData(from: MalinkiConfigurationProvider.sharedInstance.getRasterLayer(with: rasterLayer.id, of: rasterLayer.themeID)!)
+            //get the basemap
+            if let basemap = MalinkiConfigurationProvider.sharedInstance.getBasemap(for: self.basemapID) {
                 
-                //add the layer to the map
-                if layer.isAppleMaps {
-                    mapView.mapType = layer.getAppleMapType()
+                //create a layer from the given basemap
+                let baseLayer = MalinkiRasterData(from: basemap)
+                
+                //add the basemap to the mapview
+                if baseLayer.isAppleMaps {
+                    mapView.mapType = baseLayer.getAppleMapType()
                 } else {
-                    let overlay = layer.getOverlay()
-                    overlay.canReplaceMapContent = false
+                    let overlay = baseLayer.getOverlay()
+                    overlay.canReplaceMapContent = true
                     mapView.addOverlay(overlay)
                 }
             }
+            
+            //add raster layers from the map theme
+            for rasterLayer in self.mapLayers.rasterLayers.filter({$0.themeID == self.mapThemeID}).sorted(by: {$0.id < $1.id}) {
+                //che(ck the visibility of the current layer
+                if rasterLayer.isToggled {
+                    //get a layer according to the data source
+                    let layer = MalinkiRasterData(from: MalinkiConfigurationProvider.sharedInstance.getRasterLayer(with: rasterLayer.id, of: rasterLayer.themeID)!)
+                    
+                    //add the layer to the map
+                    if layer.isAppleMaps {
+                        mapView.mapType = layer.getAppleMapType()
+                    } else {
+                        let overlay = layer.getOverlay()
+                        overlay.canReplaceMapContent = false
+                        mapView.addOverlay(overlay)
+                    }
+                }
+                
+                self.setCurrentRasterLayers(for: mapView.region)
+            }
+        } else {
+            //remove only polygons and polylines from the mapview
+            let polygonsOrLinestrings = mapView.overlays.filter({$0 is MKPolygon || $0 is MKPolyline || $0 is MKMultiPolyline || $0 is MKMultiPolygon})
+            mapView.removeOverlays(polygonsOrLinestrings)
+        }
+        
+        //add the geometry of the selected annotation
+        if self.features.geometries.count != 0 {
+            
+            //get the different geometry types
+            let polygons = self.features.geometries.filter({$0.type == .polygon})
+            let multipolygons = self.features.geometries.filter({$0.type == .multipolygon})
+            let linestrings = self.features.geometries.filter({$0.type == .linestring})
+            let multilinestring = self.features.geometries.filter({$0.type == .multilinestring})
+            
+            //create and add one multipolygon
+            var allPolygons: [MKPolygon] = []
+            allPolygons.append(contentsOf: polygons.map({$0.polygon}))
+            allPolygons.append(contentsOf: multipolygons.map({$0.multiPolygon.polygons}).flatMap({$0}))
+            mapView.addOverlay(MKMultiPolygon(allPolygons))
+            
+            //create and add one multilinestring
+            var allLinestrings: [MKPolyline] = []
+            allLinestrings.append(contentsOf: linestrings.map({$0.linestring}))
+            allLinestrings.append(contentsOf: multilinestring.map({$0.multiLinestring.polylines}).flatMap({$0}))
+            mapView.addOverlay(MKMultiPolyline(allLinestrings))
         }
     }
     
@@ -201,7 +259,11 @@ final class Coordinator: NSObject, MKMapViewDelegate {
         return annotationView
     }
     
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+    @MainActor func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        self.control.features.clearAll()
+    }
+    
+    @MainActor func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
         let overlayRender: MKOverlayRenderer
         
@@ -209,6 +271,20 @@ final class Coordinator: NSObject, MKMapViewDelegate {
             let mto = overlay as! MalinkiTileOverlay
             overlayRender = MKTileOverlayRenderer(tileOverlay: mto)
             overlayRender.alpha = mto.alpha
+        } else if overlay is MKMultiPolyline {
+            let renderer = MKMultiPolylineRenderer(multiPolyline: overlay as! MKMultiPolyline)
+            let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.annotation?.layerID ?? 0, theme: self.control.features.annotation?.themeID ?? 0)?.style
+            renderer.strokeColor = UIColor(named: vectorStyle?.featureStyle.outline.colour ?? "AccentColor")
+            renderer.lineWidth = vectorStyle?.featureStyle.outline.width ?? 1.0
+            overlayRender = renderer
+            
+        } else if overlay is MKMultiPolygon {
+            let renderer = MKMultiPolygonRenderer(multiPolygon: overlay as! MKMultiPolygon)
+            let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.annotation?.layerID ?? 0, theme: self.control.features.annotation?.themeID ?? 0)?.style
+            renderer.strokeColor = UIColor(named: vectorStyle?.featureStyle.outline.colour ?? "AccentColor")
+            renderer.fillColor = UIColor(named: vectorStyle?.featureStyle.fill.colour ?? "AccentColor")?.withAlphaComponent(vectorStyle?.featureStyle.fill.opacity ?? 0.5)
+            renderer.lineWidth = vectorStyle?.featureStyle.outline.width ?? 1.0
+            overlayRender = renderer
         } else {
             overlayRender = MKOverlayRenderer()
         }
