@@ -12,6 +12,7 @@ import MapKit
 public class MalinkiVectorAnnotation: MalinkiVectorData {
     
     var currentAnnotations: [String: String] = [:]
+    var deselectAnnotations: Bool = false
     
     func getAnnotationFeatures(for layerID: Int, in mapThemeID: Int) -> [MalinkiAnnotation] {
         //get config data
