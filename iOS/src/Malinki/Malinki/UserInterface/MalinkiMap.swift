@@ -76,6 +76,7 @@ struct MalinkiMap: View {
             MalinkiObjectDetailsView(isSheetShowing: self.$sheet.isShowing, sheetDetent: self.$selectedDetentIdentifier)
                 .environmentObject(self.features)
                 .onDisappear(perform: {
+                    self.mapLayers.allowRedraw = false
                     self.features.clearAll()
                     self.vectorAnnotations.deselectAnnotations = true
                 })
