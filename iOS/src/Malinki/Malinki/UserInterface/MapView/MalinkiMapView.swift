@@ -120,10 +120,12 @@ struct MalinkiMapView: UIViewRepresentable {
         if self.vectorAnnotations.deselectAnnotations{
             view.selectedAnnotations.filter({!($0 is MKClusterAnnotation)}).map({view.deselectAnnotation($0, animated: true)})
             self.vectorAnnotations.deselectAnnotations = false
+        } else {
+            
+            self.updateOverlays(from: view)
         }
         
         self.updateAnnotations(from: view)
-        self.updateOverlays(from: view)
         
     }
     
@@ -142,17 +144,15 @@ struct MalinkiMapView: UIViewRepresentable {
             if self.isThemeToggled() {
                 let vectorAnnotations = MalinkiVectorAnnotation()
                 mapView.addAnnotations(self.getVisibleVectorLayers().map({vectorAnnotations.getAnnotationFeatures(for: $0.id, in: self.mapThemeID)}).flatMap({$0}))
-                
-                self.setCurrentAnnotations()
             }
-            
+            self.setCurrentAnnotations()
         }
         
     }
     
     private func updateOverlays(from mapView: MKMapView) {
         
-        if self.shouldUpdateRasterOverlays(for: mapView.region) {
+        if self.shouldUpdateRasterOverlays(for: mapView.region) && self.mapLayers.allowRedraw  {
             //remove all overlays from the map
             mapView.removeOverlays(mapView.overlays)
             
@@ -192,6 +192,9 @@ struct MalinkiMapView: UIViewRepresentable {
                 self.setCurrentRasterLayers(for: mapView.region)
             }
         } else {
+            //allow the redraw
+            self.mapLayers.allowRedraw = true
+            
             //remove only polygons and polylines from the mapview
             let polygonsOrLinestrings = mapView.overlays.filter({$0 is MKPolygon || $0 is MKPolyline || $0 is MKMultiPolyline || $0 is MKMultiPolygon})
             mapView.removeOverlays(polygonsOrLinestrings)
