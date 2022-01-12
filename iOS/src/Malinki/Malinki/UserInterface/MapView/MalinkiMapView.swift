@@ -263,6 +263,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     }
     
     @MainActor func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        self.control.closeSheet()
         self.control.features.clearAll()
     }
     
