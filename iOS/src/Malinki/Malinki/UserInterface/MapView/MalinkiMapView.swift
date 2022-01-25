@@ -62,7 +62,7 @@ struct MalinkiMapView: UIViewRepresentable {
     /// This function edits a dictionary containing information about the current layers represented by annotations.
     private func setCurrentAnnotations() {
         self.vectorAnnotations.currentAnnotations = ["mapTheme": String(self.mapThemeID),
-                                                     "isThemeToggled": String(self.isThemeToggled()),
+                                                     "areAnnotationsToggled": String(self.areAnnotationsToggled()),
                                                      "layers": self.getVisibleVectorLayers().map({String($0.id)}).joined(separator: "-")]
     }
     
@@ -73,7 +73,7 @@ struct MalinkiMapView: UIViewRepresentable {
         self.mapLayers.currentMapRegion = region
     }
     
-    private func isThemeToggled() -> Bool {
+    private func areAnnotationsToggled() -> Bool {
         return self.mapLayers.mapThemes.filter({$0.annotationsAreToggled && $0.themeID == self.mapThemeID}).count != 0
     }
     
@@ -92,7 +92,7 @@ struct MalinkiMapView: UIViewRepresentable {
     
     private func shouldUpdateAnnotations() -> Bool {
         let checkMapTheme = self.vectorAnnotations.currentAnnotations["mapTheme"] != String(self.mapThemeID)
-        let checkIsThemeToggled = self.vectorAnnotations.currentAnnotations["isThemeToggled"] != String(self.isThemeToggled())
+        let checkIsThemeToggled = self.vectorAnnotations.currentAnnotations["areAnnotationsToggled"] != String(self.areAnnotationsToggled())
         let checkLayers = self.vectorAnnotations.currentAnnotations["layers"] != self.getVisibleVectorLayers().map({String($0.id)}).joined(separator: "-")
         
         return checkMapTheme || checkIsThemeToggled || checkLayers
@@ -141,7 +141,7 @@ struct MalinkiMapView: UIViewRepresentable {
             mapView.removeAnnotations(mapView.annotations)
             
             //add annotations, if theme is toggled
-            if self.isThemeToggled() {
+            if self.areAnnotationsToggled() {
                 let vectorAnnotations = MalinkiVectorAnnotation()
                 mapView.addAnnotations(self.getVisibleVectorLayers().map({vectorAnnotations.getAnnotationFeatures(for: $0.id, in: self.mapThemeID)}).flatMap({$0}))
             }
