@@ -15,13 +15,13 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     
     @Published public var featureData: [MalinkiFeatureData] = []
     @Published public var geometries: [MalinkiVectorGeometry] = []
-    public var annotation: MalinkiAnnotation? = nil
+    public var selectedAnnotation: MalinkiAnnotation? = nil
     public var span: MKCoordinateSpan? = nil
     
     public func clearAll() {
         self.featureData = []
         self.geometries = []
-        self.annotation = nil
+        self.selectedAnnotation = nil
         self.span = nil
     }
     
@@ -30,7 +30,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         self.featureData = []
         
         //get the layer data from the config file
-        let featureLayer = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.annotation?.layerID ?? 0, theme: self.annotation?.themeID ?? 0)
+        let featureLayer = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? 0, theme: self.selectedAnnotation?.themeID ?? 0)
         let featureInfo = featureLayer?.featureInfo
         
         if let wfs = featureInfo?.wfs {
@@ -47,7 +47,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     
     private func getFeatureInfo(config: MalinkiConfigurationVectorFeatureInfoWMS) {
         //get coordinates
-        let coord = self.annotation?.coordinate
+        let coord = self.selectedAnnotation?.coordinate
         
         //get delta longitude
         let deltaLon = self.span?.longitudeDelta ?? 1.0
@@ -120,15 +120,15 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                 if config.infoFormat == "application/json" {
                     
                     //get geojson object and its data
-                    await self.getFeatureData(name: annotation?.title ?? "", from: self.decodeGeoJSON(from: data))
+                    await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: self.decodeGeoJSON(from: data))
                     
                 } else if config.infoFormat == "text/plain" {
                     let text = String(data: data, encoding: .utf8) ?? ""
-                    self.addFeature(name: annotation?.title ?? "", data: ["Data": text])
+                    self.addFeature(name: selectedAnnotation?.title ?? "", data: ["Data": text])
                 }
                 
             } catch {
-                self.addFeature(name: annotation?.title ?? "", data: ["Error": "not able to get data from webservice"])
+                self.addFeature(name: selectedAnnotation?.title ?? "", data: ["Error": "not able to get data from webservice"])
             }
         }
     }
@@ -159,7 +159,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                 
                 //get the geometry
                 if let geometry = feature.geometry.first {
-                    self.geometries.append(MalinkiVectorGeometry(mapThemeID: self.annotation?.themeID ?? -99, layerID: self.annotation?.layerID ?? -99, geometry: geometry))
+                    self.geometries.append(MalinkiVectorGeometry(mapThemeID: self.selectedAnnotation?.themeID ?? -99, layerID: self.selectedAnnotation?.layerID ?? -99, geometry: geometry))
                 }
             }
         }

@@ -277,14 +277,14 @@ final class Coordinator: NSObject, MKMapViewDelegate {
             overlayRender.alpha = mto.alpha
         } else if overlay is MKMultiPolyline {
             let renderer = MKMultiPolylineRenderer(multiPolyline: overlay as! MKMultiPolyline)
-            let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.annotation?.layerID ?? 0, theme: self.control.features.annotation?.themeID ?? 0)?.style
+            let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.selectedAnnotation?.layerID ?? 0, theme: self.control.features.selectedAnnotation?.themeID ?? 0)?.style
             renderer.strokeColor = UIColor(named: vectorStyle?.featureStyle.outline.colour ?? "AccentColor")
             renderer.lineWidth = vectorStyle?.featureStyle.outline.width ?? 1.0
             overlayRender = renderer
             
         } else if overlay is MKMultiPolygon {
             let renderer = MKMultiPolygonRenderer(multiPolygon: overlay as! MKMultiPolygon)
-            let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.annotation?.layerID ?? 0, theme: self.control.features.annotation?.themeID ?? 0)?.style
+            let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.selectedAnnotation?.layerID ?? 0, theme: self.control.features.selectedAnnotation?.themeID ?? 0)?.style
             renderer.strokeColor = UIColor(named: vectorStyle?.featureStyle.outline.colour ?? "AccentColor")
             renderer.fillColor = UIColor(named: vectorStyle?.featureStyle.fill.colour ?? "AccentColor")?.withAlphaComponent(vectorStyle?.featureStyle.fill.opacity ?? 0.5)
             renderer.lineWidth = vectorStyle?.featureStyle.outline.width ?? 1.0
@@ -306,7 +306,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
             mapView.setRegion(region, animated: true)
             
             
-            self.control.features.annotation = annotation
+            self.control.features.selectedAnnotation = annotation
             self.control.features.span = mapView.region.span
             self.control.features.getFeatureData()
             self.control.showDetailSheet()

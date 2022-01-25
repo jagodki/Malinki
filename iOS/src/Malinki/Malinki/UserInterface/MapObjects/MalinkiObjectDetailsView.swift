@@ -45,7 +45,7 @@ struct MalinkiObjectDetailsView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: {
                     ToolbarItem(placement: .principal, content: {
-                        MalinkiSheetHeader(title: self.features.featureData.count > 1 ? "\(self.features.featureData[0].name) +\(self.features.featureData.count - 1)" : self.features.featureData.first?.name ?? "", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent, subtitle: self.features.annotation?.subtitle ?? "")
+                        MalinkiSheetHeader(title: self.features.featureData.count > 1 ? "\(self.features.featureData[0].name) +\(self.features.featureData.count - 1)" : self.features.featureData.first?.name ?? "", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent, subtitle: self.features.selectedAnnotation?.subtitle ?? "")
                     })
                 })
             }
