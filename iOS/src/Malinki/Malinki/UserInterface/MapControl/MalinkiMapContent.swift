@@ -14,16 +14,13 @@ struct MalinkiMapContent: View {
     
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @Binding private var sheetDetent: UISheetPresentationController.Detent.Identifier?
-    @Binding private var mapThemeID: Int
     @Binding private var isSheetShowing: Bool
     
     /// The initialiser of this sctructure.
     /// - Parameters:
-    ///   - mapThemeID: the ID of the current map theme as binding
     ///   - isSheetShowing: a binding to control the presentation of a sheet
     ///   - sheetDetent: a binding to control the selected detent of a sheet   
-    init(mapThemeID: Binding<Int>, isSheetShowing: Binding<Bool>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>) {
-        self._mapThemeID = mapThemeID
+    init(isSheetShowing: Binding<Bool>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>) {
         self._isSheetShowing = isSheetShowing
         self._sheetDetent = sheetDetent
     }
@@ -35,9 +32,9 @@ struct MalinkiMapContent: View {
                 List {
                     
                     //marker layer
-                    if self.mapLayers.mapThemes.filter({$0.hasAnnotations && $0.themeID == self.mapThemeID}).count != 0 {
+                    if self.mapLayers.mapThemes.filter({$0.hasAnnotations && $0.themeID == self.mapLayers.selectedMapThemeID}).count != 0 {
                         Section {
-                            Toggle(isOn: self.$mapLayers.mapThemes.filter({$0.themeID.wrappedValue == self.mapThemeID}).first!.annotationsAreToggled) {
+                            Toggle(isOn: self.$mapLayers.mapThemes.filter({$0.themeID.wrappedValue == self.mapLayers.selectedMapThemeID}).first!.annotationsAreToggled) {
                                 HStack {
                                     Image(systemName: "mappin.circle.fill")
                                     Text(LocalizedStringKey("Marker to query data"))
@@ -48,7 +45,7 @@ struct MalinkiMapContent: View {
                     
                     //all overlay layers of the map
                     Section {
-                        List(self.$mapLayers.rasterLayers.filter({$0.themeID.wrappedValue == self.mapThemeID})) { $layer in
+                        List(self.$mapLayers.rasterLayers.filter({$0.themeID.wrappedValue == self.mapLayers.selectedMapThemeID})) { $layer in
                             Toggle(isOn: $layer.isToggled) {
                                 HStack {
                                     layer.image
@@ -73,7 +70,7 @@ struct MalinkiMapContent: View {
 @available(iOS 15.0, *)
 struct MalinkiMapContent_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapContent(mapThemeID: .constant(0), isSheetShowing: .constant(false), sheetDetent: .constant(UISheetPresentationController.Detent.Identifier.medium))
-            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)})))
+        MalinkiMapContent(isSheetShowing: .constant(false), sheetDetent: .constant(UISheetPresentationController.Detent.Identifier.medium))
+            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)}), selectedMapThemeID: 0))
     }
 }

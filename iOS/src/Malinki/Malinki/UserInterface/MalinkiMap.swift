@@ -14,22 +14,17 @@ struct MalinkiMap: View {
     
     @State private var searchText: String = ""
     @State private var isEditing: Bool = false
-    
     @State private var basemapID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfBasemapOnStartUp()
-    @State private var mapThemeID: Int = MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp()
     @State private var selectedDetentIdentifier: UISheetPresentationController.Detent.Identifier? = UISheetPresentationController.Detent.Identifier.medium
     @StateObject private var sheet: MalinkiSheet = MalinkiSheet()
-    
-    @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes())
     @StateObject private var features: MalinkiFeatureDataContainer = MalinkiFeatureDataContainer()
-    
-    private var vectorAnnotations: MalinkiVectorAnnotation = MalinkiVectorAnnotation()
+    @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes(), selectedMapThemeID: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
     
     @available(iOS 15.0, *)
     var body: some View {
         
         ZStack {
-            MalinkiMapView(basemapID: self.$basemapID, mapThemeID: self.$mapThemeID, sheetState: self.$sheet.state, vectorAnnotations: self.vectorAnnotations)
+            MalinkiMapView(basemapID: self.$basemapID, sheetState: self.$sheet.state)
                 .environmentObject(self.mapLayers)
                 .environmentObject(self.features)
                 .edgesIgnoringSafeArea(.all)
@@ -41,7 +36,8 @@ struct MalinkiMap: View {
                     Spacer()
                     
                     VStack {
-                        MalinkiMapThemes(mapThemeID: self.$mapThemeID, sheetState: self.$sheet.state)
+                        MalinkiMapThemes(sheetState: self.$sheet.state)
+                            .environmentObject(self.mapLayers)
                             .frame(width: 40, height: 30, alignment: .center)
                             .padding(.top, 10.0)
                         
@@ -70,7 +66,7 @@ struct MalinkiMap: View {
             MalinkiBasemaps(basemapID: self.$basemapID, isSheetShowing: self.$sheet.isShowing, sheetDetent: self.$selectedDetentIdentifier)
                 .environmentObject(self.mapLayers)
         case .layers:
-            MalinkiMapContent(mapThemeID: self.$mapThemeID, isSheetShowing: self.$sheet.isShowing, sheetDetent: self.$selectedDetentIdentifier)
+            MalinkiMapContent(isSheetShowing: self.$sheet.isShowing, sheetDetent: self.$selectedDetentIdentifier)
                 .environmentObject(self.mapLayers)
         case .details:
             MalinkiObjectDetailsView(isSheetShowing: self.$sheet.isShowing, sheetDetent: self.$selectedDetentIdentifier)
@@ -78,7 +74,7 @@ struct MalinkiMap: View {
                 .onDisappear(perform: {
                     self.mapLayers.allowRedraw = false
                     self.features.clearAll()
-                    self.vectorAnnotations.deselectAnnotations = true
+                    self.mapLayers.annotations.deselectAnnotations = true
                 })
         default:
             EmptyView()

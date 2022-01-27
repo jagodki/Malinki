@@ -8,28 +8,25 @@
 import SwiftUI
 
 /// A struct to display a button for choosing the map themes.
+@available(iOS 15.0.0, *)
 struct MalinkiMapThemes: View {
     
-    @Binding private var mapThemeID: Int
     @Binding private var sheetState: MalinkiSheetState?
+    @EnvironmentObject var mapLayers: MalinkiLayerContainer
     
     /// The initialiser of this struct.
     /// - Parameters:
-    ///   - mapThemeID: a binding indicating the current map theme
     ///   - sheetState: a binding of the sheet state
-    init(mapThemeID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
-        self._mapThemeID = mapThemeID
+    init(sheetState: Binding<MalinkiSheetState?>) {
         self._sheetState = sheetState
     }
     
     var body: some View {
         
         Menu {
-            Picker(selection: self.$mapThemeID, label: Text("Map Themes")) {
+            Picker(selection: self.$mapLayers.selectedMapThemeID, label: Text("Map Themes")) {
                 ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
-                    Button(action: {
-                        self.mapThemeID = mapTheme.id
-                    }) {
+                    HStack {
                         Text(mapTheme.externalNames.en)
                         Image(systemName: mapTheme.iconName)
                     }.tag(mapTheme.id)
@@ -51,8 +48,10 @@ struct MalinkiMapThemes: View {
     }
 }
 
+@available(iOS 15.0.0, *)
 struct MalinkiMapThemes_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapThemes(mapThemeID: .constant(0), sheetState: .constant(.basemaps))
+        MalinkiMapThemes(sheetState: .constant(.basemaps))
+            .environmentObject(MalinkiLayerContainer(layers: [], themes: [MalinkiTheme(themeID: 0), MalinkiTheme(themeID: 1)], selectedMapThemeID: 0))
     }
 }
