@@ -99,8 +99,8 @@
                         },
                         "correspondingRasterLayer": 2,
                         "vectorTypes": {
-                            "localFile": "warngebiete_see_centroids",
-                            "remoteFile": null,
+                            "localFile": null,
+                            "remoteFile": "https://raw.githubusercontent.com/jagodki/Malinki/main/GIS/Local%20Annotations/warngebiete_see_centroids.geojson",
                             "wfs": null
                         },
                         "attributes": {
