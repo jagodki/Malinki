@@ -30,7 +30,7 @@ final class MalinkiLayerContainer: ObservableObject {
     var currentRasterLayers: [String: String] = [:]
     var currentMapRegion: MKCoordinateRegion?
     var allowRedraw: Bool = true
-    @Published var annotations: MalinkiAnnotationContainer = MalinkiAnnotationContainer()
+    var annotations: MalinkiAnnotationContainer = MalinkiAnnotationContainer()
     
     init(layers: [MalinkiLayer], themes: [MalinkiTheme], selectedMapThemeID: Int) {
         self.rasterLayers = layers
