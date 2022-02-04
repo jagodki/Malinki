@@ -495,7 +495,7 @@
         }
     ],
     "onStartUp": {
-        "theme": 0,
+        "theme": 1,
         "basemap": 0
     }
 }
