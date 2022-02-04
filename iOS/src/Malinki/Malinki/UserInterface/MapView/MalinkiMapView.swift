@@ -49,8 +49,6 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.showsScale = true
 //        mapView.showsUserLocation = true
         
-        self.mapLayers.setInformationAboutCurrentAnnotations()
-        self.mapLayers.setInformationAboutCurrentRasterlayers(for: mapView.region, baseMapID: self.basemapID)
         self.mapLayers.queryCurrentAnnotations()
         
         return mapView
@@ -81,7 +79,7 @@ struct MalinkiMapView: UIViewRepresentable {
     
     func updateUIView(_ view: MKMapView, context: UIViewRepresentableContext<MalinkiMapView>) {
         if self.mapLayers.annotations.deselectAnnotations{
-            view.selectedAnnotations.filter({!($0 is MKClusterAnnotation)}).map({view.deselectAnnotation($0, animated: true)})
+            _ = view.selectedAnnotations.filter({!($0 is MKClusterAnnotation)}).map({view.deselectAnnotation($0, animated: true)})
             self.mapLayers.annotations.deselectAnnotations = false
         } else {
             
@@ -105,7 +103,6 @@ struct MalinkiMapView: UIViewRepresentable {
             
             //add annotations, if theme is toggled
             if self.mapLayers.areAnnotationsToggled() {
-//                mapView.addAnnotations(self.mapLayers.getVisibleVectorLayers().map({self.mapLayers.annotations.getAnnotationFeatures(for: $0.id, in: self.mapLayers.selectedMapThemeID)}).flatMap({$0}))
                 mapView.addAnnotations(self.mapLayers.annotations.annotations.values.flatMap({$0}))
             }
             
