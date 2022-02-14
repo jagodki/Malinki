@@ -65,19 +65,19 @@ final class MalinkiLayerContainer: ObservableObject {
     }
     
     /// Get all vector/annotation layers corresponding to the map theme.
-    /// - Returns: <#description#>
+    /// - Returns: an array of MalinkiConfigurationVectorData
     private func getVectorLayers() -> [MalinkiConfigurationVectorData] {
         return MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.selectedMapThemeID)
     }
     
     /// Get all visible raster layers.
-    /// - Returns: <#description#>
+    /// - Returns: an array of Integers
     private func getVisibleRasterLayerIDs() -> [Int] {
         return self.rasterLayers.filter({$0.isToggled && $0.themeID == self.selectedMapThemeID}).map({$0.id})
     }
     
     /// Get all visible vector/annotation layers (getVectorLayers() - getVisibleRasterLayerIDs()).
-    /// - Returns: <#description#>
+    /// - Returns: an array of MalinkiConfigurationVectorData
     func getVisibleVectorLayers() -> [MalinkiConfigurationVectorData] {
         return self.getVectorLayers().filter({self.getVisibleRasterLayerIDs().contains($0.correspondingRasterLayer)})
     }
