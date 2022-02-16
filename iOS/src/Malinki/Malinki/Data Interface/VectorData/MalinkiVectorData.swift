@@ -42,5 +42,22 @@ public class MalinkiVectorData {
         return data
     }
     
+    public func getLocalData(from pathAsString: String) -> Data {
+        var jsonData = Data()
+        
+        do {
+            //get the path of the local file
+            if let bundleURL = Bundle.main.url(forResource: pathAsString, withExtension: "geojson") {
+                
+                //try to read the data
+                jsonData = try Data(contentsOf: bundleURL)
+            }
+        } catch let error {
+            print("ERROR: unable to read local GeoJSON-file: \(error)")
+        }
+        
+        return jsonData
+    }
+    
     
 }
