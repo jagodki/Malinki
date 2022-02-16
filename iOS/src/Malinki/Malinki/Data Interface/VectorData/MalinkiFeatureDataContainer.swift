@@ -38,11 +38,35 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         } else if let wms = featureInfo?.wms {
             self.getFeatureInfo(config: wms)
         } else if let localFile = featureInfo?.localFile {
-            print("local")
+            self.getLocalData(from: localFile)
         } else if let remoteFile = featureInfo?.remoteFile {
-            print("remote")
+            self.getRemoteFeatureData(from: remoteFile)
         }
         
+    }
+    
+    private func getRemoteFeatureData(from urlAsString: String) {
+        Task {
+            //fetch data
+            let data = try await self.fetchData(from: urlAsString)
+            
+            //decode the data
+            let json = self.decodeGeoJSON(from: data)
+            
+            //get features from json string
+            await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: json)
+        }
+    }
+    
+    private func getLocalFeatureData(from path: String) async {
+        //get the data of the geojson file
+        let data = self.getLocalData(from: path)
+        
+        //decode the data
+        let json = self.decodeGeoJSON(from: data)
+        
+        //get features from json string
+        await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: json)
     }
     
     private func getFeatureInfo(config: MalinkiConfigurationVectorFeatureInfoWMS) {
