@@ -52,8 +52,10 @@ final class MalinkiLayerContainer: ObservableObject {
     }
     
     /// This function edits a dictionary containing information about the current layers represented by annotations.
+    /// Also updates the information about new loaded annotations for fetching remote data.
     func setInformationAboutCurrentAnnotations() {
         self.annotations.currentAnnotations = self.getInformationAboutCurrentAnnotations()
+        self.annotations.newAnnotationsLoaded = false
     }
     
     /// Returns a dictionary with information about the current visible raster layers.

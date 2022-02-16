@@ -14,6 +14,7 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
     var currentAnnotations: [String: String] = [:] //["mapTheme": String(...), "areAnnotationsToggled": String(...), "layers": ... + "-" + ...]
     var deselectAnnotations: Bool = false
     @Published var annotations: [Int: [MalinkiAnnotation]] = [:]
+    var newAnnotationsLoaded: Bool = false
     
     func getAnnotationFeatures(for layerIDs: [Int], in mapThemeID: Int) {
         //init an empty result array
@@ -28,40 +29,32 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
             let vectorTypes = vectorDataConfig?.vectorTypes
             
             if let local = vectorTypes?.localFile {
-                do {
-                    //get the path of the local file
-                    if let bundleURL = Bundle.main.url(forResource: local, withExtension: "geojson") {
+                
+                //get data from file
+                let jsonData = self.getLocalData(from: local)
+                
+                //parse the json-file
+                let features = self.decodeGeoJSON(from: jsonData)
+                
+                for feature in features {
+                    //get the properties as a dictionary
+                    if let properties = feature.properties {
                         
-                        //try to read the data
-                        let jsonData = try Data(contentsOf: bundleURL)
+                        //get a dictionary from the json data
+                        let featureData = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
                         
-                        //parse the json-file
-                        let features = self.decodeGeoJSON(from: jsonData)
+                        //get the feature data
+                        guard let title = featureData?[vectorDataConfig?.attributes.title ?? ""] as? String else { continue }
+                        guard let id = featureData?[vectorDataConfig?.attributes.id ?? ""] as? Int else { continue }
                         
-                        for feature in features {
-                            //get the properties as a dictionary
-                            if let properties = feature.properties {
-                                
-                                //get a dictionary from the json data
-                                let featureData = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
-                                
-                                //get the feature data
-                                guard let title = featureData?[vectorDataConfig?.attributes.title ?? ""] as? String else { continue }
-                                guard let id = featureData?[vectorDataConfig?.attributes.id ?? ""] as? Int else { continue }
-                                
-                                //get the point geometry
-                                guard let point = feature.geometry.first as? MKPointAnnotation else { continue }
-                                
-                                //create a new annotation
-                                self.updateAnnotations(annotation: MalinkiAnnotation(title: title, subtitle: configuration.getExternalVectorName(id: layerID, theme: mapThemeID), coordinate: point.coordinate, themeID: mapThemeID, layerID: layerID, featureID: id), for: layerID)
-                            }
-                        }
-                    } else {
-                        print("ERROR: cannot find GeoJSON file: " + local)
+                        //get the point geometry
+                        guard let point = feature.geometry.first as? MKPointAnnotation else { continue }
+                        
+                        //create a new annotation
+                        self.updateAnnotations(annotation: MalinkiAnnotation(title: title, subtitle: configuration.getExternalVectorName(id: layerID, theme: mapThemeID), coordinate: point.coordinate, themeID: mapThemeID, layerID: layerID, featureID: id), for: layerID)
                     }
-                } catch let error {
-                    print("ERROR: unable to read local GeoJSON-file: \(error)")
                 }
+                
             } else if let remote = vectorTypes?.remoteFile {
                 Task {
                     //get the data from the remote source
@@ -111,10 +104,14 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
             self.annotations[layerID] = []
         }
         self.annotations[layerID]?.append(annotation)
+        
+        self.newAnnotationsLoaded = true
     }
     
     private func setAnnotations(annotations: [MalinkiAnnotation], for layerID: Int) {
         self.annotations[layerID] = annotations
+        
+        self.newAnnotationsLoaded = true
     }
     
 }

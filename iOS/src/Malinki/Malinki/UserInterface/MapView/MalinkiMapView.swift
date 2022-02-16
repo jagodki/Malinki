@@ -74,7 +74,7 @@ struct MalinkiMapView: UIViewRepresentable {
         let checkIsThemeToggled = self.mapLayers.annotations.currentAnnotations["areAnnotationsToggled"] != self.mapLayers.getInformationAboutCurrentAnnotations()["areAnnotationsToggled"]
         let checkLayers = self.mapLayers.annotations.currentAnnotations["layers"] != self.mapLayers.getInformationAboutCurrentAnnotations()["layers"]
         
-        return checkMapTheme || checkIsThemeToggled || checkLayers
+        return checkMapTheme || checkIsThemeToggled || checkLayers || self.mapLayers.annotations.newAnnotationsLoaded
     }
     
     func updateUIView(_ view: MKMapView, context: UIViewRepresentableContext<MalinkiMapView>) {
