@@ -97,7 +97,16 @@ final class MalinkiLayerContainer: ObservableObject {
     /// Get all visible vector/annotation layers (getVectorLayers() - getVisibleRasterLayerIDs()).
     /// - Returns: an array of MalinkiConfigurationVectorData
     func getVisibleVectorLayers() -> [MalinkiConfigurationVectorData] {
-        return self.getVectorLayers().filter({self.getVisibleRasterLayerIDs().contains($0.correspondingRasterLayer)})
+        return self.getVectorLayers().filter({vectorLayer in
+            //default to true for vector layers without corresponding raster layer
+            var isVisible = true
+            
+            if let correspondingRasterLayer = vectorLayer.correspondingRasterLayer {
+                isVisible = self.getVisibleRasterLayerIDs().contains(correspondingRasterLayer)
+            }
+            
+            return isVisible
+        })
     }
     
     /// This functions starts the query of the current annotations.
