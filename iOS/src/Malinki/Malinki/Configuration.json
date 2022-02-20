@@ -411,6 +411,95 @@
                     }
                 ]
             }
+        },
+        {
+            "id": 2,
+            "internalName": "pressure_marine",
+            "externalNames": {
+                "en": "Air Pressure",
+                "de": "Luftdruck",
+                "fr": "Pression de l'air",
+                "sv": "Lufttryck",
+                "pl": "Ciśnienie Powietrza"
+            },
+            "iconName": "hurricane",
+            "layers": {
+                "vectorLayers": [
+                    {
+                        "id": 100,
+                        "internalName": "marine",
+                        "externalNames": {
+                            "en": "Oceans and Seas",
+                            "de": "Ozeane und Meere",
+                            "fr": "Océans et mers",
+                            "sv": "Oceaner och Hav",
+                            "pl": "Oceany i morza"
+                        },
+                        "correspondingRasterLayer": null,
+                        "vectorTypes": {
+                            "localFile": "marine_centroids",
+                            "remoteFile": null,
+                            "wfs": null
+                        },
+                        "attributes": {
+                            "id": "id",
+                            "title": "name"
+                        },
+                        "featureInfo": {
+                            "wms": null,
+                            "wfs": null,
+                            "localFile": "marine",
+                            "remoteFile": null
+                        },
+                        "style": {
+                            "annotationStyle": {
+                                "colour": "AccentColor",
+                                "glyph": "humidity.fill"
+                            },
+                            "featureStyle": {
+                                "outline": {
+                                    "colour": "AccentColor",
+                                    "width": 1.0
+                                },
+                                "fill": {
+                                    "colour": "AccentColor",
+                                    "opacity": 0.5
+                                }
+                            }
+                        }
+                    }
+                ],
+                "rasterLayers": [
+                    {
+                        "id": 0,
+                        "internalName": "presure",
+                        "externalNames": {
+                            "en": "Air Pressure",
+                            "de": "Luftdruck",
+                            "fr": "Pression de l'air",
+                            "sv": "Lufttryck",
+                            "pl": "Ciśnienie Powietrza"
+                        },
+                        "rasterTypes": {
+                            "tms": null,
+                            "wms": {
+                                "baseURL": "https://maps.dwd.de/geoserver/ows?",
+                                "crs": "EPSG:3857",
+                                "layers": "dwd:Icon-eu_reg00625_fd_sl_QFF",
+                                "styles": "",
+                                "format": "image/png",
+                                "version": "1.3.0",
+                                "width": "256",
+                                "height": "256"
+                            },
+                            "wmts": null,
+                            "apple": false
+                        },
+                        "imageName": "tornado",
+                        "opacity": 1.0
+                    }
+                ]
+            }
         }
     ],
     "basemaps": [
