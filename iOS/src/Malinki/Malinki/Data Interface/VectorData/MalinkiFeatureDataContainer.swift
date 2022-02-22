@@ -38,7 +38,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         } else if let wms = featureInfo?.wms {
             self.getFeatureInfo(config: wms)
         } else if let localFile = featureInfo?.localFile {
-            self.getLocalData(from: localFile)
+            self.getLocalFeatureData(from: localFile)
         } else if let remoteFile = featureInfo?.remoteFile {
             self.getRemoteFeatureData(from: remoteFile)
         }
@@ -54,19 +54,21 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
             let json = self.decodeGeoJSON(from: data)
             
             //get features from json string
-            await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: json)
+            await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: json, filterField: MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? -99, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id, filterValue: self.selectedAnnotation?.featureID)
         }
     }
     
-    private func getLocalFeatureData(from path: String) async {
-        //get the data of the geojson file
-        let data = self.getLocalData(from: path)
-        
-        //decode the data
-        let json = self.decodeGeoJSON(from: data)
-        
-        //get features from json string
-        await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: json)
+    private func getLocalFeatureData(from path: String) {
+        Task {
+            //get the data of the geojson file
+            let data = self.getLocalData(from: path)
+            
+            //decode the data
+            let json = self.decodeGeoJSON(from: data)
+            
+            //get features from json string
+            await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: json, filterField: MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? -99, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id, filterValue: self.selectedAnnotation?.featureID)
+        }
     }
     
     private func getFeatureInfo(config: MalinkiConfigurationVectorFeatureInfoWMS) {
@@ -161,7 +163,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         self.featureData.append(MalinkiFeatureData(data: data, name: name))
     }
     
-    private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature]) async {
+    private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature], filterField: String? = nil, filterValue: Int? = nil) async {
         //pass an information to the user, if the query returned no data
         if geojsonFeatures.count == 0 {
             self.addFeature(name: name, data: ["Result": "No Data"])
@@ -172,12 +174,24 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                 if let properties = feature.properties {
                     var attributes: [String: String] = [:]
 
-                    //get a dictionary from the json data and append the feature data
+                    //get a dictionary from the json data
                     let property = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
+                    
+                    //investigate the feature regarding a possible given filter
+                    var continueLoop = true
+                    if let fieldName = filterField, let fieldValue = filterValue {
+                        continueLoop = property?[fieldName] as! Int != fieldValue
+                    }
+                    if continueLoop {
+                        continue
+                    }
+                    
+                    //parsing all properties of the current feature
                     for (key, value) in property ?? ["": ""] {
                         attributes[key] = String(describing: value)
                     }
 
+                    //add the feature to the feature data object
                     self.addFeature(name: name, data: attributes)
                 }
                 
