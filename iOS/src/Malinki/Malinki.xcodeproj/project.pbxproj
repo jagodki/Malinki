@@ -25,6 +25,8 @@
 		CE44B0AD26C985FC00298DC3 /* MalinkiConfigurationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B0AC26C985FC00298DC3 /* MalinkiConfigurationProvider.swift */; };
 		CE44B0AF26C9867700298DC3 /* MalinkiConfigurationObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE44B0AE26C9867700298DC3 /* MalinkiConfigurationObjects.swift */; };
 		CE47C2E02721EF9D00034C38 /* MalinkiMapContentButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE47C2DF2721EF9D00034C38 /* MalinkiMapContentButton.swift */; };
+		CE4F33C127C2C0640052AADD /* marine_centroids.geojson in Resources */ = {isa = PBXBuildFile; fileRef = CE4F33C027C2C0640052AADD /* marine_centroids.geojson */; };
+		CE4F33C327C2C06C0052AADD /* marine.geojson in Resources */ = {isa = PBXBuildFile; fileRef = CE4F33C227C2C06C0052AADD /* marine.geojson */; };
 		CE5B566A26C458B6008EA9BE /* MalinkiMapThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B566926C458B6008EA9BE /* MalinkiMapThemes.swift */; };
 		CE711125276A781300D0F5EB /* MalinkiSheetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE711124276A781300D0F5EB /* MalinkiSheetHeader.swift */; };
 		CE8695D626FBAA8100A0A916 /* MalinkiWMTSOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8695D526FBAA8100A0A916 /* MalinkiWMTSOverlay.swift */; };
@@ -77,6 +79,8 @@
 		CE44B0AC26C985FC00298DC3 /* MalinkiConfigurationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiConfigurationProvider.swift; sourceTree = "<group>"; };
 		CE44B0AE26C9867700298DC3 /* MalinkiConfigurationObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiConfigurationObjects.swift; sourceTree = "<group>"; };
 		CE47C2DF2721EF9D00034C38 /* MalinkiMapContentButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapContentButton.swift; sourceTree = "<group>"; };
+		CE4F33C027C2C0640052AADD /* marine_centroids.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marine_centroids.geojson; sourceTree = "<group>"; };
+		CE4F33C227C2C06C0052AADD /* marine.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marine.geojson; sourceTree = "<group>"; };
 		CE582B9D26B1E2C100BAA289 /* Configuration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Configuration.json; sourceTree = "<group>"; };
 		CE5B566926C458B6008EA9BE /* MalinkiMapThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapThemes.swift; sourceTree = "<group>"; };
 		CE711124276A781300D0F5EB /* MalinkiSheetHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSheetHeader.swift; sourceTree = "<group>"; };
@@ -177,6 +181,8 @@
 		CE4DB0CB274BE6C9006019F8 /* LocalData */ = {
 			isa = PBXGroup;
 			children = (
+				CE4F33C227C2C06C0052AADD /* marine.geojson */,
+				CE4F33C027C2C0640052AADD /* marine_centroids.geojson */,
 				CEFBB250275820B1003EE716 /* 2m_temp_places.geojson */,
 				CEFBB24F275820B1003EE716 /* warngebiete_see_centroids.geojson */,
 			);
@@ -353,8 +359,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEC9FB54268A4447005882E7 /* Preview Assets.xcassets in Resources */,
+				CE4F33C327C2C06C0052AADD /* marine.geojson in Resources */,
 				CEFBB251275820B1003EE716 /* warngebiete_see_centroids.geojson in Resources */,
 				CEE9EA7126CC49C00025AF80 /* Configuration.json in Resources */,
+				CE4F33C127C2C0640052AADD /* marine_centroids.geojson in Resources */,
 				CEC9FB51268A4447005882E7 /* Assets.xcassets in Resources */,
 				CEFBB252275820B1003EE716 /* 2m_temp_places.geojson in Resources */,
 			);

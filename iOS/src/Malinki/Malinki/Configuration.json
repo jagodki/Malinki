@@ -448,8 +448,8 @@
                         "featureInfo": {
                             "wms": null,
                             "wfs": null,
-                            "localFile": "marine",
-                            "remoteFile": null
+                            "localFile": null,
+                            "remoteFile": "https://raw.githubusercontent.com/jagodki/Malinki/main/iOS/src/Malinki/Malinki/LocalData/marine.geojson"
                         },
                         "style": {
                             "annotationStyle": {
