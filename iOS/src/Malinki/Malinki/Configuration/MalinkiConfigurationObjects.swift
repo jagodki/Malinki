@@ -52,7 +52,7 @@ struct MalinkiConfigurationVectorData: Decodable {
 struct MalinkiConfigurationVectorTypes: Decodable {
     var localFile: String?
     var remoteFile: String?
-    var wfs: String?
+    var wfs: MalinkiConfigurationWFS?
 }
 
 struct MalinkiConfigurationVectorAttributes: Decodable {
@@ -62,7 +62,7 @@ struct MalinkiConfigurationVectorAttributes: Decodable {
 
 struct MalinkiConfigurationVectorFeatureInfo: Decodable {
     var wms: MalinkiConfigurationVectorFeatureInfoWMS?
-    var wfs: String?
+    var wfs: MalinkiConfigurationWFS?
     var localFile: String?
     var remoteFile: String?
 }
@@ -86,8 +86,8 @@ struct MalinkiConfigurationVectorFields: Decodable {
 }
 
 struct MalinkiConfigurationVectorStyle: Decodable {
-    var annotationStyle: MalinkiConfigurationVectorAnnotationStyle
-    var featureStyle: MalinkiConfigurationVectorFeatureStyle
+    var annotationStyle: MalinkiConfigurationVectorAnnotationStyle?
+    var featureStyle: MalinkiConfigurationVectorFeatureStyle?
 }
 
 struct MalinkiConfigurationVectorAnnotationStyle: Decodable {
@@ -97,7 +97,7 @@ struct MalinkiConfigurationVectorAnnotationStyle: Decodable {
 
 struct MalinkiConfigurationVectorFeatureStyle: Decodable {
     var outline: MalinkiConfigurationVectorStyleOutline
-    var fill: MalinkiConfigurationVectorStyleFill
+    var fill: MalinkiConfigurationVectorStyleFill?
 }
 
 struct MalinkiConfigurationVectorStyleOutline: Decodable {
@@ -108,6 +108,16 @@ struct MalinkiConfigurationVectorStyleOutline: Decodable {
 struct MalinkiConfigurationVectorStyleFill: Decodable {
     var colour: String
     var opacity: Double
+}
+
+//MARK: - Vector Types
+struct MalinkiConfigurationWFS: Decodable {
+    var baseURL: String
+    var crs: String
+    var typename: String
+    var typenames: String
+    var version: String
+    var additionalParameters: String?
 }
 
 //MARK: - Raster Types
