@@ -467,6 +467,56 @@
                                 }
                             }
                         }
+                    },
+                    {
+                        "id": 101,
+                        "internalName": "cities_de",
+                        "externalNames": {
+                            "en": "Cities Germany",
+                            "de": "Städte Deutschland",
+                            "fr": "Villes Allemagne",
+                            "sv": "Städer Tyskalnd",
+                            "pl": "Miasta Niemcy"
+                        },
+                        "correspondingRasterLayer": 0,
+                        "vectorTypes": {
+                            "localFile": null,
+                            "remoteFile": null,
+                            "wfs": {
+                                "baseURL": "https://maps.dwd.de/geoserver/wfs?",
+                                "crs": "EPSG:4258",
+                                "typename": "dwd:RBSN_T2m",
+                                "typenames": "dwd:RBSN_T2m",
+                                "version": "2.0.0",
+                                "additionalParameters": null
+                            }
+                        },
+                        "attributes": {
+                            "id": "ID",
+                            "title": "NAME"
+                        },
+                        "featureInfo": {
+                            "wms": null,
+                            "wfs": null,
+                            "localFile": null,
+                            "remoteFile": null
+                        },
+                        "style": {
+                            "annotationStyle": {
+                                "colour": "AccentColor",
+                                "glyph": "wind"
+                            },
+                            "featureStyle": {
+                                "outline": {
+                                    "colour": "AccentColor",
+                                    "width": 1.0
+                                },
+                                "fill": {
+                                    "colour": "AccentColor",
+                                    "opacity": 0.5
+                                }
+                            }
+                        }
                     }
                 ],
                 "rasterLayers": [
