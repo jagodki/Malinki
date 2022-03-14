@@ -45,7 +45,7 @@ struct MalinkiConfigurationVectorData: Decodable {
     var correspondingRasterLayer: Int?
     var vectorTypes: MalinkiConfigurationVectorTypes
     var attributes: MalinkiConfigurationVectorAttributes
-    var featureInfo: MalinkiConfigurationVectorFeatureInfo
+    var featureInfo: MalinkiConfigurationVectorFeatureInfo?
     var style: MalinkiConfigurationVectorStyle
 }
 

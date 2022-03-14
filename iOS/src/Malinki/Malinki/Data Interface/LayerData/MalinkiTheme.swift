@@ -17,7 +17,7 @@ final class MalinkiTheme: ObservableObject {
     
     init(themeID: Int) {
         self.themeID = themeID
-        let annotations = MalinkiConfigurationProvider.sharedInstance.getMapTheme(for: themeID)?.layers.vectorLayers.filter({$0.featureInfo.wms != nil || $0.featureInfo.wfs != nil})
+        let annotations = MalinkiConfigurationProvider.sharedInstance.getMapTheme(for: themeID)?.layers.vectorLayers.filter({$0.featureInfo != nil})
         self.hasAnnotations = (annotations?.count != 0)
     }
     
