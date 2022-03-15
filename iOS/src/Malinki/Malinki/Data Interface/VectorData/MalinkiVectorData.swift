@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 import CoreGraphics
 import SwiftUI
+import SWXMLHash
 
 @available(iOS 15.0.0, *)
 public class MalinkiVectorData {
@@ -57,6 +58,11 @@ public class MalinkiVectorData {
         }
         
         return jsonData
+    }
+    
+    public func decodeGML(from data: Data) -> XMLIndexer {
+        let gml = XMLHash.lazy(data)
+        return gml
     }
     
     
