@@ -31,7 +31,8 @@
                         },
                         "attributes": {
                             "id": "ne_id",
-                            "title": "name"
+                            "title": "name",
+                            "geometry": null
                         },
                         "featureInfo": {
                             "wms": {
@@ -105,7 +106,8 @@
                         },
                         "attributes": {
                             "id": "OBJECTID",
-                            "title": "NAME"
+                            "title": "NAME",
+                            "geometry": null
                         },
                         "featureInfo": {
                             "wms": {
@@ -443,7 +445,8 @@
                         },
                         "attributes": {
                             "id": "id",
-                            "title": "name"
+                            "title": "name",
+                            "geometry": null
                         },
                         "featureInfo": {
                             "wms": null,
@@ -470,13 +473,13 @@
                     },
                     {
                         "id": 101,
-                        "internalName": "cities_de",
+                        "internalName": "cities",
                         "externalNames": {
-                            "en": "Cities Germany",
-                            "de": "Städte Deutschland",
-                            "fr": "Villes Allemagne",
-                            "sv": "Städer Tyskalnd",
-                            "pl": "Miasta Niemcy"
+                            "en": "Cities",
+                            "de": "Städte",
+                            "fr": "Villes",
+                            "sv": "Städer",
+                            "pl": "Miasta"
                         },
                         "correspondingRasterLayer": 0,
                         "vectorTypes": {
@@ -485,15 +488,16 @@
                             "wfs": {
                                 "baseURL": "https://maps.dwd.de/geoserver/wfs?",
                                 "crs": "EPSG:4258",
-                                "typename": "dwd:RBSN_T2m",
-                                "typenames": "dwd:RBSN_T2m",
+                                "typename": "dwd:ICON-EPS_meteograms",
+                                "typenames": "dwd:ICON-EPS_meteograms",
                                 "version": "2.0.0",
                                 "additionalParameters": null
                             }
                         },
                         "attributes": {
-                            "id": "ID",
-                            "title": "NAME"
+                            "id": "dwd:ID",
+                            "title": "dwd:STATION",
+                            "geometry": "dwd:THE_GEOM"
                         },
                         "featureInfo": {
                             "wms": null,
