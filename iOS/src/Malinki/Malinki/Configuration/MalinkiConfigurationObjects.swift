@@ -58,6 +58,7 @@ struct MalinkiConfigurationVectorTypes: Decodable {
 struct MalinkiConfigurationVectorAttributes: Decodable {
     var id: String
     var title: String
+    var geometry: String?
 }
 
 struct MalinkiConfigurationVectorFeatureInfo: Decodable {
