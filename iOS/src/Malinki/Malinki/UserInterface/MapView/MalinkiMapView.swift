@@ -16,6 +16,7 @@ struct MalinkiMapView: UIViewRepresentable {
     @Binding private var sheetState: MalinkiSheetState?
     @EnvironmentObject var features: MalinkiFeatureDataContainer
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
+    @EnvironmentObject var mapAnnotations: MalinkiAnnotationContainer
     
     init(basemapID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
         self._basemapID = basemapID

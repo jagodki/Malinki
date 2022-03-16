@@ -27,6 +27,7 @@ struct MalinkiMap: View {
             MalinkiMapView(basemapID: self.$basemapID, sheetState: self.$sheet.state)
                 .environmentObject(self.mapLayers)
                 .environmentObject(self.features)
+                .environmentObject(self.mapLayers.annotations)
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
