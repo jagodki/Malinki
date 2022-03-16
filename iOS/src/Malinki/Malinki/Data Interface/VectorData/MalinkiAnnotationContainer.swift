@@ -64,9 +64,48 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
                     let features = self.decodeGeoJSON(from: jsonData)
                     
                     //get the annotations
-                    self.setAnnotations(annotations: self.createAnnotations(features: features, layerID: layerID, mapThemeID: mapThemeID), for: layerID)
+                    DispatchQueue.main.async {
+                        self.setAnnotations(annotations: self.createAnnotations(features: features, layerID: layerID, mapThemeID: mapThemeID), for: layerID)
+                    }
                 }
             } else if let wfs = vectorTypes?.wfs {
+                Task {
+                    //create the GetFeature-Request
+                    let additionalParameters = wfs.additionalParameters ?? ""
+                    let wfsRequest = "\(wfs.baseURL)&SERVICE=WFS&REQUEST=GetFeature&SRSNAME=\(wfs.crs)&TYPENAME=\(wfs.typename)&TYPENAMES=\(wfs.typenames)&VERSION=\(wfs.version)\(additionalParameters)"
+                    
+                    //get the data from the wfs response
+                    let data = try await self.fetchData(from: wfsRequest)
+                    
+                    //get the id and title names
+                    let id = vectorDataConfig?.attributes.id ?? ""
+                    let title = vectorDataConfig?.attributes.title ?? ""
+                    let geometry = vectorDataConfig?.attributes.geometry ?? ""
+                    
+                    //decode the gml
+                    let gml = self.decodeGML(from: data)
+                    for member in gml["wfs:FeatureCollection"]["wfs:member"].all {
+                        for child in member.children {
+                            
+                            //get the coordinate pair, i.e. the value of the child of gml:Point
+                            let coordinates = (child[geometry]["gml:Point"].children[0].element?.text ?? "").split(separator: " ")
+                            let x = coordinates.first ?? "-999.99"
+                            let y = coordinates.last ?? "-999.99"
+                            
+                            //create new annotations
+                            DispatchQueue.main.async {
+                                self.updateAnnotations(annotation: MalinkiAnnotation(title: child[title].element?.text,
+                                                                                     subtitle: configuration.getExternalVectorName(id: layerID,theme: mapThemeID),
+                                                                                     coordinate: CLLocationCoordinate2D(latitude: Double(y) ?? -999.99,
+                                                                                                                        longitude: Double(x) ?? -999.99),
+                                                                                     themeID: mapThemeID,
+                                                                                     layerID: layerID,
+                                                                                     featureID: Int(child[id].element?.text ?? "0") ?? -99),
+                                                       for: layerID)
+                            }
+                        }
+                    }
+                }
                 
             }
         }
