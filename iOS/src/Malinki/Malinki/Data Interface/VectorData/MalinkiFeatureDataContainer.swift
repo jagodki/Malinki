@@ -178,7 +178,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                     let property = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
                     
                     //investigate the feature regarding a possible given filter
-                    var continueLoop = true
+                    var continueLoop = false
                     if let fieldName = filterField, let fieldValue = filterValue {
                         continueLoop = property?[fieldName] as! Int != fieldValue
                     }
