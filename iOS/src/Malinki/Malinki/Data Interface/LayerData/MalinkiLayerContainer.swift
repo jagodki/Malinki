@@ -30,7 +30,14 @@ final class MalinkiLayerContainer: ObservableObject {
     var currentRasterLayers: [String: String] = [:]
     var currentMapRegion: MKCoordinateRegion?
     var allowRedraw: Bool = true
-    var annotations: MalinkiAnnotationContainer = MalinkiAnnotationContainer()
+    var currentAnnotations: [String: String] = [:] //["mapTheme": String(...), "areAnnotationsToggled": String(...), "layers": ... + "-" + ...]
+    
+    private var _annotations: MalinkiAnnotationContainer = MalinkiAnnotationContainer()
+    var annotations: MalinkiAnnotationContainer {
+        get {
+            return self._annotations
+        }
+    }
     
     /// The initialiser of this class.
     /// - Parameters:
@@ -54,8 +61,8 @@ final class MalinkiLayerContainer: ObservableObject {
     /// This function edits a dictionary containing information about the current layers represented by annotations.
     /// Also updates the information about new loaded annotations for fetching remote data.
     func setInformationAboutCurrentAnnotations() {
-        self.annotations.currentAnnotations = self.getInformationAboutCurrentAnnotations()
-        self.annotations.newAnnotationsLoaded = false
+        self.currentAnnotations = self.getInformationAboutCurrentAnnotations()
+        self._annotations.newAnnotationsLoaded = false
     }
     
     /// Returns a dictionary with information about the current visible raster layers.
@@ -111,7 +118,7 @@ final class MalinkiLayerContainer: ObservableObject {
     
     /// This functions starts the query of the current annotations.
     func queryCurrentAnnotations() {
-        self.annotations.getAnnotationFeatures(for: self.getVisibleVectorLayers().map({$0.id}), in: self.selectedMapThemeID)
+        self._annotations.getAnnotationFeatures(for: self.getVisibleVectorLayers().map({$0.id}), in: self.selectedMapThemeID)
     }
     
 }

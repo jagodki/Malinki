@@ -11,7 +11,6 @@ import MapKit
 @available(iOS 15.0.0, *)
 public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
     
-    var currentAnnotations: [String: String] = [:] //["mapTheme": String(...), "areAnnotationsToggled": String(...), "layers": ... + "-" + ...]
     var deselectAnnotations: Bool = false
     @Published var annotations: [Int: [MalinkiAnnotation]] = [:]
     var newAnnotationsLoaded: Bool = false

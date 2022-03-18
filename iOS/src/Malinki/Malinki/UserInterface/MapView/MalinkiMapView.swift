@@ -71,17 +71,17 @@ struct MalinkiMapView: UIViewRepresentable {
     }
     
     private func shouldUpdateAnnotations() -> Bool {
-        let checkMapTheme = self.mapLayers.annotations.currentAnnotations["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
-        let checkIsThemeToggled = self.mapLayers.annotations.currentAnnotations["areAnnotationsToggled"] != self.mapLayers.getInformationAboutCurrentAnnotations()["areAnnotationsToggled"]
-        let checkLayers = self.mapLayers.annotations.currentAnnotations["layers"] != self.mapLayers.getInformationAboutCurrentAnnotations()["layers"]
+        let checkMapTheme = self.mapLayers.currentAnnotations["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
+        let checkIsThemeToggled = self.mapLayers.currentAnnotations["areAnnotationsToggled"] != self.mapLayers.getInformationAboutCurrentAnnotations()["areAnnotationsToggled"]
+        let checkLayers = self.mapLayers.currentAnnotations["layers"] != self.mapLayers.getInformationAboutCurrentAnnotations()["layers"]
         
-        return checkMapTheme || checkIsThemeToggled || checkLayers || self.mapLayers.annotations.newAnnotationsLoaded
+        return checkMapTheme || checkIsThemeToggled || checkLayers || self.mapAnnotations.newAnnotationsLoaded
     }
     
     func updateUIView(_ view: MKMapView, context: UIViewRepresentableContext<MalinkiMapView>) {
-        if self.mapLayers.annotations.deselectAnnotations{
+        if self.mapAnnotations.deselectAnnotations{
             _ = view.selectedAnnotations.filter({!($0 is MKClusterAnnotation)}).map({view.deselectAnnotation($0, animated: true)})
-            self.mapLayers.annotations.deselectAnnotations = false
+            self.mapAnnotations.deselectAnnotations = false
         } else {
             
             self.updateOverlays(from: view)
@@ -104,7 +104,7 @@ struct MalinkiMapView: UIViewRepresentable {
             
             //add annotations, if theme is toggled
             if self.mapLayers.areAnnotationsToggled() {
-                mapView.addAnnotations(self.mapLayers.annotations.annotations.values.flatMap({$0}))
+                mapView.addAnnotations(self.mapAnnotations.annotations.values.flatMap({$0}))
             }
             
             self.mapLayers.setInformationAboutCurrentAnnotations()
