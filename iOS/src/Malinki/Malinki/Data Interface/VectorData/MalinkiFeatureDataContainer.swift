@@ -179,8 +179,8 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                     
                     //investigate the feature regarding a possible given filter
                     var continueLoop = false
-                    if let fieldName = filterField, let fieldValue = filterValue {
-                        continueLoop = property?[fieldName] as! Int != fieldValue
+                    if let fieldName = filterField, let fieldValue = filterValue, let propertyValues = property {
+                        continueLoop = propertyValues[fieldName] as! Int != fieldValue
                     }
                     if continueLoop {
                         continue
