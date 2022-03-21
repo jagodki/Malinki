@@ -44,7 +44,7 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
                         
                         //get the feature data
                         guard let title = featureData?[vectorDataConfig?.attributes.title ?? ""] as? String else { continue }
-                        guard let id = featureData?[vectorDataConfig?.attributes.id ?? ""] as? Int else { continue }
+                        let id = self.createStringValue(from: featureData?[vectorDataConfig?.attributes.id ?? ""] as Any)
                         
                         //get the point geometry
                         guard let point = feature.geometry.first as? MKPointAnnotation else { continue }
@@ -70,8 +70,7 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
             } else if let wfs = vectorTypes?.wfs {
                 Task {
                     //create the GetFeature-Request
-                    let additionalParameters = wfs.additionalParameters ?? ""
-                    let wfsRequest = "\(wfs.baseURL)&SERVICE=WFS&REQUEST=GetFeature&SRSNAME=\(wfs.crs)&TYPENAME=\(wfs.typename)&TYPENAMES=\(wfs.typenames)&VERSION=\(wfs.version)\(additionalParameters)"
+                    let wfsRequest = self.createWFSGetFeatureRequest(from: wfs)
                     
                     //get the data from the wfs response
                     let data = try await self.fetchData(from: wfsRequest)
@@ -99,7 +98,7 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
                                                                                                                         longitude: Double(x) ?? -999.99),
                                                                                      themeID: mapThemeID,
                                                                                      layerID: layerID,
-                                                                                     featureID: Int(child[id].element?.text ?? "0") ?? -99),
+                                                                                     featureID: child[id].element?.text ?? "0"),
                                                        for: layerID)
                             }
                         }
@@ -124,7 +123,7 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
                 
                 //get the feature data
                 guard let title = featureData?[vectorDataConfig?.attributes.title ?? ""] as? String else { continue }
-                guard let id = featureData?[vectorDataConfig?.attributes.id ?? ""] as? Int else { continue }
+                let id = self.createStringValue(from: featureData?[vectorDataConfig?.attributes.id ?? ""] as Any)
                 
                 //get the point geometry
                 guard let point = feature.geometry.first as? MKPointAnnotation else { continue }
