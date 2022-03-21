@@ -18,9 +18,9 @@ public class MalinkiAnnotation: NSObject, MKAnnotation, ObservableObject {
     public var coordinate: CLLocationCoordinate2D
     public var themeID: Int
     public var layerID: Int
-    public var featureID: Int
+    public var featureID: String
     
-    init(title: String?, subtitle: String?, coordinate: CLLocationCoordinate2D, themeID: Int, layerID: Int, featureID: Int) {
+    init(title: String?, subtitle: String?, coordinate: CLLocationCoordinate2D, themeID: Int, layerID: Int, featureID: String) {
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
