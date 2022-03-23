@@ -58,6 +58,7 @@ struct MalinkiMapView: UIViewRepresentable {
     private func shouldUpdateRasterOverlays(for region: MKCoordinateRegion) -> Bool {
         let checkMapTheme = self.mapLayers.currentRasterLayers["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
         let checkBaseMap = self.mapLayers.currentRasterLayers["baseMap"] != String(self.basemapID)
+        
         let checkLayers = self.mapLayers.currentRasterLayers["layers"] != self.mapLayers.getInformationAboutCurrentRasterlayers(baseMapID: self.basemapID)["layers"]
         
         let precision = 10000000.0
