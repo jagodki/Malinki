@@ -34,7 +34,7 @@ public class MalinkiVectorData {
     }
     
     public func fetchData(from urlString: String) async throws -> Data {
-        guard let url = URL(string: urlString) else {
+        guard let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: urlStringEncoded) else {
             throw MalinkiVectorDataError.invalidURLString
         }
         
@@ -65,5 +65,27 @@ public class MalinkiVectorData {
         return gml
     }
     
+    func createWFSGetFeatureRequest(from config: MalinkiConfigurationWFS) -> String {
+        let additionalParameters = config.additionalParameters ?? ""
+        let wfsRequest = "\(config.baseURL)&SERVICE=WFS&REQUEST=GetFeature&SRSNAME=\(config.crs)&TYPENAME=\(config.typename)&TYPENAMES=\(config.typenames)&VERSION=\(config.version)\(additionalParameters)"
+        return wfsRequest
+    }
+    
+    func createStringValue(from anyValue: Any) -> String {
+        let stringValue: String
+        
+        switch anyValue {
+        case is String:
+            stringValue = anyValue as? String ?? ""
+        case is Double:
+            stringValue = String(anyValue as? Double ?? 0.0)
+        case is Int:
+            stringValue = String(anyValue as? Int ?? 0)
+        default:
+            stringValue = ""
+        }
+        
+        return stringValue
+    }
     
 }
