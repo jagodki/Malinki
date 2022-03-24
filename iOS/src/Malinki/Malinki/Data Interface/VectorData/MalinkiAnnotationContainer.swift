@@ -86,20 +86,22 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
                         for child in member.children {
                             
                             //get the coordinate pair, i.e. the value of the child of gml:Point
-                            let coordinates = (child[geometry]["gml:Point"].children[0].element?.text ?? "").split(separator: " ")
-                            let x = coordinates.first ?? "-999.99"
-                            let y = coordinates.last ?? "-999.99"
-                            
-                            //create new annotations
-                            DispatchQueue.main.async {
-                                self.updateAnnotations(annotation: MalinkiAnnotation(title: child[title].element?.text,
-                                                                                     subtitle: configuration.getExternalVectorName(id: layerID,theme: mapThemeID),
-                                                                                     coordinate: CLLocationCoordinate2D(latitude: Double(y) ?? -999.99,
-                                                                                                                        longitude: Double(x) ?? -999.99),
-                                                                                     themeID: mapThemeID,
-                                                                                     layerID: layerID,
-                                                                                     featureID: child[id].element?.text ?? "0"),
-                                                       for: layerID)
+                            if let pointNode = child[geometry]["gml:Point"].children.first {
+                                let coordinates = (pointNode.element?.text ?? "").split(separator: " ")
+                                let x = coordinates.first ?? "-999.99"
+                                let y = coordinates.last ?? "-999.99"
+                                
+                                //create new annotations
+                                DispatchQueue.main.async {
+                                    self.updateAnnotations(annotation: MalinkiAnnotation(title: child[title].element?.text,
+                                                                                         subtitle: configuration.getExternalVectorName(id: layerID,theme: mapThemeID),
+                                                                                         coordinate: CLLocationCoordinate2D(latitude: Double(y) ?? -999.99,
+                                                                                                                            longitude: Double(x) ?? -999.99),
+                                                                                         themeID: mapThemeID,
+                                                                                         layerID: layerID,
+                                                                                         featureID: child[id].element?.text ?? "0"),
+                                                           for: layerID)
+                                }
                             }
                         }
                     }
