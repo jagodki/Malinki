@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 import SwiftUI
+import SWXMLHash
 
 @available(iOS 15.0, *)
 @MainActor
@@ -17,6 +18,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     @Published public var geometries: [MalinkiVectorGeometry] = []
     public var selectedAnnotation: MalinkiAnnotation? = nil
     public var span: MKCoordinateSpan? = nil
+    private var gmlGeometries: [XMLIndexer] = []
     
     public func clearAll() {
         self.featureData = []
@@ -34,7 +36,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         let featureInfo = featureLayer?.featureInfo
         
         if let wfs = featureInfo?.wfs {
-            print("wfs")
+            self.getFeature(config: wfs)
         } else if let wms = featureInfo?.wms {
             self.getFeatureInfo(config: wms)
         } else if let localFile = featureInfo?.localFile {
@@ -54,7 +56,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
             let json = self.decodeGeoJSON(from: data)
             
             //get features from json string
-            await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: json, filterField: MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? -99, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id, filterValue: self.selectedAnnotation?.featureID)
+            await self.getFeatureData(name: self.selectedAnnotation?.title ?? "", from: json, filterField: MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? -99, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id, filterValue: self.selectedAnnotation?.featureID)
         }
     }
     
@@ -67,7 +69,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
             let json = self.decodeGeoJSON(from: data)
             
             //get features from json string
-            await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: json, filterField: MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? -99, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id, filterValue: self.selectedAnnotation?.featureID)
+            await self.getFeatureData(name: self.selectedAnnotation?.title ?? "", from: json, filterField: MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? -99, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id, filterValue: self.selectedAnnotation?.featureID)
         }
     }
     
@@ -163,7 +165,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         self.featureData.append(MalinkiFeatureData(data: data, name: name))
     }
     
-    private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature], filterField: String? = nil, filterValue: Int? = nil) async {
+    private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature], filterField: String? = nil, filterValue: String? = nil) async {
         //pass an information to the user, if the query returned no data
         if geojsonFeatures.count == 0 {
             self.addFeature(name: name, data: ["Result": "No Data"])
@@ -173,14 +175,14 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                 //get the properties as a dictionary
                 if let properties = feature.properties {
                     var attributes: [String: String] = [:]
-
+                    
                     //get a dictionary from the json data
                     let property = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
                     
                     //investigate the feature regarding a possible given filter
                     var continueLoop = false
                     if let fieldName = filterField, let fieldValue = filterValue, let propertyValues = property {
-                        continueLoop = propertyValues[fieldName] as! Int != fieldValue
+                        continueLoop = self.createStringValue(from: propertyValues[fieldName] as Any) != fieldValue
                     }
                     if continueLoop {
                         continue
@@ -190,7 +192,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                     for (key, value) in property ?? ["": ""] {
                         attributes[key] = String(describing: value)
                     }
-
+                    
                     //add the feature to the feature data object
                     self.addFeature(name: name, data: attributes)
                 }
@@ -202,4 +204,146 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
             }
         }
     }
+    
+    private func getFeature(config: MalinkiConfigurationWFS) {
+        Task {
+            if let annotation = self.selectedAnnotation {
+                //get the config of the current vector layer
+                let vectorDataConfig = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: annotation.layerID, theme: annotation.themeID)
+                
+                //create request
+                let wfsRequest = self.createWFSGetFeatureRequest(from: config)
+                
+                //create the filter parameter
+                let filter = "<fes:Filter xmlns:fes=\"http://www.opengis.net/fes/2.0\" xmlns:gml=\"http://www.opengis.net/gml/3.2\"><fes:And><fes:PropertyIsEqualTo><fes:PropertyName>\(MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: annotation.layerID, theme: annotation.themeID)?.attributes.id ?? "")</fes:PropertyName><fes:Literal>\(annotation.featureID)</fes:Literal></fes:PropertyIsEqualTo></fes:And></fes:Filter>"
+                
+                //query data from WFS
+                let data = try await self.fetchData(from: "\(wfsRequest)&FILTER=\(filter)")
+                
+                //parse the server response
+                let gml = self.decodeGML(from: data)
+                
+                //get the geometry name
+                let geomName = vectorDataConfig?.attributes.geometry ?? ""
+                
+                //check for features in the response
+                let members = gml["wfs:FeatureCollection"]["wfs:member"].all
+                if members.count == 0 {
+                    self.addFeature(name: annotation.title ?? "", data: ["Result": "No Data"])
+                } else {
+                    for member in members {
+                        //init an array to store the attribute data
+                        var properties: [String: String] = [:]
+                        
+                        for child in member.children {
+                            
+                            for gmlData in child.children {
+                                //get the name of the current node
+                                let nodeName = gmlData.element?.name ?? ""
+                                
+                                //get the attribute data
+                                if nodeName != "gml:boundedBy" && nodeName != geomName {
+                                    properties[nodeName] = gmlData.element?.text
+                                }
+                            }
+                            
+                            //empty exisiting gml geometries
+                            self.gmlGeometries = []
+                            
+                            //search for polygons
+                            let geomNode = child[geomName]
+                            print(child.element?.name)
+                            print(geomNode.all.count)
+                            self.getPolgyonFromGML(geomNode: geomNode)
+                            
+                            //start search for linestring if necessary, i.e. the previous search for polygons was not successfull
+                            if self.gmlGeometries.count == 0 {
+                                self.getLinestringFromGML(geomNode: geomNode)
+                                
+                                //extract linestring
+                                let polylineArray = self.gmlGeometries.map({ linestring -> MKPolyline in
+                                    //get locations from the posList
+                                    let locationArray = self.getLocationsFromPosList(xmlElement: linestring["gml:posList"].element)
+                                    
+                                    //create a MKPolyline
+                                    return MKPolyline(coordinates: locationArray, count: locationArray.count)
+                                })
+                                
+                                //add the geometry to the class var
+                                self.geometries.append(MalinkiVectorGeometry(mapThemeID: annotation.themeID, layerID: annotation.layerID, geometry: MKMultiPolyline(polylineArray)))
+                            } else {
+                                //extract polygon
+                                var polygonArray: [MKPolygon] = []
+                                
+                                
+                                for polygon in self.gmlGeometries {
+                                    //get the boundary of the poylgon
+                                    let boundary = self.getLocationsFromPosList(xmlElement: polygon["gml:exterior"]["gml:LinearRing"]["gml:posList"].element)
+                                    
+                                    //get all inner rings
+                                    let innerPolygons = polygon["gml:interior"].all.map({interior -> MKPolygon in
+                                        let islandLocationArray = self.getLocationsFromPosList(xmlElement: interior["gml:LinearRing"]["gml:posList"].element)
+                                        return MKPolygon(coordinates: islandLocationArray, count: islandLocationArray.count)
+                                    })
+                                    
+                                    //create a new polygon
+                                    polygonArray.append(MKPolygon(coordinates: boundary, count: boundary.count, interiorPolygons: innerPolygons))
+                                }
+                                
+                                //add the geometry to the class var
+                                self.geometries.append(MalinkiVectorGeometry(mapThemeID: annotation.themeID, layerID: annotation.layerID, geometry: MKMultiPolygon(polygonArray)))
+                            }
+                        }
+                        
+                        //insert the attribute data
+                        self.addFeature(name: annotation.title ?? "", data: properties)
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    private func getLocationsFromPosList(xmlElement: XMLElement?) -> [CLLocationCoordinate2D] {
+        //init result var
+        var locationArray: [CLLocationCoordinate2D] = []
+        
+        guard let posList = xmlElement else {
+            return locationArray
+        }
+        
+        let coords = posList.text.split(separator: " ")
+        var counter = 1
+        
+        //create locations from the posList
+        while counter < coords.count {
+            locationArray.append(CLLocationCoordinate2D(latitude: Double(coords[counter]) ?? -99.99, longitude: Double(coords[counter - 1]) ?? -99.99))
+            counter += 2
+        }
+        
+        return locationArray
+    }
+    
+    private func getPolgyonFromGML(geomNode: XMLIndexer) {
+        for child in geomNode.children {
+            
+            if child.element?.name == "gml:Polygon" {
+                self.gmlGeometries.append(child)
+            } else {
+                self.getPolgyonFromGML(geomNode: child)
+            }
+        }
+    }
+    
+    private func getLinestringFromGML(geomNode: XMLIndexer) {
+        for child in geomNode.children {
+            
+            if child.element?.name == "gml:LineString" {
+                self.gmlGeometries.append(child)
+            } else {
+                self.getLinestringFromGML(geomNode: child)
+            }
+        }
+    }
+    
 }
