@@ -105,53 +105,20 @@
                             "wfs": null
                         },
                         "attributes": {
-                            "id": "OBJECTID",
-                            "title": "NAME",
-                            "geometry": null
+                            "id": "AREADESC",
+                            "title": "AREADESC",
+                            "geometry": "dwd:THE_GEOM"
                         },
                         "featureInfo": {
-                            "wms": {
-                                "baseURL": "https://maps.dwd.de/geoserver/ows?",
-                                "version": "1.3.0",
-                                "crs": "EPSG:4326",
-                                "layers": "dwd:Warnungen_See",
-                                "styles": "",
-                                "format": "image/png",
-                                "queryLayers": "dwd:Warnungen_See",
-                                "infoFormat": "application/json",
-                                "featureCount": 10,
-                                "fields": [
-                                    {
-                                        "name": "DESCRIPTION",
-                                        "externalNames": {
-                                            "en": "Description",
-                                            "de": "Beschreibung",
-                                            "fr": "Température en kelvin",
-                                            "sv": "Temperatur i Kelvin",
-                                            "pl": "Temperatura w Kelwinach"
-                                        }
-                                    }, {
-                                        "name": "HEADLINE",
-                                        "externalNames": {
-                                            "en": "Headline",
-                                            "de": "Überschrift",
-                                            "fr": "Temps",
-                                            "sv": "Tid",
-                                            "pl": "Czas"
-                                        }
-                                    }, {
-                                        "name": "EVENT",
-                                        "externalNames": {
-                                            "en": "Event",
-                                            "de": "Ereignis",
-                                            "fr": "Temps",
-                                            "sv": "Tid",
-                                            "pl": "Czas"
-                                        }
-                                    }
-                                ]
+                            "wms": null,
+                            "wfs": {
+                                "baseURL": "https://maps.dwd.de/geoserver/wfs?",
+                                "crs": "EPSG:4258",
+                                "typename": "dwd:Warnungen_See",
+                                "typenames": "dwd:Warnungen_See",
+                                "version": "2.0.0",
+                                "additionalParameters": null
                             },
-                            "wfs": null,
                             "localFile": null,
                             "remoteFile": null
                         },
