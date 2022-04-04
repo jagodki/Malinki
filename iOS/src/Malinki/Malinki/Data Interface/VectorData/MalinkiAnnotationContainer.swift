@@ -9,12 +9,18 @@ import Foundation
 import MapKit
 
 @available(iOS 15.0.0, *)
+/// This class is a container for storing vector data, that should be displayed in the map.
 public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
     
     var deselectAnnotations: Bool = false
     @Published var annotations: [Int: [MalinkiAnnotation]] = [:]
     var newAnnotationsLoaded: Bool = false
     
+    /// This function gets annotations for each visible layer with a corresponding annotation layer.
+    ///  The created annoations will be stored in a published class var, not returned by the function.
+    /// - Parameters:
+    ///   - layerIDs: an array of all layer ids to create annotations for
+    ///   - mapThemeID: the id of the current map theme
     func getAnnotationFeatures(for layerIDs: [Int], in mapThemeID: Int) {
         //init an empty result array
         self.annotations = [:]
@@ -111,6 +117,12 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
         }
     }
     
+    /// This function creates annotations for given point features.
+    /// - Parameters:
+    ///   - features: an array of point features of MKGeoJSONFeature
+    ///   - layerID: the id of the annotation layer
+    ///   - mapThemeID: the id of the corresponding map theme
+    /// - Returns: an array of MalinkiAnnotation
     private func createAnnotations(features: [MKGeoJSONFeature], layerID: Int, mapThemeID: Int) -> [MalinkiAnnotation]{
         var annotations: [MalinkiAnnotation] = []
         let configuration = MalinkiConfigurationProvider.sharedInstance
@@ -138,6 +150,10 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
         return annotations
     }
     
+    /// This function stores a given annotation to the published class var.
+    /// - Parameters:
+    ///   - annotation: an annotation of type MalinkiAnnotation
+    ///   - layerID: the id of the corresponding annotation layer
     private func updateAnnotations(annotation: MalinkiAnnotation, for layerID: Int) {
         if !self.annotations.keys.contains(layerID) {
             self.annotations[layerID] = []
@@ -147,6 +163,10 @@ public class MalinkiAnnotationContainer: MalinkiVectorData, ObservableObject {
         self.newAnnotationsLoaded = true
     }
     
+    /// This function stores given annotations to the published class var.
+    /// - Parameters:
+    ///   - annotations: an array of annotations of type MalinkiAnnotation
+    ///   - layerID: the id of the corresponding annotation layer
     private func setAnnotations(annotations: [MalinkiAnnotation], for layerID: Int) {
         self.annotations[layerID] = annotations
         

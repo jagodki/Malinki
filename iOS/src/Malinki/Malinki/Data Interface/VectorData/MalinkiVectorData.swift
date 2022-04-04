@@ -12,12 +12,16 @@ import SwiftUI
 import SWXMLHash
 
 @available(iOS 15.0.0, *)
+/// This class provides acces to vector data of different source types.
 public class MalinkiVectorData {
     
     enum MalinkiVectorDataError: Error {
         case invalidURLString
     }
     
+    /// This function decodes given GeoJSON data to the build in MKGeoJSONFeatures.
+    /// - Parameter data: a data object containing GeoJSON data
+    /// - Returns: an array of MKGeoJSONFeature
     public func decodeGeoJSON(from data: Data) -> [MKGeoJSONFeature] {
         //create the result var
         var features: [MKGeoJSONFeature] = []
@@ -33,6 +37,9 @@ public class MalinkiVectorData {
         return features
     }
     
+    /// This function fetches json data from a remote source
+    /// - Parameter urlString: the url of the source
+    /// - Returns: the data from the remote location
     public func fetchData(from urlString: String) async throws -> Data {
         guard let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let url = URL(string: urlStringEncoded) else {
             throw MalinkiVectorDataError.invalidURLString
@@ -43,6 +50,9 @@ public class MalinkiVectorData {
         return data
     }
     
+    /// This function fetches json data on the local device.
+    /// - Parameter pathAsString: the path to the local file
+    /// - Returns: the data from the local device
     public func getLocalData(from pathAsString: String) -> Data {
         var jsonData = Data()
         
@@ -60,17 +70,26 @@ public class MalinkiVectorData {
         return jsonData
     }
     
+    /// This function decodes xml data.
+    /// - Parameter data: previously fetched xml data
+    /// - Returns: decoded data as XMLIndexer
     public func decodeGML(from data: Data) -> XMLIndexer {
         let gml = XMLHash.lazy(data)
         return gml
     }
     
+    /// This function creates a WFS GetFeatures-Request from a given config.
+    /// - Parameter config: a configuration of the WFS
+    /// - Returns: the String of the GetFeatures-Request
     func createWFSGetFeatureRequest(from config: MalinkiConfigurationWFS) -> String {
         let additionalParameters = config.additionalParameters ?? ""
         let wfsRequest = "\(config.baseURL)&SERVICE=WFS&REQUEST=GetFeature&SRSNAME=\(config.crs)&TYPENAME=\(config.typename)&TYPENAMES=\(config.typenames)&VERSION=\(config.version)\(additionalParameters)"
         return wfsRequest
     }
     
+    /// This function creates a String from a given Int, Double or String value.
+    /// - Parameter anyValue: the value to convert into String
+    /// - Returns: the converted value
     func createStringValue(from anyValue: Any) -> String {
         let stringValue: String
         
