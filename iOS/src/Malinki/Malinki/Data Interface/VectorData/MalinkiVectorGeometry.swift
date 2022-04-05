@@ -8,6 +8,7 @@
 import Foundation
 import MapKit
 
+/// This function stores spatial data in MapKit types of any geometry type.
 public class MalinkiVectorGeometry {
     
     enum GeometryType {

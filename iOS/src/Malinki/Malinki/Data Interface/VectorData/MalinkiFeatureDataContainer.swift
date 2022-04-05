@@ -12,6 +12,7 @@ import SWXMLHash
 
 @available(iOS 15.0, *)
 @MainActor
+/// This class is a container for feature data, including geometries and attribute data, that should be displayed in a map view.
 public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     
     @Published public var featureData: [MalinkiFeatureData] = []
@@ -20,6 +21,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     public var span: MKCoordinateSpan? = nil
     private var gmlGeometries: [XMLIndexer] = []
     
+    /// This function clears all instant vars.
     public func clearAll() {
         self.featureData = []
         self.geometries = []
@@ -27,6 +29,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         self.span = nil
     }
     
+    /// This function is the main entry point for querying feature data, no matter of the data source.
     public func getFeatureData() {
         //clear the current data
         self.featureData = []
@@ -47,6 +50,8 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         
     }
     
+    /// This function queries data from a GeoJSON file on a remote storage using http. The data will be stored in a published instance var.
+    /// - Parameter urlAsString: the url of the remote file
     private func getRemoteFeatureData(from urlAsString: String) {
         Task {
             //fetch data
@@ -60,6 +65,8 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         }
     }
     
+    /// This function queries data from a GeoJSON file on the local device. The data will be stored in a published instance var.
+    /// - Parameter path: the path to the file excluding the file extension
     private func getLocalFeatureData(from path: String) {
         Task {
             //get the data of the geojson file
@@ -73,6 +80,8 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         }
     }
     
+    /// This function queries data from a WMS using GetFeatureInfo-request. The data will be stored in a published instance var.
+    /// - Parameter config: the wms config
     private func getFeatureInfo(config: MalinkiConfigurationVectorFeatureInfoWMS) {
         //get coordinates
         let coord = self.selectedAnnotation?.coordinate
@@ -161,10 +170,20 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         }
     }
     
+    /// This function adds a single feature to a published instance var.
+    /// - Parameters:
+    ///   - name: the name of the feature
+    ///   - data: the attribute data stored in a dictionary
     private func addFeature(name: String, data: [String: String]) {
         self.featureData.append(MalinkiFeatureData(data: data, name: name))
     }
     
+    /// This function filters given features and stores them in a published instance var.
+    /// - Parameters:
+    ///   - name: the name of the feature
+    ///   - geojsonFeatures: the previously queried GeoJSON features
+    ///   - filterField: the name of the field to filter on
+    ///   - filterValue: the value of the filter
     private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature], filterField: String? = nil, filterValue: String? = nil) async {
         //pass an information to the user, if the query returned no data
         if geojsonFeatures.count == 0 {
@@ -205,6 +224,8 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         }
     }
     
+    /// This function queries data from a WFS using a GetFeatures-request. The data will be stored in a published instance var.
+    /// - Parameter config: the wfs config
     private func getFeature(config: MalinkiConfigurationWFS) {
         Task {
             if let annotation = self.selectedAnnotation {
@@ -252,8 +273,6 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                             
                             //search for polygons
                             let geomNode = child[geomName]
-                            print(child.element?.name)
-                            print(geomNode.all.count)
                             self.getPolgyonFromGML(geomNode: geomNode)
                             
                             //start search for linestring if necessary, i.e. the previous search for polygons was not successfull
@@ -304,6 +323,9 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         
     }
     
+    /// This function extracts the spatial information from the GML-element posList.
+    /// - Parameter xmlElement: the posList xml element
+    /// - Returns: an array of locations
     private func getLocationsFromPosList(xmlElement: XMLElement?) -> [CLLocationCoordinate2D] {
         //init result var
         var locationArray: [CLLocationCoordinate2D] = []
@@ -324,6 +346,8 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         return locationArray
     }
     
+    /// This function searches the xml elements gml:Polygon in the given xml indexer. This function follows dynamic programming.
+    /// - Parameter geomNode: the geometry GML node
     private func getPolgyonFromGML(geomNode: XMLIndexer) {
         for child in geomNode.children {
             
@@ -334,7 +358,8 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
             }
         }
     }
-    
+    /// This function searches the xml elements gml:LineString in the given xml indexer. This function follows dynamic programming.
+    /// - Parameter geomNode: the geometry GML node
     private func getLinestringFromGML(geomNode: XMLIndexer) {
         for child in geomNode.children {
             
