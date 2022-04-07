@@ -23,4 +23,5 @@ enum MalinkiSheetState {
     case basemaps
     case layers
     case details
+    case search
 }
