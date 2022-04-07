@@ -24,7 +24,7 @@ struct MalinkiMapThemes: View {
     var body: some View {
         
         Menu {
-            Picker(selection: self.$mapLayers.selectedMapThemeID, label: Text("Map Themes")) {
+            Picker(selection: self.$mapLayers.selectedMapThemeID, label: Text(LocalizedStringKey("Map Themes"))) {
                 ForEach(MalinkiConfigurationProvider.sharedInstance.getMapThemes(), id: \.id) { mapTheme in
                     HStack {
                         Text(mapTheme.externalNames.en)
