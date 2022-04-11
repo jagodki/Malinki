@@ -19,6 +19,7 @@ struct MalinkiMap: View {
     @StateObject private var sheet: MalinkiSheet = MalinkiSheet()
     @StateObject private var features: MalinkiFeatureDataContainer = MalinkiFeatureDataContainer()
     @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes(), selectedMapThemeID: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
+    @State private var selectedTool: String? = nil
     
     @available(iOS 15.0, *)
     var body: some View {
@@ -34,6 +35,19 @@ struct MalinkiMap: View {
                 Spacer()
                 
                 HStack {
+                    VStack {
+                        Spacer()
+                            .frame(width: 10, height: 51, alignment: .center)
+                        
+                        MalinkiToolButton(sheetState: self.$sheet.state)
+                            .frame(width: 30, height: 35, alignment: .center)
+                            .padding(.all, 10.0)
+                            .background(.regularMaterial)
+                            .cornerRadius(10)
+                            .shadow(radius: 1)
+                    }
+                    .padding()
+                    
                     Spacer()
                     
                     VStack {
@@ -48,6 +62,7 @@ struct MalinkiMap: View {
                         MalinkiMapContentButton(sheetState: self.$sheet.state)
                             .frame(width: 40, height: 30, alignment: .center)
                             .padding(.bottom, 10.0)
+                        
                     }
                     .background(.regularMaterial)
                     .cornerRadius(10)
@@ -77,6 +92,8 @@ struct MalinkiMap: View {
                     self.features.clearAll()
                     self.mapLayers.annotations.deselectAnnotations = true
                 })
+        case .search:
+            MalinkiSearchView(searchText: self.$searchText, sheetDetent: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing)
         default:
             EmptyView()
         }
