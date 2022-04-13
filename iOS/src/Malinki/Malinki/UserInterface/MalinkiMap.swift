@@ -21,7 +21,7 @@ struct MalinkiMap: View {
     @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes(), selectedMapThemeID: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
     @State private var selectedTool: String? = nil
     
-    @available(iOS 15.0, *)
+    
     var body: some View {
         
         ZStack {
@@ -93,7 +93,7 @@ struct MalinkiMap: View {
                     self.mapLayers.annotations.deselectAnnotations = true
                 })
         case .search:
-            MalinkiSearchView(searchText: self.$searchText, sheetDetent: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing)
+            MalinkiSearchView(searchText: self.$searchText, sheetDetent: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing, isEditing: self.$isEditing)
         default:
             EmptyView()
         }
