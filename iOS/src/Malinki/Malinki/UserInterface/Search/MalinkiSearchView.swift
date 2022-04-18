@@ -30,6 +30,14 @@ struct MalinkiSearchView: View {
                     .padding()
                 Spacer()
                 
+                //show an information to the user, if no search string is inserted
+                if self.searchText == "" {
+                    Text(LocalizedStringKey("No search results..."))
+                        .foregroundColor(.secondary)
+                        .italic()
+                    Spacer()
+                }
+                
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
