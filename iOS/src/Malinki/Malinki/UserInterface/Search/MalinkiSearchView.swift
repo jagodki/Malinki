@@ -15,6 +15,7 @@ struct MalinkiSearchView: View {
     @Binding private var sheetDetent: UISheetPresentationController.Detent.Identifier?
     @Binding private var isSheetShowing: Bool
     @Binding private var isEditing: Bool
+    private var config: MalinkiConfigurationProvider = MalinkiConfigurationProvider.sharedInstance
     
     init(searchText: Binding<String>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>, isEditing: Binding<Bool>) {
         self._searchText = searchText
@@ -36,13 +37,26 @@ struct MalinkiSearchView: View {
                         .foregroundColor(.secondary)
                         .italic()
                     Spacer()
+                } else {
+                    Form {
+                        Section(header: Text(LocalizedStringKey("Map Themes")).sectionHeaderStyle()) {
+                                
+                                ForEach(self.config.getMapThemes().filter({self.config.getExternalThemeName(id: $0.id).lowercased().contains(self.searchText.lowercased())}), id: \.id) { mapTheme in
+                                    Text(mapTheme.externalNames.en)
+                                }
+                                
+                            }
+                    }
                 }
                 
             }
+            .background(Color(uiColor: .systemGray6))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
                     MalinkiSheetHeader(title: "Search", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent)
+                    //                    MalinkiSearchBar(searchText: self.$searchText, isEditing: self.$isEditing, sheetDetent: self.$sheetDetent)
+                    //                        .padding(.top, 50)
                 })
             })
         }
