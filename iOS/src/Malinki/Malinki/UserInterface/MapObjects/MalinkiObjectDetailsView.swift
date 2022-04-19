@@ -29,9 +29,7 @@ struct MalinkiObjectDetailsView: View {
         } else {
             NavigationView {
                 List(self.$features.featureData) { $feature in
-                    Section(header: Text(self.features.featureData.count > 1 ? feature.name : "Object Data")
-                                .foregroundColor(.primary)
-                                .fontWeight(.semibold)) {
+                    Section(header: Text(self.features.featureData.count > 1 ? feature.name : "Object Data").sectionHeaderStyle()) {
                         ForEach(feature.data.sorted(by: >), id: \.key) { key, value in
                             VStack(alignment: .leading) {
                                 Text(key)
