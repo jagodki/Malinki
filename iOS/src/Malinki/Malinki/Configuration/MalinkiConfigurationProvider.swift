@@ -149,4 +149,8 @@ class MalinkiConfigurationProvider {
         return self.getMapTheme(for: mapTheme)?.layers.vectorLayers ?? []
     }
     
+    func getExternalThemeName(id: Int) -> String {
+        return self.getMapTheme(for: id)?.externalNames.en ?? ""
+    }
+    
 }
