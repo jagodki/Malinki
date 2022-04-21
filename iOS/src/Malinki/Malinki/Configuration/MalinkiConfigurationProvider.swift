@@ -103,7 +103,7 @@ class MalinkiConfigurationProvider {
     /// - Returns: an array of MalinkiMapLayer with all layers of the given map theme
     func getMapLayers(of mapTheme: Int) -> [MalinkiLayer] {
         var mapLayers: [MalinkiLayer] = []
-        mapLayers.append(contentsOf: self.getRasterLayers(of: mapTheme).map({MalinkiLayer(id: $0.id, name: $0.externalNames.en, imageName: $0.imageName, themeID: mapTheme)}))
+        mapLayers.append(contentsOf: self.getRasterLayers(of: mapTheme).map({MalinkiLayer(id: $0.id, name: self.getExternalLayerName(themeID: mapTheme, layerID: $0.id), imageName: $0.imageName, themeID: mapTheme)}))
         return mapLayers
     }
     
@@ -157,6 +157,10 @@ class MalinkiConfigurationProvider {
     
     func getExternalThemeName(id: Int) -> String {
         return self.getMapTheme(for: id)?.externalNames.en ?? ""
+    }
+    
+    func getExternalLayerName(themeID: Int, layerID: Int) -> String {
+        return self.getRasterLayer(with: layerID, of: themeID)?.externalNames.en ?? ""
     }
     
 }
