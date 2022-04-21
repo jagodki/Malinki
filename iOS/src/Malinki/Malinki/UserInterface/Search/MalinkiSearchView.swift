@@ -17,6 +17,18 @@ struct MalinkiSearchView: View {
     @Binding private var isEditing: Bool
     private var config: MalinkiConfigurationProvider = MalinkiConfigurationProvider.sharedInstance
     
+    private var filteredThemes: [MalinkiConfigurationTheme] {
+        return self.config.getMapThemes().filter({
+            self.config.getExternalThemeName(id: $0.id).lowercased().contains(self.searchText.lowercased())
+        })
+    }
+    
+    private var filteredMapLayers: [MalinkiLayer] {
+        return self.config.getAllMapLayersArray().filter({
+            $0.name.lowercased().contains(self.searchText.lowercased())
+        })
+    }
+    
     init(searchText: Binding<String>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>, isEditing: Binding<Bool>) {
         self._searchText = searchText
         self._sheetDetent = sheetDetent
@@ -32,20 +44,36 @@ struct MalinkiSearchView: View {
                 Spacer()
                 
                 //show an information to the user, if no search string is inserted
-                if self.searchText == "" {
+                if self.searchText == "" || (self.filteredThemes.count == 0 && self.filteredMapLayers.count == 0) {
                     Text(LocalizedStringKey("No search results..."))
                         .foregroundColor(.secondary)
                         .italic()
                     Spacer()
                 } else {
                     Form {
-                        Section(header: Text(LocalizedStringKey("Map Themes")).sectionHeaderStyle()) {
+                        
+                        //show filtered map themes
+                        if self.filteredThemes.count != 0 {
+                            Section(header: Text(LocalizedStringKey("Map Themes")).sectionHeaderStyle()) {
                                 
-                                ForEach(self.config.getMapThemes().filter({self.config.getExternalThemeName(id: $0.id).lowercased().contains(self.searchText.lowercased())}), id: \.id) { mapTheme in
-                                    Text(mapTheme.externalNames.en)
+                                ForEach(self.filteredThemes, id: \.id) { mapTheme in
+                                    Text(self.config.getExternalThemeName(id: mapTheme.id))
                                 }
                                 
                             }
+                        }
+                        
+                        //show filtered map layers
+                        if self.filteredMapLayers.count != 0 {
+                            Section(header: Text(LocalizedStringKey("Map Content")).sectionHeaderStyle()) {
+                                
+                                ForEach(self.filteredMapLayers, id: \.self) { layer in
+                                    Text(self.config.getExternalLayerName(themeID: layer.themeID, layerID: layer.id))
+                                }
+                                
+                            }
+                        }
+                        
                     }
                 }
                 
@@ -55,8 +83,6 @@ struct MalinkiSearchView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
                     MalinkiSheetHeader(title: "Search", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent)
-                    //                    MalinkiSearchBar(searchText: self.$searchText, isEditing: self.$isEditing, sheetDetent: self.$sheetDetent)
-                    //                        .padding(.top, 50)
                 })
             })
         }
