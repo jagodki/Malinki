@@ -86,6 +86,12 @@ class MalinkiConfigurationProvider {
         return self.configData?.mapThemes.filter({$0.id == mapTheme}).first?.layers.rasterLayers ?? []
     }
     
+    /// This function returns all raster layers.
+    /// - Returns: an array of all raster layers
+    func getAllRasterLayers() -> [MalinkiConfigurationMapData] {
+        return self.configData?.mapThemes.map({$0.layers.rasterLayers}).flatMap({$0}).sorted(by: {$0.id > $1.id}) ?? []
+    }
+    
     /// This function returns all raster layers of the map theme that is active on start up.
     /// - Returns:an array of all raster layers of the map theme that is active on start up
     func getRasterLayersOnStartUp() -> [MalinkiConfigurationMapData] {
