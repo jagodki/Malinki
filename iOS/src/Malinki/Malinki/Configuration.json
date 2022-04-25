@@ -450,16 +450,9 @@
                         },
                         "correspondingRasterLayer": 0,
                         "vectorTypes": {
-                            "localFile": null,
+                            "localFile": "2m_temp_places",
                             "remoteFile": null,
-                            "wfs": {
-                                "baseURL": "https://maps.dwd.de/geoserver/wfs?",
-                                "crs": "EPSG:4258",
-                                "typename": "dwd:ICON-EPS_meteograms",
-                                "typenames": "dwd:ICON-EPS_meteograms",
-                                "version": "2.0.0",
-                                "additionalParameters": null
-                            }
+                            "wfs": null
                         },
                         "attributes": {
                             "id": "dwd:ID",
