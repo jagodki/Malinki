@@ -15,6 +15,7 @@ struct MalinkiSearchView: View {
     @Binding private var sheetDetent: UISheetPresentationController.Detent.Identifier?
     @Binding private var isSheetShowing: Bool
     @Binding private var isEditing: Bool
+    @EnvironmentObject private var mapLayers: MalinkiLayerContainer
     private var config: MalinkiConfigurationProvider = MalinkiConfigurationProvider.sharedInstance
     
     private var filteredThemes: [MalinkiConfigurationTheme] {
@@ -57,7 +58,13 @@ struct MalinkiSearchView: View {
                             Section(header: Text(LocalizedStringKey("Map Themes")).sectionHeaderStyle()) {
                                 
                                 ForEach(self.filteredThemes, id: \.id) { mapTheme in
-                                    Text(self.config.getExternalThemeName(id: mapTheme.id))
+                                    Button(action: {
+                                        //set the current map theme and close the sheet
+                                        self.mapLayers.selectedMapThemeID = mapTheme.id
+                                        self.isSheetShowing = false
+                                    }) {
+                                        MalinkiSearchResultView(title: self.config.getExternalThemeName(id: mapTheme.id), footnote: "", imageName: self.config.getMapTheme(for: mapTheme.id)?.iconName ?? "questionmark.circle")
+                                    }
                                 }
                                 
                             }
@@ -68,7 +75,15 @@ struct MalinkiSearchView: View {
                             Section(header: Text(LocalizedStringKey("Map Content")).sectionHeaderStyle()) {
                                 
                                 ForEach(self.filteredMapLayers, id: \.self) { layer in
-                                    Text(self.config.getExternalLayerName(themeID: layer.themeID, layerID: layer.id))
+                                    Button(action: {
+                                        //set the current map theme, only enable the current layer and close the sheet
+                                        self.mapLayers.rasterLayers.filter({$0.id == layer.id}).first?.isToggled = true
+                                        _ = self.mapLayers.rasterLayers.filter({$0.themeID == layer.themeID && $0.id != layer.id}).map({$0.isToggled = false})
+                                        self.mapLayers.selectedMapThemeID = layer.themeID
+                                        self.isSheetShowing = false
+                                    }) {
+                                        MalinkiSearchResultView(title: self.config.getExternalLayerName(themeID: layer.themeID, layerID: layer.id), footnote: self.config.getExternalThemeName(id: layer.themeID), imageName: self.config.getMapTheme(for: layer.themeID)?.iconName ?? "questionmark.circle")
+                                    }
                                 }
                                 
                             }
@@ -93,5 +108,6 @@ struct MalinkiSearchView: View {
 struct MalinkiSearchView_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiSearchView(searchText: .constant(""), sheetDetent: .constant(UISheetPresentationController.Detent.Identifier.large), isSheetShowing: .constant(true), isEditing: .constant(true))
+            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)}), selectedMapThemeID: 0))
     }
 }
