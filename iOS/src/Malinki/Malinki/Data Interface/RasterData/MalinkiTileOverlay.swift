@@ -43,11 +43,11 @@ public class MalinkiTileOverlay: MKTileOverlay {
     }
     
     private func cachePathWithName(name: String) -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] as NSString
         let cachesPath: String = paths as String
         let cachePath = cachesPath.stringByAppendingPathComponent(path: name)
-        createPathIfNecessary(path: cachesPath)
-        createPathIfNecessary(path: cachePath)
+        self.createPathIfNecessary(path: cachesPath)
+        self.createPathIfNecessary(path: cachePath)
 
         return cachePath
     }
