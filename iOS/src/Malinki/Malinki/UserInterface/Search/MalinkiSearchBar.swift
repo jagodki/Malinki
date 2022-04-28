@@ -56,7 +56,6 @@ struct MalinkiSearchBar: View {
             if self.isEditing {
                 Button(action: {
                     self.isEditing = false
-                    self.searchText = ""
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
 
                 }) {
