@@ -43,7 +43,7 @@ public class MalinkiTileOverlay: MKTileOverlay {
     }
     
     private func cachePathWithName(name: String) -> String {
-        let paths = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true)[0] as NSString
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
         let cachesPath: String = paths as String
         let cachePath = cachesPath.stringByAppendingPathComponent(path: name)
         self.createPathIfNecessary(path: cachesPath)
@@ -67,7 +67,7 @@ public class MalinkiTileOverlay: MKTileOverlay {
     
     public override func loadTile(at path: MKTileOverlayPath, result: @escaping (Data?, Error?) -> Void) {
         let url1 = self.url(forTilePath: path)
-        let filePath = getFilePathForURL(url: url1, folderName: TILE_CACHE)
+        let filePath = getFilePathForURL(url: url1, folderName: self.TILE_CACHE)
 
         let file = FileManager.default
 
