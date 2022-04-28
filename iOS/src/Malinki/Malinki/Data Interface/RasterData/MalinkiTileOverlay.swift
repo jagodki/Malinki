@@ -53,7 +53,7 @@ public class MalinkiTileOverlay: MKTileOverlay {
     }
     
     private func getFilePathForURL(url: URL, folderName: String) -> String {
-        return cachePathWithName(name: folderName).stringByAppendingPathComponent(path: "\(url.hashValue)")
+        return self.cachePathWithName(name: folderName).stringByAppendingPathComponent(path: "\(url.hashValue)")
     }
 
     private func cacheUrlToLocalFolder(url: URL, data: NSData, folderName: String) {
