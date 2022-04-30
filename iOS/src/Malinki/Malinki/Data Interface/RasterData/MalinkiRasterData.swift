@@ -24,6 +24,10 @@ struct MalinkiRasterData {
         return self.mapDataConfiguration.rasterTypes.apple
     }
     
+    private var subDirName: String {
+        return "\(String(self.mapDataConfiguration.id))-\(self.mapDataConfiguration.internalName.replacingOccurrences(of: " ", with: "_"))"
+    }
+    
     /// This function returns an object of MKTileOverlay for displaying raster data in an MKMapView.
     /// This function should be used to access the data of the current configuration object, if the property isAppleMaps is false.
     /// - Returns: an object of the type MKTIleOverlay
@@ -32,7 +36,7 @@ struct MalinkiRasterData {
         var overlay: MKTileOverlay
         
         if let tms = rasterTypes.tms {
-            overlay = MalinkiTileOverlay(urlTemplate: tms.url, alpha: CGFloat(self.mapDataConfiguration.opacity))
+            overlay = MalinkiTileOverlay(urlTemplate: tms.url, alpha: CGFloat(self.mapDataConfiguration.opacity), subDirName: self.subDirName)
             overlay.isGeometryFlipped = tms.invertedYAxis
         } else if let wms = rasterTypes.wms {
             let url = (wms.baseURL +
@@ -44,7 +48,7 @@ struct MalinkiRasterData {
                         "&STYLES=" + wms.styles +
                         "&HEIGHT=" + wms.height +
                         "&WIDTH=" + wms.width)
-            overlay = MalinkiWMSOverlay(url: url, useMercator: wms.crs == "EPSG:3857", wmsVersion: wms.version, alpha: CGFloat(self.mapDataConfiguration.opacity))
+            overlay = MalinkiWMSOverlay(url: url, useMercator: wms.crs == "EPSG:3857", wmsVersion: wms.version, alpha: CGFloat(self.mapDataConfiguration.opacity), subDirName: self.subDirName)
         } else if let wmts = rasterTypes.wmts {
             let url = (wmts.baseURL +
                         "SERVICE=WMTS&REQUEST=GetTile" +
@@ -53,7 +57,7 @@ struct MalinkiRasterData {
                         "&LAYER=" + wmts.layer +
                         "&STYLE=" + wmts.style +
                         "&TILEMATRIXSET=" + wmts.tileMatrixSet)
-            overlay = MalinkiWMTSOverlay(url: url, alpha: CGFloat(self.mapDataConfiguration.opacity))
+            overlay = MalinkiWMTSOverlay(url: url, alpha: CGFloat(self.mapDataConfiguration.opacity), subDirName: self.subDirName)
         } else {
             overlay = MKTileOverlay()
         }

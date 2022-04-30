@@ -22,11 +22,12 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
     ///   - useMercator: true if service should be queried as web mercator, i.e. EPSG:3857
     ///   - wmsVersion: the version of the service
     ///   - alpha: the opacity of the received image for displaying
-    init(url: String, useMercator: Bool, wmsVersion: String, alpha: CGFloat = 1.0) {
+    ///   - subDirName: the name of the sub directory for caching tiles
+    init(url: String, useMercator: Bool, wmsVersion: String, alpha: CGFloat = 1.0, subDirName: String) {
         self.url = url
         self.useMercator = useMercator
         self.wmsVersion = wmsVersion
-        super.init(urlTemplate: url, alpha: alpha)
+        super.init(urlTemplate: url, alpha: alpha, subDirName: subDirName)
     }
     
     public override func url(forTilePath path: MKTileOverlayPath) -> URL {

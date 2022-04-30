@@ -21,13 +21,17 @@ public class MalinkiTileOverlay: MKTileOverlay {
     
     private let TILE_CACHE = "TILE_CACHE"
     var alpha: CGFloat = 1.0
+    private var subDirName: String
     
     /// The initialiser of this class.
     /// - Parameters:
     ///   - urlTemplate: the url of the services with placeholders
     ///   - alpha: the opacity of the received image for displaying
-    init(urlTemplate: String?, alpha: CGFloat = 1.0) {
+    ///   - subDirName: the name of the sub directory for caching tiles
+    init(urlTemplate: String?, alpha: CGFloat = 1.0, subDirName: String) {
         self.alpha = alpha
+        self.subDirName
+        = subDirName
         super.init(urlTemplate: urlTemplate)
     }
     
@@ -67,7 +71,7 @@ public class MalinkiTileOverlay: MKTileOverlay {
     
     public override func loadTile(at path: MKTileOverlayPath, result: @escaping (Data?, Error?) -> Void) {
         let url1 = self.url(forTilePath: path)
-        let filePath = getFilePathForURL(url: url1, folderName: self.TILE_CACHE)
+        let filePath = getFilePathForURL(url: url1, folderName: "\(self.TILE_CACHE)/\(self.subDirName)")
 
         let file = FileManager.default
 

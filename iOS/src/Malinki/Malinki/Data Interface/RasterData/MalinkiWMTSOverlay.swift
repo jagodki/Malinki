@@ -17,9 +17,10 @@ public class MalinkiWMTSOverlay: MalinkiTileOverlay {
     /// - Parameters:
     ///   - url: the base url of the service without any parameters
     ///   - alpha: the opacity of the received image for displaying
-    init(url: String, alpha: CGFloat = 1.0) {
+    ///   - subDirName: the name of the sub directory for caching tiles   
+    init(url: String, alpha: CGFloat = 1.0, subDirName: String) {
         self.url = url
-        super.init(urlTemplate: url, alpha: alpha)
+        super.init(urlTemplate: url, alpha: alpha, subDirName: subDirName)
     }
     
     public override func url(forTilePath path: MKTileOverlayPath) -> URL {
