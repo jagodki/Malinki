@@ -23,7 +23,7 @@
                             "sv": "Temperatur",
                             "pl": "Temperatura"
                         },
-                        "correspondingRasterLayer": 0,
+                        "correspondingRasterLayer": 107,
                         "vectorTypes": {
                             "localFile": "2m_temp_places",
                             "remoteFile": null,
@@ -98,7 +98,7 @@
                             "sv": "Varningar till sjöss",
                             "pl": "Ostrzeżenia na morzu"
                         },
-                        "correspondingRasterLayer": 2,
+                        "correspondingRasterLayer": 109,
                         "vectorTypes": {
                             "localFile": "warngebiete_see_centroids",
                             "remoteFile": null,
@@ -142,7 +142,7 @@
                 ],
                 "rasterLayers": [
                     {
-                        "id": 3,
+                        "id": 110,
                         "internalName": "wmo_regions",
                         "externalNames": {
                             "en": "WMO Regions",
@@ -170,7 +170,7 @@
                         "opacity": 1.0
                     },
                     {
-                        "id": 2,
+                        "id": 109,
                         "internalName": "warnings_sea",
                         "externalNames": {
                             "en": "Warnings at Sea",
@@ -198,7 +198,7 @@
                         "opacity": 0.8
                     },
                     {
-                        "id": 1,
+                        "id": 108,
                         "internalName": "warning_area_sea",
                         "externalNames": {
                             "en": "Warning Areas at Sea",
@@ -226,7 +226,7 @@
                         "opacity": 0.8
                     },
                     {
-                        "id": 0,
+                        "id": 107,
                         "internalName": "temperatur",
                         "externalNames": {
                             "en": "Temperature",
@@ -257,7 +257,7 @@
             }
         },
         {
-            "id": 0,
+            "id": 3,
             "internalName": "topography",
             "externalNames": {
                 "en": "Topography",
@@ -271,7 +271,7 @@
                 "vectorLayers": [],
                 "rasterLayers": [
                     {
-                        "id": 0,
+                        "id": 300,
                         "internalName": "relief",
                         "externalNames": {
                             "en": "Relief",
@@ -297,7 +297,7 @@
                         "opacity": 0.75
                     },
                     {
-                        "id": 1,
+                        "id": 301,
                         "internalName": "waterbodies",
                         "externalNames": {
                             "en": "Water Bodies",
@@ -325,7 +325,7 @@
                         "opacity": 1.0
                     },
                     {
-                        "id": 2,
+                        "id": 302,
                         "internalName": "countries",
                         "externalNames": {
                             "en": "Countries",
@@ -353,7 +353,7 @@
                         "opacity": 1.0
                     },
                     {
-                        "id": 3,
+                        "id": 303,
                         "internalName": "cities",
                         "externalNames": {
                             "en": "Cities",
@@ -395,7 +395,7 @@
             "layers": {
                 "vectorLayers": [
                     {
-                        "id": 100,
+                        "id": 200,
                         "internalName": "marine",
                         "externalNames": {
                             "en": "Oceans and Seas",
@@ -439,7 +439,7 @@
                         }
                     },
                     {
-                        "id": 101,
+                        "id": 201,
                         "internalName": "cities",
                         "externalNames": {
                             "en": "Cities",
@@ -496,7 +496,7 @@
                 ],
                 "rasterLayers": [
                     {
-                        "id": 0,
+                        "id": 210,
                         "internalName": "presure",
                         "externalNames": {
                             "en": "Air Pressure",
