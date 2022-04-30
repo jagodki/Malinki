@@ -55,7 +55,9 @@ struct MalinkiSearchBar: View {
 
             if self.isEditing {
                 Button(action: {
+                    self.searchText = ""
                     self.isEditing = false
+                    self.sheetDetent = .medium
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
 
                 }) {

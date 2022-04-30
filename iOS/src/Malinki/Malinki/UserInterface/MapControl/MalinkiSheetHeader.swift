@@ -46,8 +46,8 @@ struct MalinkiSheetHeader: View {
             Spacer()
             
             Button(action: {
-                self.isSheetShowing = false
                 self.sheetDetent = .medium
+                self.isSheetShowing = false
             }) {
                 Image(systemName: "xmark.circle.fill")
                     .padding(.trailing)
