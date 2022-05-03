@@ -1,16 +1,20 @@
 {
-    "name": "Test",
-    "colour": "blue",
-    "theme_id": 1,
-    "layer_ids": [100, 102],
-    "map": {
-        "centre": {
-            "latitude": 15.0,
-            "longitude": 51.1
-        },
-        "span": {
-            "delta_latitude": 1.0,
-            "delta_longitude": 1.0
+    "bookmarks": [
+        {
+            "name": "Test",
+            "colour": "blue",
+            "theme_id": 1,
+            "layer_ids": [100, 102],
+            "map": {
+                "centre": {
+                    "latitude": 15.0,
+                    "longitude": 51.1
+                },
+                "span": {
+                    "delta_latitude": 1.0,
+                    "delta_longitude": 1.0
+                }
+            }
         }
-    }
+    ]
 }
