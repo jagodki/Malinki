@@ -16,7 +16,7 @@ struct MalinkiApp: App {
             
             //get the path
             let fileManager = FileManager.default
-            let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            let documentsUrl =  fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
             let cachePath = documentsUrl?.path.stringByAppendingPathComponent(path: "TILE_CACHE")
             
             //clear cache
