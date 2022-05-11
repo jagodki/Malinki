@@ -24,4 +24,5 @@ enum MalinkiSheetState {
     case layers
     case details
     case search
+    case bookmarks
 }
