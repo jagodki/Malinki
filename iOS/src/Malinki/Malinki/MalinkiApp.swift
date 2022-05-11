@@ -27,6 +27,9 @@ struct MalinkiApp: App {
             } catch {
                 print("ERROR - could not clear cache folder: \(error)")
             }
+            
+            //save bookmarks
+            MalinkiBookmarksProvider.sharedInstance.saveBookmarksToFile()
         })
     }
     
