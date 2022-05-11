@@ -13,11 +13,19 @@ struct MalinkiToolButton: View {
     
     var body: some View {
         Menu {
+            
             Button(action: {
                 self.sheetState = .search
             }) {
                 Text(LocalizedStringKey("Search"))
                 Image(systemName: "magnifyingglass")
+            }
+            
+            Button(action: {
+                self.sheetState = .bookmarks
+            }) {
+                Text(LocalizedStringKey("Bookmarks"))
+                Image(systemName: "bookmark.fill")
             }
         } label: {
             Image(systemName: "ellipsis")
