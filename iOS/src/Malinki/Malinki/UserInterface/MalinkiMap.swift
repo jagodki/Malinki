@@ -20,6 +20,7 @@ struct MalinkiMap: View {
     @StateObject private var features: MalinkiFeatureDataContainer = MalinkiFeatureDataContainer()
     @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes(), selectedMapThemeID: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
     @State private var selectedTool: String? = nil
+    @StateObject private var bookmarks: MalinkiBookmarksProvider = MalinkiBookmarksProvider.sharedInstance
     
     
     var body: some View {
@@ -95,6 +96,8 @@ struct MalinkiMap: View {
         case .search:
             MalinkiSearchView(searchText: self.$searchText, sheetDetent: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing, isEditing: self.$isEditing)
                 .environmentObject(self.mapLayers)
+        case .bookmarks:
+            MalinkiBookmarksView()
         default:
             EmptyView()
         }
