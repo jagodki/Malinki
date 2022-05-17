@@ -1,6 +1,7 @@
 {
     "bookmarks": [
         {
+            "id": 0,
             "name": "Test",
             "colour": "blue",
             "theme_id": 1,

@@ -14,6 +14,7 @@ struct MalinkiBookmarksRoot: Codable {
 
 //MARK: - bookmark object
 struct MalinkiBookmarksObject: Codable {
+    var id: Int
     var name: String
     var colour: String
     var theme_id: Int
