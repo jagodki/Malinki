@@ -97,7 +97,9 @@ struct MalinkiMap: View {
             MalinkiSearchView(searchText: self.$searchText, sheetDetent: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing, isEditing: self.$isEditing)
                 .environmentObject(self.mapLayers)
         case .bookmarks:
-            MalinkiBookmarksView()
+            MalinkiBookmarksView(sheetState: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing)
+                .environmentObject(self.bookmarks)
+                .environmentObject(self.mapLayers)
         default:
             EmptyView()
         }
