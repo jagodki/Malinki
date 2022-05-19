@@ -14,13 +14,15 @@ struct MalinkiMapView: UIViewRepresentable {
     
     @Binding private var basemapID: Int
     @Binding private var sheetState: MalinkiSheetState?
+    @Binding var mapRegion: MKCoordinateRegion
     @EnvironmentObject var features: MalinkiFeatureDataContainer
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @EnvironmentObject var mapAnnotations: MalinkiAnnotationContainer
     
-    init(basemapID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
+    init(basemapID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>, mapRegion: Binding<MKCoordinateRegion>) {
         self._basemapID = basemapID
         self._sheetState = sheetState
+        self._mapRegion = mapRegion
     }
     
     func showDetailSheet() {
@@ -36,6 +38,7 @@ struct MalinkiMapView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
+        mapView.region = self.mapRegion
         
         let zoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 100000)
         mapView.setCameraZoomRange(zoomRange, animated: true)
@@ -199,6 +202,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     }
     
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+        self.control.mapRegion = mapView.region
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -284,7 +288,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 @available(iOS 15.0.0, *)
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapView(basemapID: .constant(0), sheetState: .constant(nil))
+        MalinkiMapView(basemapID: .constant(0), sheetState: .constant(nil), mapRegion: .constant(MKCoordinateRegion()))
             .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)}), selectedMapThemeID: 0))
             .environmentObject(MalinkiFeatureDataContainer())
             .environmentObject(MalinkiAnnotationContainer())
