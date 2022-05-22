@@ -71,8 +71,7 @@ public class MalinkiTileOverlay: MKTileOverlay {
     
     public override func loadTile(at path: MKTileOverlayPath, result: @escaping (Data?, Error?) -> Void) {
         let url1 = self.url(forTilePath: path)
-        let filePath = getFilePathForURL(url: url1, folderName: "\(self.TILE_CACHE)/\(self.subDirName)")
-
+        let filePath = getFilePathForURL(url: url1, folderName: "\(self.TILE_CACHE)/\(self.subDirName)/\(path.z)/\(path.x)/\(path.y)")
         let file = FileManager.default
 
         if file.fileExists(atPath: filePath) {
