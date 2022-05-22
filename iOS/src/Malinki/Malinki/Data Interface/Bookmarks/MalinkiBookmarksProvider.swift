@@ -29,7 +29,7 @@ class MalinkiBookmarksProvider: ObservableObject {
                 //read the bookmarks file
                 do {
                     let decoder = JSONDecoder()
-                    self.bookmarksRoot = try decoder.decode(MalinkiBookmarksRoot.self, from: Data(contentsOf: URL(string: path)!))
+                    self.bookmarksRoot = try decoder.decode(MalinkiBookmarksRoot.self, from: Data(contentsOf: URL(string: "file://\(path)")!))
                 } catch  {
                     print("ERROR decoding the bookmarks!")
                     print(error)
