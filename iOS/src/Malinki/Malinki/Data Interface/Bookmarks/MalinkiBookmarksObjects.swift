@@ -14,11 +14,12 @@ struct MalinkiBookmarksRoot: Codable {
 
 //MARK: - bookmark object
 struct MalinkiBookmarksObject: Codable {
-    var id: Int
+    var id: String
     var name: String
-    var colour: String
+    var colour: String?
     var theme_id: Int
     var layer_ids: [Int]
+    var show_annotations: Bool
 }
 
 //MARK: - map component of bookmarks
