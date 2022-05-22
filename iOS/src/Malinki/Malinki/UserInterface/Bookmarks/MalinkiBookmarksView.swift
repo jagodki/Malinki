@@ -27,22 +27,27 @@ struct MalinkiBookmarksView: View {
     
     var body: some View {
         
+        VStack {
         NavigationView {
             List(self.bookmarksContainer.bookmarksRoot.bookmarks, id: \.id) {bookmark in
                 Button(action: {
                     self.mapLayers.selectedMapThemeID = bookmark.theme_id
                 }) {
-                    VStack {
+                    HStack {
                         Image(systemName: "bookmark.fill")
                             .padding()
-                        HStack {
+                        VStack(alignment: .leading) {
                             Text(bookmark.name)
+                                .font(.headline)
                             Text(self.config.getExternalThemeName(id: bookmark.theme_id))
                                 .font(.footnote)
                                 .foregroundColor(.secondary)
                         }
                     }
                 }
+                .swipeActions(content: {
+                    Button(action: { print(bookmark.name) }, label: { Label("Test", systemImage: "star") }).tint(.mint)
+                })
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
@@ -53,7 +58,13 @@ struct MalinkiBookmarksView: View {
         }
         Spacer()
         Button(action: {
-            print("center \(self.mapRegion.center.longitude) - \(self.mapRegion.center.latitude)")
+            self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
+                id: UUID().uuidString,
+                name: "Test",
+                theme_id: self.mapLayers.selectedMapThemeID,
+                layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
+                show_annotations: self.mapLayers.areAnnotationsToggled())
+            )
         }) {
             HStack {
                 Spacer()
@@ -61,12 +72,15 @@ struct MalinkiBookmarksView: View {
                 Text("Test")
                 Spacer()
             }
+            .font(.headline)
         }
         .padding()
         .foregroundColor(Color(uiColor: .systemGray6))
         .background(Color.accentColor)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding()
+        }
+        .background(Color(uiColor: .systemGray6))
         
     }
 }
