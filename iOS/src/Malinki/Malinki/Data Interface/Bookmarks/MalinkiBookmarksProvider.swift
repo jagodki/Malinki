@@ -16,6 +16,10 @@ class MalinkiBookmarksProvider: ObservableObject {
             print(self.bookmarksRoot)
         }
     }
+    var bookmarks: [MalinkiBookmarksObject] {
+        get { self.bookmarksRoot.bookmarks }
+        set { self.bookmarksRoot.bookmarks = newValue }
+    }
     
     /// The initialiser of this class.
     private init() {
