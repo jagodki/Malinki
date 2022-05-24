@@ -20,6 +20,7 @@ struct MalinkiBookmarksObject: Codable {
     var theme_id: Int
     var layer_ids: [Int]
     var show_annotations: Bool
+    var map: MalinkiBookmarksMap
 }
 
 //MARK: - map component of bookmarks
