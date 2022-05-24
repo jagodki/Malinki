@@ -31,7 +31,14 @@ struct MalinkiBookmarksView: View {
         NavigationView {
             List(self.bookmarksContainer.bookmarksRoot.bookmarks, id: \.id) {bookmark in
                 Button(action: {
+                    //adjust the map view
                     self.mapLayers.selectedMapThemeID = bookmark.theme_id
+                    self.mapLayers.mapThemes.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).first?.annotationsAreToggled = bookmark.show_annotations
+                    _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && bookmark.layer_ids.contains($0.id)}).map({$0.isToggled = true})
+                    
+                    //change the bbox of the map
+                    self.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: bookmark.map.centre.latitude, longitude: bookmark.map.centre.longitude),
+                                                        span: MKCoordinateSpan(latitudeDelta: bookmark.map.span.delta_latitude, longitudeDelta: bookmark.map.span.delta_longitude))
                 }) {
                     HStack {
                         Image(systemName: "bookmark.fill")
@@ -57,17 +64,22 @@ struct MalinkiBookmarksView: View {
             })
         }
         Spacer()
-        Button(action: {
-            self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
-                id: UUID().uuidString,
-                name: "Test",
-                theme_id: self.mapLayers.selectedMapThemeID,
-                layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
-                show_annotations: self.mapLayers.areAnnotationsToggled())
-            )
-        }) {
-            HStack {
-                Spacer()
+            Button(action: {
+                self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
+                    id: UUID().uuidString,
+                    name: "Test",
+                    theme_id: self.mapLayers.selectedMapThemeID,
+                    layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
+                    show_annotations: self.mapLayers.areAnnotationsToggled(),
+                    map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
+                        latitude: self.mapRegion.center.latitude,
+                        longitude: self.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
+                            delta_latitude: self.mapRegion.span.latitudeDelta,
+                            delta_longitude: self.mapRegion.span.longitudeDelta))
+                ))
+            }) {
+                HStack {
+                    Spacer()
                 Image(systemName: "plus")
                 Text("Test")
                 Spacer()
