@@ -40,7 +40,7 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.region = self.mapRegion
         
-        let zoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 100000)
+        let zoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 10000)
         mapView.setCameraZoomRange(zoomRange, animated: true)
         
         //register the annotations
