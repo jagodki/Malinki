@@ -13,7 +13,7 @@ class MalinkiBookmarksProvider: ObservableObject {
     private let fileName: String = "bookmarks.json"
     @Published var bookmarksRoot: MalinkiBookmarksRoot = MalinkiBookmarksRoot(bookmarks: []) {
         didSet {
-            print(self.bookmarksRoot)
+            self.saveBookmarksToFile()
         }
     }
     var bookmarks: [MalinkiBookmarksObject] {
@@ -62,7 +62,7 @@ class MalinkiBookmarksProvider: ObservableObject {
         let fm = FileManager.default
         let path = self.getBookMarksPath(fileManager: fm)
         let data = self.encodeBookmarks()
-        if let bookmarksPath = path, let url = URL(string: bookmarksPath) {
+        if let bookmarksPath = path, let url = URL(string: "file://\(bookmarksPath)") {
             try? data.write(to: url)
         }
     }
