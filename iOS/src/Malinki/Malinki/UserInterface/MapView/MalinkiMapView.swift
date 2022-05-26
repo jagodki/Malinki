@@ -14,15 +14,14 @@ struct MalinkiMapView: UIViewRepresentable {
     
     @Binding private var basemapID: Int
     @Binding private var sheetState: MalinkiSheetState?
-    @Binding var mapRegion: MKCoordinateRegion
     @EnvironmentObject var features: MalinkiFeatureDataContainer
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @EnvironmentObject var mapAnnotations: MalinkiAnnotationContainer
+    @EnvironmentObject var mapRegion: MalinkiMapRegion
     
-    init(basemapID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>, mapRegion: Binding<MKCoordinateRegion>) {
+    init(basemapID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
         self._basemapID = basemapID
         self._sheetState = sheetState
-        self._mapRegion = mapRegion
     }
     
     func showDetailSheet() {
@@ -38,7 +37,7 @@ struct MalinkiMapView: UIViewRepresentable {
     func makeUIView(context: UIViewRepresentableContext<MalinkiMapView>) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
-        mapView.region = self.mapRegion
+        mapView.region = self.mapRegion.mapRegion
         
         let zoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 10000)
         mapView.setCameraZoomRange(zoomRange, animated: true)
@@ -83,6 +82,16 @@ struct MalinkiMapView: UIViewRepresentable {
     }
     
     func updateUIView(_ view: MKMapView, context: UIViewRepresentableContext<MalinkiMapView>) {
+        //compare the map current map extent with the environment object
+        let unequalLongitude = self.mapRegion.mapRegion.center.longitude != view.region.center.longitude
+        let unequalLatitude = self.mapRegion.mapRegion.center.latitude != view.region.center.latitude
+        let unequalLongitudeDelta = self.mapRegion.mapRegion.span.longitudeDelta != view.region.span.longitudeDelta
+        let unequalLatitudeDelta = self.mapRegion.mapRegion.span.latitudeDelta != view.region.span.latitudeDelta
+        
+        if unequalLatitude || unequalLongitude || unequalLatitudeDelta || unequalLongitudeDelta {
+            view.setRegion(self.mapRegion.mapRegion, animated: true)
+        }
+        
         if self.mapAnnotations.deselectAnnotations{
             _ = view.selectedAnnotations.filter({!($0 is MKClusterAnnotation)}).map({view.deselectAnnotation($0, animated: true)})
             self.mapAnnotations.deselectAnnotations = false
@@ -202,7 +211,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     }
     
     func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
-        self.control.mapRegion = mapView.region
+        self.control.mapRegion.mapRegion = mapView.region
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -288,9 +297,10 @@ final class Coordinator: NSObject, MKMapViewDelegate {
 @available(iOS 15.0.0, *)
 struct MalinkiMapView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiMapView(basemapID: .constant(0), sheetState: .constant(nil), mapRegion: .constant(MKCoordinateRegion()))
+        MalinkiMapView(basemapID: .constant(0), sheetState: .constant(nil))
             .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)}), selectedMapThemeID: 0))
             .environmentObject(MalinkiFeatureDataContainer())
             .environmentObject(MalinkiAnnotationContainer())
+            .environmentObject(MalinkiMapRegion(mapRegion: MKCoordinateRegion()))
     }
 }

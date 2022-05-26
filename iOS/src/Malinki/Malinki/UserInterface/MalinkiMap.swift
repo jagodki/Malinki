@@ -21,16 +21,17 @@ struct MalinkiMap: View {
     @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes(), selectedMapThemeID: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
     @State private var selectedTool: String? = nil
     @StateObject private var bookmarks: MalinkiBookmarksProvider = MalinkiBookmarksProvider.sharedInstance
-    @State private var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 56.00, longitude: 15.00), latitudinalMeters: 1000000, longitudinalMeters: 1000000)
+    @StateObject private var mapRegion: MalinkiMapRegion = MalinkiMapRegion(mapRegion: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 56.00, longitude: 15.00), latitudinalMeters: 1000000, longitudinalMeters: 1000000)) 
     
     
     var body: some View {
         
         ZStack {
-            MalinkiMapView(basemapID: self.$basemapID, sheetState: self.$sheet.state, mapRegion: self.$mapRegion)
+            MalinkiMapView(basemapID: self.$basemapID, sheetState: self.$sheet.state)
                 .environmentObject(self.mapLayers)
                 .environmentObject(self.features)
                 .environmentObject(self.mapLayers.annotations)
+                .environmentObject(self.mapRegion)
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -98,9 +99,10 @@ struct MalinkiMap: View {
             MalinkiSearchView(searchText: self.$searchText, sheetDetent: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing, isEditing: self.$isEditing)
                 .environmentObject(self.mapLayers)
         case .bookmarks:
-            MalinkiBookmarksView(sheetState: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing, mapRegion: self.$mapRegion)
+            MalinkiBookmarksView(sheetState: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing)
                 .environmentObject(self.bookmarks)
                 .environmentObject(self.mapLayers)
+                .environmentObject(self.mapRegion)
         default:
             EmptyView()
         }

@@ -14,13 +14,12 @@ struct MalinkiBookmarksView: View {
     
     @EnvironmentObject var bookmarksContainer: MalinkiBookmarksProvider
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
+    @EnvironmentObject var mapRegion: MalinkiMapRegion
     @Binding private var sheetState: UISheetPresentationController.Detent.Identifier?
     @Binding private var isSheetShowing: Bool
     private var config = MalinkiConfigurationProvider.sharedInstance
-    @Binding private var mapRegion: MKCoordinateRegion
     
-    init(sheetState: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>, mapRegion: Binding<MKCoordinateRegion>) {
-        self._mapRegion = mapRegion
+    init(sheetState: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>) {
         self._sheetState = sheetState
         self._isSheetShowing = isSheetShowing
     }
@@ -37,7 +36,7 @@ struct MalinkiBookmarksView: View {
                     _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && bookmark.layer_ids.contains($0.id)}).map({$0.isToggled = true})
                     
                     //change the bbox of the map
-                    self.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: bookmark.map.centre.latitude, longitude: bookmark.map.centre.longitude),
+                    self.mapRegion.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: bookmark.map.centre.latitude, longitude: bookmark.map.centre.longitude),
                                                         span: MKCoordinateSpan(latitudeDelta: bookmark.map.span.delta_latitude, longitudeDelta: bookmark.map.span.delta_longitude))
                 }) {
                     HStack {
@@ -59,7 +58,7 @@ struct MalinkiBookmarksView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
-                    MalinkiSheetHeader(title: String(localized: "New bookmark"), isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetState)
+                    MalinkiSheetHeader(title: String(localized: "Bookmarks"), isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetState)
                 })
             })
         }
@@ -72,10 +71,10 @@ struct MalinkiBookmarksView: View {
                     layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
                     show_annotations: self.mapLayers.areAnnotationsToggled(),
                     map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
-                        latitude: self.mapRegion.center.latitude,
-                        longitude: self.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
-                            delta_latitude: self.mapRegion.span.latitudeDelta,
-                            delta_longitude: self.mapRegion.span.longitudeDelta))
+                        latitude: self.mapRegion.mapRegion.center.latitude,
+                        longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
+                            delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
+                            delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
                 ))
             }) {
                 HStack {
@@ -100,8 +99,9 @@ struct MalinkiBookmarksView: View {
 @available(iOS 15.0.0, *)
 struct MalinkiBookmarksView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiBookmarksView(sheetState: .constant(UISheetPresentationController.Detent.Identifier.medium), isSheetShowing: .constant(true), mapRegion: .constant(MKCoordinateRegion()))
+        MalinkiBookmarksView(sheetState: .constant(UISheetPresentationController.Detent.Identifier.medium), isSheetShowing: .constant(true))
             .environmentObject(MalinkiBookmarksProvider.sharedInstance)
             .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)}), selectedMapThemeID: 0))
+            .environmentObject(MalinkiMapRegion(mapRegion: MKCoordinateRegion()))
     }
 }

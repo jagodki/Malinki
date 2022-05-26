@@ -20,6 +20,7 @@
 		CE123BCD27459DC2007C6779 /* MalinkiVectorGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE123BCC27459DC2007C6779 /* MalinkiVectorGeometry.swift */; };
 		CE1B0A2327DA883C00077716 /* SWXMLHash in Frameworks */ = {isa = PBXBuildFile; productRef = CE1B0A2227DA883C00077716 /* SWXMLHash */; };
 		CE1B1C93282C576C001D33BB /* MalinkiBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1B1C92282C576C001D33BB /* MalinkiBookmarksView.swift */; };
+		CE21F7CB283FF75400E085E5 /* MalinkiMapRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE21F7CA283FF75400E085E5 /* MalinkiMapRegion.swift */; };
 		CE2299D2268D00B4002B16EA /* MalinkiMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */; };
 		CE2A348326977693009E4148 /* MalinkiBasemaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2A348226977693009E4148 /* MalinkiBasemaps.swift */; };
 		CE2D6EEA2731E333001F5E67 /* MalinkiSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2D6EE92731E333001F5E67 /* MalinkiSheet.swift */; };
@@ -80,6 +81,7 @@
 		CE123BC8274584A5007C6779 /* MalinkiVectorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiVectorData.swift; sourceTree = "<group>"; };
 		CE123BCC27459DC2007C6779 /* MalinkiVectorGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiVectorGeometry.swift; sourceTree = "<group>"; };
 		CE1B1C92282C576C001D33BB /* MalinkiBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiBookmarksView.swift; sourceTree = "<group>"; };
+		CE21F7CA283FF75400E085E5 /* MalinkiMapRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapRegion.swift; sourceTree = "<group>"; };
 		CE2299D1268D00B4002B16EA /* MalinkiMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapView.swift; sourceTree = "<group>"; };
 		CE2A348226977693009E4148 /* MalinkiBasemaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiBasemaps.swift; sourceTree = "<group>"; };
 		CE2D6EE92731E333001F5E67 /* MalinkiSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSheet.swift; sourceTree = "<group>"; };
@@ -172,6 +174,14 @@
 				CE1B1C92282C576C001D33BB /* MalinkiBookmarksView.swift */,
 			);
 			path = Bookmarks;
+			sourceTree = "<group>";
+		};
+		CE21F7C9283FF72400E085E5 /* MapData */ = {
+			isa = PBXGroup;
+			children = (
+				CE21F7CA283FF75400E085E5 /* MalinkiMapRegion.swift */,
+			);
+			path = MapData;
 			sourceTree = "<group>";
 		};
 		CE2299D0268D0026002B16EA /* UserInterface */ = {
@@ -275,6 +285,7 @@
 			children = (
 				CEBAA80F2821B29D00B1B284 /* Bookmarks */,
 				CE10D4FE272AB3270025084A /* LayerData */,
+				CE21F7C9283FF72400E085E5 /* MapData */,
 				CE085B3026D41B4B005D7453 /* RasterData */,
 				CE4009C12742FD5E00C0ED75 /* VectorData */,
 			);
@@ -457,6 +468,7 @@
 				CE8695D626FBAA8100A0A916 /* MalinkiWMTSOverlay.swift in Sources */,
 				CE44B0AD26C985FC00298DC3 /* MalinkiConfigurationProvider.swift in Sources */,
 				CE09C10E26BC5ECE0077177F /* MalinkiBasemapButton.swift in Sources */,
+				CE21F7CB283FF75400E085E5 /* MalinkiMapRegion.swift in Sources */,
 				CE4009C02742FA6E00C0ED75 /* MalinkiAnnotationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
