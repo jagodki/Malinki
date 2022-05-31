@@ -11,7 +11,11 @@ import SwiftUI
 @available(iOS 15, *)
 struct AlertControlView: UIViewControllerRepresentable {
     
-    @Binding var textString: String
+    @EnvironmentObject var bookmarksContainer: MalinkiBookmarksProvider
+    @EnvironmentObject var mapLayers: MalinkiLayerContainer
+    @EnvironmentObject var mapRegion: MalinkiMapRegion
+    
+    @State var textString: String = ""
     @Binding var showAlert: Bool
     
     var title: String
@@ -42,6 +46,7 @@ struct AlertControlView: UIViewControllerRepresentable {
             alert.addAction(UIAlertAction(title: String(localized: "Cancel") , style: .destructive) { _ in
                 
                 // On dismiss, SiwftUI view's two-way binding variable must be update (setting false) means, remove Alert's View from UI
+                self.textString = ""
                 alert.dismiss(animated: true) {
                     self.showAlert = false
                 }
@@ -51,7 +56,21 @@ struct AlertControlView: UIViewControllerRepresentable {
                 // On submit action, get texts from TextField & set it on SwiftUI View's two-way binding varaible `textString` so that View receives enter response.
                 if let textField = alert.textFields?.first, let text = textField.text {
                     self.textString = text
+                    self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
+                        id: UUID().uuidString,
+                        name: text,
+                        theme_id: self.mapLayers.selectedMapThemeID,
+                        layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
+                        show_annotations: self.mapLayers.areAnnotationsToggled(),
+                        map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
+                            latitude: self.mapRegion.mapRegion.center.latitude,
+                            longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
+                                delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
+                                delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
+                    ))
                 }
+                
+                self.textString = ""
                 
                 alert.dismiss(animated: true) {
                     self.showAlert = false

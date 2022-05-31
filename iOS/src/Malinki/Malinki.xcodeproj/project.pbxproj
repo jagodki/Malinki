@@ -48,6 +48,7 @@
 		CEC9FB54268A4447005882E7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEC9FB53268A4447005882E7 /* Preview Assets.xcassets */; };
 		CECCE5C3269CC8FA00BA8B30 /* MalinkiSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */; };
 		CECCE5C5269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */; };
+		CEDF03CE284236D3002B25C6 /* AlertControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDF03CD284236D3002B25C6 /* AlertControlView.swift */; };
 		CEE9EA7126CC49C00025AF80 /* Configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = CE582B9D26B1E2C100BAA289 /* Configuration.json */; };
 		CEEEC679273DA46E00A87CA3 /* MalinkiAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEC678273DA46E00A87CA3 /* MalinkiAnnotation.swift */; };
 		CEF570E626E69D8F0038B00D /* MalinkiTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF570E526E69D8F0038B00D /* MalinkiTileOverlay.swift */; };
@@ -112,6 +113,7 @@
 		CEC9FB55268A4447005882E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSearchView.swift; sourceTree = "<group>"; };
 		CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiObjectDetailsView.swift; sourceTree = "<group>"; };
+		CEDF03CD284236D3002B25C6 /* AlertControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControlView.swift; sourceTree = "<group>"; };
 		CEEEC678273DA46E00A87CA3 /* MalinkiAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiAnnotation.swift; sourceTree = "<group>"; };
 		CEF570E526E69D8F0038B00D /* MalinkiTileOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiTileOverlay.swift; sourceTree = "<group>"; };
 		CEF7E00F276935A30099A0D5 /* MalinkiFeatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiFeatureData.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 		CE2299D0268D0026002B16EA /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				CEDF03CC284236B5002B25C6 /* Alert */,
 				CE1B1C91282C5736001D33BB /* Bookmarks */,
 				CE5A7B7526B1D62C00D423E9 /* MapControl */,
 				CE5A7B7726B1D67D00D423E9 /* MapObjects */,
@@ -345,6 +348,14 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		CEDF03CC284236B5002B25C6 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				CEDF03CD284236D3002B25C6 /* AlertControlView.swift */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -447,6 +458,7 @@
 				CE10D500272AB3590025084A /* MalinkiLayerContainer.swift in Sources */,
 				CE90913E2783307500ED7EAC /* MalinkiAnnotationContainer.swift in Sources */,
 				CE0736A5269649DB00490383 /* MalinkiMap.swift in Sources */,
+				CEDF03CE284236D3002B25C6 /* AlertControlView.swift in Sources */,
 				CE0CA1472766814000AB916C /* MalinkiCoordinatesConverter.swift in Sources */,
 				CE123BC9274584A5007C6779 /* MalinkiVectorData.swift in Sources */,
 				CEB2A15D26AF40C9002F2D52 /* MalinkiSearchBar.swift in Sources */,

@@ -15,9 +15,13 @@ struct MalinkiBookmarksView: View {
     @EnvironmentObject var bookmarksContainer: MalinkiBookmarksProvider
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @EnvironmentObject var mapRegion: MalinkiMapRegion
+    
     @Binding private var sheetState: UISheetPresentationController.Detent.Identifier?
     @Binding private var isSheetShowing: Bool
+    
     private var config = MalinkiConfigurationProvider.sharedInstance
+    
+    @State private var showAlert: Bool = false
     
     init(sheetState: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>) {
         self._sheetState = sheetState
@@ -26,73 +30,68 @@ struct MalinkiBookmarksView: View {
     
     var body: some View {
         
-        VStack {
-        NavigationView {
-            List(self.bookmarksContainer.bookmarksRoot.bookmarks, id: \.id) {bookmark in
+        ZStack {
+            AlertControlView(showAlert: self.$showAlert, title: String(localized: "Bookmark Name"), message: String(localized: "Insert the bookmark name."))
+//                .environmentObject(self.bookmarksContainer)
+//                .environmentObject(self.mapLayers)
+//                .environmentObject(self.mapRegion)
+            
+            VStack {
+                NavigationView {
+                    List(self.bookmarksContainer.bookmarksRoot.bookmarks, id: \.id) {bookmark in
+                        Button(action: {
+                            //adjust the map view
+                            self.mapLayers.selectedMapThemeID = bookmark.theme_id
+                            self.mapLayers.mapThemes.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).first?.annotationsAreToggled = bookmark.show_annotations
+                            _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && bookmark.layer_ids.contains($0.id)}).map({$0.isToggled = true})
+                            
+                            //change the bbox of the map
+                            self.mapRegion.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: bookmark.map.centre.latitude, longitude: bookmark.map.centre.longitude),
+                                                                          span: MKCoordinateSpan(latitudeDelta: bookmark.map.span.delta_latitude, longitudeDelta: bookmark.map.span.delta_longitude))
+                        }) {
+                            HStack {
+                                Image(systemName: "bookmark.fill")
+                                    .padding()
+                                VStack(alignment: .leading) {
+                                    Text(bookmark.name)
+                                        .font(.headline)
+                                    Text(self.config.getExternalThemeName(id: bookmark.theme_id))
+                                        .font(.footnote)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                        .swipeActions(content: {
+                            Button(action: { self.showAlert = true }, label: { Label("Test", systemImage: "star") }).tint(.mint)
+                        })
+                    }
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar(content: {
+                        ToolbarItem(placement: .principal, content: {
+                            MalinkiSheetHeader(title: String(localized: "Bookmarks"), isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetState)
+                        })
+                    })
+                }
+                Spacer()
                 Button(action: {
-                    //adjust the map view
-                    self.mapLayers.selectedMapThemeID = bookmark.theme_id
-                    self.mapLayers.mapThemes.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).first?.annotationsAreToggled = bookmark.show_annotations
-                    _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && bookmark.layer_ids.contains($0.id)}).map({$0.isToggled = true})
-                    
-                    //change the bbox of the map
-                    self.mapRegion.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: bookmark.map.centre.latitude, longitude: bookmark.map.centre.longitude),
-                                                        span: MKCoordinateSpan(latitudeDelta: bookmark.map.span.delta_latitude, longitudeDelta: bookmark.map.span.delta_longitude))
+                    self.showAlert = true
                 }) {
                     HStack {
-                        Image(systemName: "bookmark.fill")
-                            .padding()
-                        VStack(alignment: .leading) {
-                            Text(bookmark.name)
-                                .font(.headline)
-                            Text(self.config.getExternalThemeName(id: bookmark.theme_id))
-                                .font(.footnote)
-                                .foregroundColor(.secondary)
-                        }
+                        Spacer()
+                        Image(systemName: "plus")
+                        Text("Test")
+                        Spacer()
                     }
+                    .font(.headline)
                 }
-                .swipeActions(content: {
-                    Button(action: { print(bookmark.name) }, label: { Label("Test", systemImage: "star") }).tint(.mint)
-                })
+                .padding()
+                .foregroundColor(Color(uiColor: .systemGray6))
+                .background(Color.accentColor)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .padding()
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar(content: {
-                ToolbarItem(placement: .principal, content: {
-                    MalinkiSheetHeader(title: String(localized: "Bookmarks"), isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetState)
-                })
-            })
+            .background(Color(uiColor: .systemGray6))
         }
-        Spacer()
-            Button(action: {
-                self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
-                    id: UUID().uuidString,
-                    name: "Test",
-                    theme_id: self.mapLayers.selectedMapThemeID,
-                    layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
-                    show_annotations: self.mapLayers.areAnnotationsToggled(),
-                    map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
-                        latitude: self.mapRegion.mapRegion.center.latitude,
-                        longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
-                            delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
-                            delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
-                ))
-            }) {
-                HStack {
-                    Spacer()
-                Image(systemName: "plus")
-                Text("Test")
-                Spacer()
-            }
-            .font(.headline)
-        }
-        .padding()
-        .foregroundColor(Color(uiColor: .systemGray6))
-        .background(Color.accentColor)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding()
-        }
-        .background(Color(uiColor: .systemGray6))
-        
     }
 }
 
