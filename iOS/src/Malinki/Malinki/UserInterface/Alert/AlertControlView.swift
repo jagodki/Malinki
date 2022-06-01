@@ -8,6 +8,11 @@
 import Foundation
 import SwiftUI
 
+enum BookmarkActionType {
+    case insert
+    case update
+}
+
 @available(iOS 15, *)
 struct AlertControlView: UIViewControllerRepresentable {
     
@@ -15,11 +20,13 @@ struct AlertControlView: UIViewControllerRepresentable {
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @EnvironmentObject var mapRegion: MalinkiMapRegion
     
-    @State var textString: String = ""
     @Binding var showAlert: Bool
     
+    var textString: String = ""
     var title: String
     var message: String
+    var actionType: BookmarkActionType
+    var uuidString: String
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<AlertControlView>) -> UIViewController {
         return UIViewController() // Container on which UIAlertContoller presents
@@ -38,7 +45,7 @@ struct AlertControlView: UIViewControllerRepresentable {
             // Adds UITextField & make sure that coordinator is delegate to UITextField.
             alert.addTextField { textField in
                 textField.placeholder = String(localized: "Enter some text")
-                textField.text = self.textString            // setting initial value
+                textField.text = ""                         // setting initial value
                 textField.delegate = context.coordinator    // using coordinator as delegate
             }
             
@@ -46,7 +53,6 @@ struct AlertControlView: UIViewControllerRepresentable {
             alert.addAction(UIAlertAction(title: String(localized: "Cancel") , style: .destructive) { _ in
                 
                 // On dismiss, SiwftUI view's two-way binding variable must be update (setting false) means, remove Alert's View from UI
-                self.textString = ""
                 alert.dismiss(animated: true) {
                     self.showAlert = false
                 }
@@ -55,22 +61,27 @@ struct AlertControlView: UIViewControllerRepresentable {
             alert.addAction(UIAlertAction(title: String(localized: "Submit"), style: .default) { _ in
                 // On submit action, get texts from TextField & set it on SwiftUI View's two-way binding varaible `textString` so that View receives enter response.
                 if let textField = alert.textFields?.first, let text = textField.text {
-                    self.textString = text
-                    self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
-                        id: UUID().uuidString,
-                        name: text,
-                        theme_id: self.mapLayers.selectedMapThemeID,
-                        layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
-                        show_annotations: self.mapLayers.areAnnotationsToggled(),
-                        map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
-                            latitude: self.mapRegion.mapRegion.center.latitude,
-                            longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
-                                delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
-                                delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
-                    ))
+                    
+                    switch self.actionType {
+                    case .insert:
+                        self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
+                            id: UUID().uuidString,
+                            name: text,
+                            theme_id: self.mapLayers.selectedMapThemeID,
+                            layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
+                            show_annotations: self.mapLayers.areAnnotationsToggled(),
+                            map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
+                                latitude: self.mapRegion.mapRegion.center.latitude,
+                                longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
+                                    delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
+                                    delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
+                        ))
+                    case .update:
+                        if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == self.uuidString}) {
+                            self.bookmarksContainer.bookmarks[index].name = text
+                        }
+                    }
                 }
-                
-                self.textString = ""
                 
                 alert.dismiss(animated: true) {
                     self.showAlert = false

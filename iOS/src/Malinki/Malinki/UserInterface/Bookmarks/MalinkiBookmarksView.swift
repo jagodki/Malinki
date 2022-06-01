@@ -21,6 +21,8 @@ struct MalinkiBookmarksView: View {
     
     private var config = MalinkiConfigurationProvider.sharedInstance
     
+    @State private var actionType: BookmarkActionType = .insert
+    @State private var uuidString: String = ""
     @State private var showAlert: Bool = false
     
     init(sheetState: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>) {
@@ -31,10 +33,7 @@ struct MalinkiBookmarksView: View {
     var body: some View {
         
         ZStack {
-            AlertControlView(showAlert: self.$showAlert, title: String(localized: "Bookmark Name"), message: String(localized: "Insert the bookmark name."))
-//                .environmentObject(self.bookmarksContainer)
-//                .environmentObject(self.mapLayers)
-//                .environmentObject(self.mapRegion)
+            AlertControlView(showAlert: self.$showAlert, title: String(localized: "Bookmark Name"), message: String(localized: "Insert the bookmark name."), actionType: self.actionType, uuidString: self.uuidString)
             
             VStack {
                 NavigationView {
@@ -62,7 +61,13 @@ struct MalinkiBookmarksView: View {
                             }
                         }
                         .swipeActions(content: {
-                            Button(action: { self.showAlert = true }, label: { Label("Test", systemImage: "star") }).tint(.mint)
+                            Button(action: {
+                                self.actionType = .update
+                                self.uuidString = bookmark.id
+                                self.showAlert = true
+                            }, label: {
+                                Label("Test", systemImage: "star")
+                            }).tint(.mint)
                         })
                     }
                     .navigationBarTitleDisplayMode(.inline)
@@ -74,6 +79,7 @@ struct MalinkiBookmarksView: View {
                 }
                 Spacer()
                 Button(action: {
+                    self.actionType = .insert
                     self.showAlert = true
                 }) {
                     HStack {
