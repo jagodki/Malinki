@@ -64,18 +64,20 @@ struct AlertControlView: UIViewControllerRepresentable {
                     
                     switch self.actionType {
                     case .insert:
-                        self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
-                            id: UUID().uuidString,
-                            name: text,
-                            theme_id: self.mapLayers.selectedMapThemeID,
-                            layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
-                            show_annotations: self.mapLayers.areAnnotationsToggled(),
-                            map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
-                                latitude: self.mapRegion.mapRegion.center.latitude,
-                                longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
-                                    delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
-                                    delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
-                        ))
+                        withAnimation() {
+                            self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
+                                id: UUID().uuidString,
+                                name: text,
+                                theme_id: self.mapLayers.selectedMapThemeID,
+                                layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
+                                show_annotations: self.mapLayers.areAnnotationsToggled(),
+                                map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
+                                    latitude: self.mapRegion.mapRegion.center.latitude,
+                                    longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
+                                        delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
+                                        delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
+                            ))
+                        }
                     case .update:
                         if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == self.uuidString}) {
                             self.bookmarksContainer.bookmarks[index].name = text
