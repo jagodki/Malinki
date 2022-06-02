@@ -62,12 +62,47 @@ struct MalinkiBookmarksView: View {
                         }
                         .swipeActions(content: {
                             Button(action: {
+                                //remove the bookmark
+                                if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == bookmark.id}) {
+                                    _ = withAnimation() {
+                                        self.bookmarksContainer.bookmarks.remove(at: index)
+                                    }
+                                }
+                            }, label: {
+                                Label(String(localized: "Delete"), systemImage: "trash.fill")
+                            }).tint(.red)
+                        })
+                        .swipeActions(content: {
+                            Button(action: {
+                                //update map region and content
+                                if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == bookmark.id}) {
+                                    
+                                    self.bookmarksContainer.bookmarks[index] = MalinkiBookmarksObject(
+                                        id: bookmark.id,
+                                        name: bookmark.name,
+                                        theme_id: self.mapLayers.selectedMapThemeID,
+                                        layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
+                                        show_annotations: self.mapLayers.areAnnotationsToggled(),
+                                        map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
+                                            latitude: self.mapRegion.mapRegion.center.latitude,
+                                            longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
+                                                delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
+                                                delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
+                                    )
+                                }
+                            }, label: {
+                                Label(String(localized: "Update"), systemImage: "arrow.triangle.2.circlepath")
+                            }).tint(.purple)
+                        })
+                        .swipeActions(content: {
+                            Button(action: {
+                                //create a new bookmark
                                 self.actionType = .update
                                 self.uuidString = bookmark.id
                                 self.showAlert = true
                             }, label: {
-                                Label("Test", systemImage: "star")
-                            }).tint(.mint)
+                                Label(String(localized: "Rename"), systemImage: "pencil")
+                            }).tint(.blue)
                         })
                     }
                     .navigationBarTitleDisplayMode(.inline)
