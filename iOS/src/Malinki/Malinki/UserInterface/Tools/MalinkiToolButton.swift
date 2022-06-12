@@ -31,6 +31,23 @@ struct MalinkiToolButton: View {
             }
             
             //the clean cache entry
+            Button(action: {
+                let fm = FileManager.default
+                let documentsUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first
+                let cacheUrl = documentsUrl?.appendingPathComponent(MalinkiConfigurationProvider.sharedInstance.getCacheName())
+                
+                //clear cache
+                do {
+                    if let mapCacheUrl = cacheUrl {
+                        _ = try fm.contentsOfDirectory(at: mapCacheUrl, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter(\.hasDirectoryPath).map({try fm.removeItem(at: $0)})
+                    }
+                } catch {
+                    print("ERROR - could not clear cache folder with tool button: \(error)")
+                }
+            }) {
+                Text(LocalizedStringKey("Clear Map Cache"))
+                Image(systemName: "trash.fill")
+            }
         } label: {
             Image(systemName: "ellipsis")
                 .font(.title2)
