@@ -10,6 +10,7 @@ import SheeKit
 import MapKit
 
 @available(iOS 15.0.0, *)
+/// A structur to show all bookmarks as buttons/list entries. Should be presented inside a sheet.
 struct MalinkiBookmarksView: View {
     
     @EnvironmentObject var bookmarksContainer: MalinkiBookmarksProvider
@@ -25,6 +26,10 @@ struct MalinkiBookmarksView: View {
     @State private var uuidString: String = ""
     @State private var showAlert: Bool = false
     
+    /// The initialiser of this struct.
+    /// - Parameters:
+    ///   - sheetState: the state of the sheet
+    ///   - isSheetShowing: a boolean binding indicating, whether the sheet is open or closed
     init(sheetState: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>) {
         self._sheetState = sheetState
         self._isSheetShowing = isSheetShowing
