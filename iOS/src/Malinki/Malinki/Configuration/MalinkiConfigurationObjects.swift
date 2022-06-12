@@ -12,6 +12,7 @@ struct MalinkiConfiguration: Decodable {
     var mapThemes: [MalinkiConfigurationTheme]
     var basemaps: [MalinkiConfigurationMapData]
     var onStartUp: MalinkiConfigurationStartUp
+    var cacheName: String
 }
 
 struct MalinkiConfigurationTheme: Decodable {

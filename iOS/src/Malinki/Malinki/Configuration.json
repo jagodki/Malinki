@@ -611,5 +611,6 @@
     "onStartUp": {
         "theme": 1,
         "basemap": 0
-    }
+    },
+    "cacheName": "TILE_CACHE"
 }

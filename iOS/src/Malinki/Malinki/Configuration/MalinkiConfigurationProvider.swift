@@ -163,4 +163,8 @@ class MalinkiConfigurationProvider {
         return self.getRasterLayer(with: layerID, of: themeID)?.externalNames.en ?? ""
     }
     
+    func getCacheName() -> String {
+        return self.configData?.cacheName ?? "TILE_CACHE"
+    }
+    
 }
