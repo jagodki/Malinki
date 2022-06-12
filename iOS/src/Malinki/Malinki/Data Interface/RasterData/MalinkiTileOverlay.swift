@@ -19,7 +19,7 @@ extension String {
 /// A class for loading a TMS as a MKTileOverlay.
 public class MalinkiTileOverlay: MKTileOverlay {
     
-    private let TILE_CACHE = "TILE_CACHE"
+    private let TILE_CACHE = MalinkiConfigurationProvider.sharedInstance.getCacheName()
     var alpha: CGFloat = 1.0
     private var subDirName: String
     
