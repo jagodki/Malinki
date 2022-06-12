@@ -17,7 +17,7 @@ struct MalinkiApp: App {
             //get the path
             let fileManager = FileManager.default
             let documentsUrl =  fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
-            let cachePath = documentsUrl?.path.stringByAppendingPathComponent(path: "TILE_CACHE")
+            let cachePath = documentsUrl?.path.stringByAppendingPathComponent(path: MalinkiConfigurationProvider.sharedInstance.getCacheName())
             
             //clear cache
             do {
@@ -25,7 +25,7 @@ struct MalinkiApp: App {
                     try fileManager.removeItem(atPath: mapCachePath)
                 }
             } catch {
-                print("ERROR - could not clear cache folder: \(error)")
+                print("ERROR - could not clear cache folder after app entered background: \(error)")
             }
             
             //save bookmarks
