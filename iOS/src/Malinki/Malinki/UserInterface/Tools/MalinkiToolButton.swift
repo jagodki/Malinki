@@ -8,9 +8,11 @@
 import SwiftUI
 
 /// A structur to show a menu button with several tools available.
+@available(iOS 15.0, *)
 struct MalinkiToolButton: View {
     
     @Binding var sheetState: MalinkiSheetState?
+    @State private var showingActions: Bool = false
     
     var body: some View {
         Menu {
@@ -32,6 +34,18 @@ struct MalinkiToolButton: View {
             
             //the clean cache entry
             Button(action: {
+                self.showingActions = true
+            }) {
+                Text(LocalizedStringKey("Clear Map Cache"))
+                Image(systemName: "trash.fill")
+            }
+        } label: {
+            Image(systemName: "ellipsis")
+                .font(.title2)
+                .foregroundColor(Color.primary)
+                .padding()
+        }.confirmationDialog(Text(LocalizedStringKey("All cached map tiles will be removed, e.g. map tiles will be requested from web services again after panning or zooming the map.")), isPresented: self.$showingActions, titleVisibility: .visible, actions: {
+            Button("OK", role: .destructive) {
                 let fm = FileManager.default
                 let documentsUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first
                 let cacheUrl = documentsUrl?.appendingPathComponent(MalinkiConfigurationProvider.sharedInstance.getCacheName())
@@ -44,19 +58,12 @@ struct MalinkiToolButton: View {
                 } catch {
                     print("ERROR - could not clear cache folder with tool button: \(error)")
                 }
-            }) {
-                Text(LocalizedStringKey("Clear Map Cache"))
-                Image(systemName: "trash.fill")
             }
-        } label: {
-            Image(systemName: "ellipsis")
-                .font(.title2)
-                .foregroundColor(Color.primary)
-                .padding()
-        }
+        })
     }
 }
 
+@available(iOS 15.0, *)
 struct MalinkiToolButton_Previews: PreviewProvider {
     static var previews: some View {
         MalinkiToolButton(sheetState: .constant(.search))
