@@ -39,6 +39,8 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
         var xMin = self.tmsConverter.latitudeOfRow(row: path.y+1, zoom: path.z)
         var xMax = self.tmsConverter.latitudeOfRow(row: path.y, zoom: path.z)
         
+//        print("coord_4326_request: \(self.url.replacingOccurrences(of: "EPSG:3857", with: "EPSG:4326"))&BBOX=\(xMin),\(yMin),\(xMax),\(yMax)")
+        
         //if EPSG:3857 is used
         if self.useMercator {
             //caching of the precalculated values
@@ -47,16 +49,24 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
             let latMin = xMin
             let latMax = xMax
             
+//            print("coord_4326_min: \(lonMin),\(latMin)")
+//            print("coord_4326_max: \(lonMax),\(latMax)")
+            
             //x and y will be flipped, because of the order of coordinates in EPSG: 3857:
             //x = easting, y = northing
             xMin = self.tmsConverter.mercatorXofLongitude(lon: lonMin)
             xMax = self.tmsConverter.mercatorXofLongitude(lon: lonMax)
             yMin = self.tmsConverter.mercatorYofLatitude(lat: latMin)
             yMax = self.tmsConverter.mercatorYofLatitude(lat: latMax)
+            
+//            print("coord_3857_min: \(xMin),\(yMin)")
+//            print("coord_3857_max: \(xMax),\(yMax)")
+            
         }
         
-        let resolvedUrl = "\(self.url)" + "&BBOX=\(xMin),\(yMin),\(xMax),\(yMax)"
-        
+        let resolvedUrl = "\(self.url)&BBOX=\(xMin),\(yMin),\(xMax),\(yMax)"
+//        print("coord_3857_request: \(resolvedUrl)")
+//        print("coord_________")
         return URL(string: resolvedUrl)!
     }
     
