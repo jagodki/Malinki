@@ -11,6 +11,8 @@ import MapKit
 /// A struct containing functions for converting coordinates.
 struct MalinkiCoordinatesConverter {
     
+    private let radius: Double = 6378137.0; /* in meters on the equator */
+    
     func longitudeOfColumn(column: Int, zoom: Int) -> Double {
         let x = Double(column)
         let z = Double(zoom)
@@ -60,4 +62,9 @@ struct MalinkiCoordinatesConverter {
         return Int(log2(360 * ((width / 128) / spanStraight)))
     }
     
+}
+
+extension FloatingPoint {
+    var degreesToRadians: Self { self * .pi / 180 }
+    var radiansToDegrees: Self { self * 180 / .pi }
 }
