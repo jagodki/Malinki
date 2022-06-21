@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A class to provide access to the spatial bookmarks of the user.
 class MalinkiBookmarksProvider: ObservableObject {
     
     static let sharedInstance = MalinkiBookmarksProvider()  // The singleton of this class
@@ -53,11 +54,15 @@ class MalinkiBookmarksProvider: ObservableObject {
         return bookmarksData
     }
     
+    /// A function to create the absolute path of the bookmarks file.
+    /// - Parameter fileManager: a default FileManager object
+    /// - Returns: the path as String
     private func getBookMarksPath(fileManager: FileManager) -> String? {
         let documentsUrl =  fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
         return documentsUrl?.path.stringByAppendingPathComponent(path: self.fileName)
     }
     
+    /// A function for saving the bookmarks object to a file.
     public func saveBookmarksToFile() {
         let fm = FileManager.default
         let path = self.getBookMarksPath(fileManager: fm)

@@ -14,6 +14,8 @@ enum BookmarkActionType {
 }
 
 @available(iOS 15, *)
+
+/// A structure to show an alert with the possiblity to insert some text in a field.
 struct AlertControlView: UIViewControllerRepresentable {
     
     @EnvironmentObject var bookmarksContainer: MalinkiBookmarksProvider
