@@ -1,9 +1,9 @@
 {
     "bookmarks": [
         {
-            "id": 0,
+            "id": "",
             "name": "Test",
-            "colour": "blue",
+            "colour": "",
             "theme_id": 1,
             "layer_ids": [100, 102],
             "map": {
