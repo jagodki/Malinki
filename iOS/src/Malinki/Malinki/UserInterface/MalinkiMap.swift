@@ -103,6 +103,8 @@ struct MalinkiMap: View {
                 .environmentObject(self.bookmarks)
                 .environmentObject(self.mapLayers)
                 .environmentObject(self.mapRegion)
+        case .annotations:
+            EmptyView()
         default:
             EmptyView()
         }

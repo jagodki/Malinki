@@ -32,6 +32,14 @@ struct MalinkiToolButton: View {
                 Image(systemName: "bookmark.fill")
             }
             
+            //the annotations entry
+            Button(action: {
+                self.sheetState = .annotations
+            }) {
+                Text(LocalizedStringKey("Marker"))
+                Image(systemName: "mappin.and.ellipse")
+            }
+            
             //the clean cache entry
             Button(action: {
                 self.showingActions = true
