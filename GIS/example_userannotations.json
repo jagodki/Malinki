@@ -1,0 +1,13 @@
+{
+    "user_annotations": [
+        {
+            "id": "0",
+            "name": "Test",
+            "theme_ids": [0,1],
+            "position": {
+                "latitude": 15.0,
+                "longitude": 51.1
+            }
+        }
+    ]
+}
