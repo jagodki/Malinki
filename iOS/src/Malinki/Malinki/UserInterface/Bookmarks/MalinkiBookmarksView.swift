@@ -42,7 +42,7 @@ struct MalinkiBookmarksView: View {
             
             VStack {
                 NavigationView {
-                    List(self.bookmarksContainer.bookmarksRoot.bookmarks, id: \.id) {bookmark in
+                    List(self.bookmarksContainer.bookmarks, id: \.id) {bookmark in
                         Button(action: {
                             //adjust the map view
                             self.mapLayers.selectedMapThemeID = bookmark.theme_id
@@ -101,7 +101,7 @@ struct MalinkiBookmarksView: View {
                         })
                         .swipeActions(content: {
                             Button(action: {
-                                //create a new bookmark
+                                //rename the bookmark
                                 self.actionType = .update
                                 self.uuidString = bookmark.id
                                 self.showAlert = true
