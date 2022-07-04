@@ -22,7 +22,7 @@ struct MalinkiBookmarksView: View {
     
     private var config = MalinkiConfigurationProvider.sharedInstance
     
-    @State private var actionType: BookmarkActionType = .insert
+    @State private var actionType: AlertActionType = .insertBookmark
     @State private var uuidString: String = ""
     @State private var showAlert: Bool = false
     
@@ -102,7 +102,7 @@ struct MalinkiBookmarksView: View {
                         .swipeActions(content: {
                             Button(action: {
                                 //rename the bookmark
-                                self.actionType = .update
+                                self.actionType = .updateBookmark
                                 self.uuidString = bookmark.id
                                 self.showAlert = true
                             }, label: {
@@ -119,7 +119,7 @@ struct MalinkiBookmarksView: View {
                 }
                 Spacer()
                 Button(action: {
-                    self.actionType = .insert
+                    self.actionType = .insertBookmark
                     self.showAlert = true
                 }) {
                     HStack {
