@@ -21,6 +21,7 @@ enum AlertActionType {
 struct AlertControlView: UIViewControllerRepresentable {
     
     @EnvironmentObject var bookmarksContainer: MalinkiBookmarksProvider
+    @EnvironmentObject var userAnnotationsContainer: MalinkiUserAnnotationsProvider
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @EnvironmentObject var mapRegion: MalinkiMapRegion
     
@@ -87,9 +88,18 @@ struct AlertControlView: UIViewControllerRepresentable {
                             self.bookmarksContainer.bookmarks[index].name = text
                         }
                     case .insertMapPin:
-                        <#code#>
+                        self.userAnnotationsContainer.userAnnotations.append(MalinkiUserAnnotation(
+                            id: UUID().uuidString,
+                            name: text,
+                            theme_ids: [self.mapLayers.selectedMapThemeID],
+                            position: MalinkiUserAnnotationsPosition(
+                                longitude: self.mapRegion.mapRegion.center.longitude,
+                                latitude: self.mapRegion.mapRegion.center.latitude - self.mapRegion.mapRegion.span.latitudeDelta / 4)
+                        ))
                     case .updateMapPin:
-                        <#code#>
+                        if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == self.uuidString}) {
+                            self.userAnnotationsContainer.userAnnotations[index].name = text
+                        }
                     }
                 }
                 
