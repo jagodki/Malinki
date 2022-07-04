@@ -8,9 +8,11 @@
 import Foundation
 import SwiftUI
 
-enum BookmarkActionType {
-    case insert
-    case update
+enum AlertActionType {
+    case insertBookmark
+    case updateBookmark
+    case insertMapPin
+    case updateMapPin
 }
 
 @available(iOS 15, *)
@@ -27,7 +29,7 @@ struct AlertControlView: UIViewControllerRepresentable {
     var textString: String = ""
     var title: String
     var message: String
-    var actionType: BookmarkActionType
+    var actionType: AlertActionType
     var uuidString: String
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<AlertControlView>) -> UIViewController {
@@ -65,7 +67,7 @@ struct AlertControlView: UIViewControllerRepresentable {
                 if let textField = alert.textFields?.first, let text = textField.text {
                     
                     switch self.actionType {
-                    case .insert:
+                    case .insertBookmark:
                         withAnimation() {
                             self.bookmarksContainer.bookmarks.append(MalinkiBookmarksObject(
                                 id: UUID().uuidString,
@@ -80,10 +82,14 @@ struct AlertControlView: UIViewControllerRepresentable {
                                         delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
                             ))
                         }
-                    case .update:
+                    case .updateBookmark:
                         if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == self.uuidString}) {
                             self.bookmarksContainer.bookmarks[index].name = text
                         }
+                    case .insertMapPin:
+                        <#code#>
+                    case .updateMapPin:
+                        <#code#>
                     }
                 }
                 
