@@ -25,7 +25,6 @@ struct MalinkiMap: View {
     @StateObject private var mapRegion: MalinkiMapRegion = MalinkiMapRegion(mapRegion: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 56.00, longitude: 15.00), latitudinalMeters: 1000000, longitudinalMeters: 1000000))
     @StateObject private var userAnnotations: MalinkiUserAnnotationsProvider = MalinkiUserAnnotationsProvider()
     
-    
     var body: some View {
         
         ZStack {
@@ -106,7 +105,10 @@ struct MalinkiMap: View {
                 .environmentObject(self.mapLayers)
                 .environmentObject(self.mapRegion)
         case .annotations:
-            EmptyView()
+            MalinkiUserAnnotationsView(sheetState: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing)
+                .environmentObject(self.userAnnotations)
+                .environmentObject(self.mapLayers)
+                .environmentObject(self.mapRegion)
         default:
             EmptyView()
         }

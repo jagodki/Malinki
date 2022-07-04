@@ -12,6 +12,7 @@ import SheeKit
 @available(iOS 15.0.0, *)
 struct MalinkiUserAnnotationsView: View {
     
+    @EnvironmentObject var userAnnotationsContainer: MalinkiUserAnnotationsProvider
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @EnvironmentObject var mapRegion: MalinkiMapRegion
     
@@ -20,18 +21,113 @@ struct MalinkiUserAnnotationsView: View {
     
     private var config = MalinkiConfigurationProvider.sharedInstance
     
-    @State private var actionType: BookmarkActionType = .insert
+    @State private var actionType: AlertActionType = .insertMapPin
     @State private var uuidString: String = ""
     @State private var showAlert: Bool = false
     
+    init(sheetState: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>) {
+        self._sheetState = sheetState
+        self._isSheetShowing = isSheetShowing
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            AlertControlView(showAlert: self.$showAlert, title: String(localized: "Map Pin Name"), message: String(localized: "Insert the name of the map pin."), actionType: self.actionType, uuidString: self.uuidString)
+            
+            VStack {
+                NavigationView {
+                    List(self.userAnnotationsContainer.userAnnotations, id: \.id) {annotation in
+                        Button(action: {
+                            //change the center of the map
+                            self.mapRegion.mapRegion.center = CLLocationCoordinate2D(latitude: annotation.position.latitude, longitude: annotation.position.longitude)
+                        }) {
+                            HStack {
+                                Image(systemName: "mappin.and.ellipse")
+                                    .padding()
+                                VStack(alignment: .leading) {
+                                    Text(annotation.name)
+                                        .font(.headline)
+                                    HStack {
+                                        ForEach(annotation.theme_ids, id: \.self) {theme_id in
+                                            Text(self.config.getExternalThemeName(id: theme_id))
+                                        }
+                                    }
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                        .swipeActions(content: {
+                            Button(action: {
+                                //remove the annotation
+                                if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == annotation.id}) {
+                                    _ = withAnimation() {
+                                        self.userAnnotationsContainer.userAnnotations.remove(at: index)
+                                    }
+                                }
+                            }, label: {
+                                Label(String(localized: "Delete"), systemImage: "trash.fill")
+                            }).tint(.red)
+                        })
+                        .swipeActions(content: {
+                            Button(action: {
+                                //update the annotation location
+                                if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == annotation.id}) {
+                                    
+                                    self.userAnnotationsContainer.userAnnotations[index] = MalinkiUserAnnotation (id: annotation.id, name: annotation.name, theme_ids: annotation.theme_ids, position: MalinkiUserAnnotationsPosition(longitude: self.mapRegion.mapRegion.center.longitude,latitude: self.mapRegion.mapRegion.center.latitude))
+                                }
+                            }, label: {
+                                Label(String(localized: "Update"), systemImage: "arrow.triangle.2.circlepath")
+                            }).tint(.purple)
+                        })
+                        .swipeActions(content: {
+                            Button(action: {
+                                //rename the annotation
+                                self.actionType = .updateMapPin
+                                self.uuidString = annotation.id
+                                self.showAlert = true
+                            }, label: {
+                                Label(String(localized: "Rename"), systemImage: "pencil")
+                            }).tint(.blue)
+                        })
+                    }
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar(content: {
+                        ToolbarItem(placement: .principal, content: {
+                            MalinkiSheetHeader(title: String(localized: "Map Pins"), isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetState)
+                        })
+                    })
+                }
+                Spacer()
+                Button(action: {
+                    self.actionType = .insertMapPin
+                    self.showAlert = true
+                }) {
+                    HStack {
+                        Spacer()
+                        Image(systemName: "plus")
+                        Text("Add Map Pin")
+                        Spacer()
+                    }
+                    .font(.headline)
+                }
+                .padding()
+                .foregroundColor(Color(uiColor: .systemGray6))
+                .background(Color.accentColor)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .padding()
+            }
+            .background(Color(uiColor: .systemGray6))
+        }
     }
 }
 
 @available(iOS 15.0.0, *)
 struct MalinkiUserAnnotationsView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiUserAnnotationsView()
+        MalinkiUserAnnotationsView(sheetState: .constant(.medium), isSheetShowing: .constant(false))
+            .environmentObject(MalinkiUserAnnotationsProvider.sharedInstance)
+            .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)}), selectedMapThemeID: 0))
+            .environmentObject(MalinkiMapRegion(mapRegion: MKCoordinateRegion()))
     }
 }
