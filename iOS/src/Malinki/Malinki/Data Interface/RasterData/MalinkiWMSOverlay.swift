@@ -14,7 +14,7 @@ public class MalinkiWMSOverlay: MalinkiTileOverlay {
     private var url: String
     private var useMercator: Bool
     private let wmsVersion: String
-    private let tmsConverter: MalinkiCoordinatesConverter = MalinkiCoordinatesConverter()
+    private let tmsConverter: MalinkiCoordinatesConverter = MalinkiCoordinatesConverter.sharedInstance
     
     /// The initialiser of this class
     /// - Parameters:

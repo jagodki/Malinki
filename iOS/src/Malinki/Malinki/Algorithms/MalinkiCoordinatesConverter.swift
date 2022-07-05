@@ -12,6 +12,7 @@ import MapKit
 struct MalinkiCoordinatesConverter {
     
     private let radius: Double = 6378137.0; /* in meters on the equator */
+    static let sharedInstance = MalinkiCoordinatesConverter()
     
     func longitudeOfColumn(column: Int, zoom: Int) -> Double {
         let x = Double(column)

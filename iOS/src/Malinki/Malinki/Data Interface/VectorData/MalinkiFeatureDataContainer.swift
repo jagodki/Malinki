@@ -109,7 +109,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         var y1 = (coord?.latitude ?? 0.0) + height / 2 * lonPerPoint
         
         if config.crs == "EPSG:3857" {
-            let coordinateConverter = MalinkiCoordinatesConverter()
+            let coordinateConverter = MalinkiCoordinatesConverter.sharedInstance
             x0 = coordinateConverter.mercatorXofLongitude(lon: x0)
             x1 = coordinateConverter.mercatorXofLongitude(lon: x1)
             y0 = coordinateConverter.mercatorYofLatitude(lat: y0)
