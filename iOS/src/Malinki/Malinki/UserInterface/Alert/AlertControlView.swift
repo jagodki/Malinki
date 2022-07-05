@@ -94,7 +94,7 @@ struct AlertControlView: UIViewControllerRepresentable {
                             theme_ids: [self.mapLayers.selectedMapThemeID],
                             position: MalinkiUserAnnotationsPosition(
                                 longitude: self.mapRegion.mapRegion.center.longitude,
-                                latitude: self.mapRegion.mapRegion.center.latitude - self.mapRegion.mapRegion.span.latitudeDelta / 4)
+                                latitude: MalinkiCoordinatesConverter.sharedInstance.latitudeOverSheet(for: self.mapRegion.mapRegion.center.latitude, with: self.mapRegion.mapRegion.span.latitudeDelta))
                         ))
                     case .updateMapPin:
                         if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == self.uuidString}) {
