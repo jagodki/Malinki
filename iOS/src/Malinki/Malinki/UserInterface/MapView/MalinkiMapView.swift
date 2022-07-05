@@ -14,10 +14,12 @@ struct MalinkiMapView: UIViewRepresentable {
     
     @Binding private var basemapID: Int
     @Binding private var sheetState: MalinkiSheetState?
+    
     @EnvironmentObject var features: MalinkiFeatureDataContainer
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @EnvironmentObject var mapAnnotations: MalinkiAnnotationContainer
     @EnvironmentObject var mapRegion: MalinkiMapRegion
+    @EnvironmentObject var userAnnotationsContainer: MalinkiUserAnnotationsProvider
     
     init(basemapID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
         self._basemapID = basemapID
@@ -58,25 +60,25 @@ struct MalinkiMapView: UIViewRepresentable {
     }
     
     private func shouldUpdateRasterOverlays(for region: MKCoordinateRegion) -> Bool {
-        let checkMapTheme = self.mapLayers.currentRasterLayers["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
-        let checkBaseMap = self.mapLayers.currentRasterLayers["baseMap"] != String(self.basemapID)
+        let checkMapTheme = self.mapLayers.previousRasterLayers["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
+        let checkBaseMap = self.mapLayers.previousRasterLayers["baseMap"] != String(self.basemapID)
         
-        let checkLayers = self.mapLayers.currentRasterLayers["layers"] != self.mapLayers.getInformationAboutCurrentRasterlayers(baseMapID: self.basemapID)["layers"]
+        let checkLayers = self.mapLayers.previousRasterLayers["layers"] != self.mapLayers.getInformationAboutCurrentRasterlayers(baseMapID: self.basemapID)["layers"]
         
         let precision = 10000000.0
         
-        let checkLat = round(Double(self.mapLayers.currentMapRegion?.center.latitude ?? 0) * precision) != round(Double(region.center.latitude) * precision)
-        let checkLon = round(Double(self.mapLayers.currentMapRegion?.center.longitude ?? 0) * precision) != round(Double(region.center.longitude) * precision)
-        let checkLatDelta = round(Double(self.mapLayers.currentMapRegion?.span.latitudeDelta ?? 0) * precision) != round(Double(region.span.latitudeDelta) * precision)
-        let checkLonDelta = round(Double(self.mapLayers.currentMapRegion?.span.longitudeDelta ?? 0) * precision) != round(Double(region.span.longitudeDelta) * precision)
+        let checkLat = round(Double(self.mapLayers.previousMapRegion?.center.latitude ?? 0) * precision) != round(Double(region.center.latitude) * precision)
+        let checkLon = round(Double(self.mapLayers.previousMapRegion?.center.longitude ?? 0) * precision) != round(Double(region.center.longitude) * precision)
+        let checkLatDelta = round(Double(self.mapLayers.previousMapRegion?.span.latitudeDelta ?? 0) * precision) != round(Double(region.span.latitudeDelta) * precision)
+        let checkLonDelta = round(Double(self.mapLayers.previousMapRegion?.span.longitudeDelta ?? 0) * precision) != round(Double(region.span.longitudeDelta) * precision)
         
         return checkMapTheme || checkBaseMap || checkLayers || checkLat || checkLon || checkLatDelta || checkLonDelta
     }
     
     private func shouldUpdateAnnotations() -> Bool {
-        let checkMapTheme = self.mapLayers.currentAnnotations["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
-        let checkIsThemeToggled = self.mapLayers.currentAnnotations["areAnnotationsToggled"] != self.mapLayers.getInformationAboutCurrentAnnotations()["areAnnotationsToggled"]
-        let checkLayers = self.mapLayers.currentAnnotations["layers"] != self.mapLayers.getInformationAboutCurrentAnnotations()["layers"]
+        let checkMapTheme = self.mapLayers.previousAnnotations["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
+        let checkIsThemeToggled = self.mapLayers.previousAnnotations["areAnnotationsToggled"] != self.mapLayers.getInformationAboutCurrentAnnotations()["areAnnotationsToggled"]
+        let checkLayers = self.mapLayers.previousAnnotations["layers"] != self.mapLayers.getInformationAboutCurrentAnnotations()["layers"]
         
         return checkMapTheme || checkIsThemeToggled || checkLayers || self.mapAnnotations.newAnnotationsLoaded
     }

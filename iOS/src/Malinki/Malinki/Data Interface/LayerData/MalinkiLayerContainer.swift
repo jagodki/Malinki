@@ -27,10 +27,10 @@ final class MalinkiLayerContainer: ObservableObject {
             self.queryCurrentAnnotations()
         }
     }
-    var currentRasterLayers: [String: String] = [:]
-    var currentMapRegion: MKCoordinateRegion?
+    var previousRasterLayers: [String: String] = [:]
+    var previousMapRegion: MKCoordinateRegion?
     var allowRedraw: Bool = true
-    var currentAnnotations: [String: String] = [:] //["mapTheme": String(...), "areAnnotationsToggled": String(...), "layers": ... + "-" + ...]
+    var previousAnnotations: [String: String] = [:] //["mapTheme": String(...), "areAnnotationsToggled": String(...), "layers": ... + "-" + ...]
     
     private var _annotations: MalinkiAnnotationContainer = MalinkiAnnotationContainer()
     var annotations: MalinkiAnnotationContainer {
@@ -61,7 +61,7 @@ final class MalinkiLayerContainer: ObservableObject {
     /// This function edits a dictionary containing information about the current layers represented by annotations.
     /// Also updates the information about new loaded annotations for fetching remote data.
     func setInformationAboutCurrentAnnotations() {
-        self.currentAnnotations = self.getInformationAboutCurrentAnnotations()
+        self.previousAnnotations = self.getInformationAboutCurrentAnnotations()
         self._annotations.newAnnotationsLoaded = false
     }
     
@@ -79,8 +79,8 @@ final class MalinkiLayerContainer: ObservableObject {
     ///   - region: the MKCoordinateRegion of the current map scene
     ///   - baseMapID: the ID of the current basemap
     func setInformationAboutCurrentRasterlayers(for region: MKCoordinateRegion, baseMapID: Int) {
-        self.currentRasterLayers = self.getInformationAboutCurrentRasterlayers(baseMapID: baseMapID)
-        self.currentMapRegion = region
+        self.previousRasterLayers = self.getInformationAboutCurrentRasterlayers(baseMapID: baseMapID)
+        self.previousMapRegion = region
     }
     
     /// An information about the status of the annotations
