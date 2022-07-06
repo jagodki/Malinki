@@ -8,10 +8,12 @@
 import Foundation
 import MapKit
 
+@available(iOS 15, *)
 class MalinkiUserAnnotationsProvider: ObservableObject {
     
     static let sharedInstance = MalinkiUserAnnotationsProvider()  // The singleton of this class
     private let fileName: String = "user_annotations.geojson"
+    var previousUserAnnotations: [MalinkiAnnotation] = []
     
     @Published var userAnnotationsRoot: MalinkiUserAnnotationsRoot = MalinkiUserAnnotationsRoot(user_annotations: []) {
         didSet {
@@ -42,6 +44,8 @@ class MalinkiUserAnnotationsProvider: ObservableObject {
                 }
             }
         }
+        
+        self.setPreviousUserAnnotations()
     }
     
     /// A function to encode the user annotations object.
@@ -71,6 +75,14 @@ class MalinkiUserAnnotationsProvider: ObservableObject {
         if let userAnnotationsPath = path, let url = URL(string: "file://\(userAnnotationsPath)") {
             try? data.write(to: url)
         }
+    }
+    
+    public func getAnnotations() -> [MalinkiAnnotation] {
+        return self.userAnnotations.map({MalinkiAnnotation(title: $0.name, subtitle: String(localized: "User Map Pin"), coordinate: CLLocationCoordinate2D(latitude: $0.position.latitude, longitude: $0.position.longitude), themeID: $0.theme_ids.first ?? -99, layerID: -99, featureID: "")})
+    }
+    
+    public func setPreviousUserAnnotations() {
+        self.previousUserAnnotations = self.getAnnotations()
     }
     
 }
