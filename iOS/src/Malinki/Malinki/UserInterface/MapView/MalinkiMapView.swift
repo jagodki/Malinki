@@ -79,8 +79,9 @@ struct MalinkiMapView: UIViewRepresentable {
         let checkMapTheme = self.mapLayers.previousAnnotations["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
         let checkIsThemeToggled = self.mapLayers.previousAnnotations["areAnnotationsToggled"] != self.mapLayers.getInformationAboutCurrentAnnotations()["areAnnotationsToggled"]
         let checkLayers = self.mapLayers.previousAnnotations["layers"] != self.mapLayers.getInformationAboutCurrentAnnotations()["layers"]
+        let checkUserAnnotations = self.userAnnotationsContainer.getAnnotations() != self.userAnnotationsContainer.previousUserAnnotations
         
-        return checkMapTheme || checkIsThemeToggled || checkLayers || self.mapAnnotations.newAnnotationsLoaded
+        return checkMapTheme || checkIsThemeToggled || checkLayers || self.mapAnnotations.newAnnotationsLoaded || checkUserAnnotations
     }
     
     func updateUIView(_ view: MKMapView, context: UIViewRepresentableContext<MalinkiMapView>) {
@@ -122,7 +123,11 @@ struct MalinkiMapView: UIViewRepresentable {
                 mapView.addAnnotations(self.mapAnnotations.annotations.values.flatMap({$0}))
             }
             
+            //add user annotations to the map
+            mapView.addAnnotations(self.userAnnotationsContainer.getAnnotations().filter({$0.themeID == self.mapLayers.selectedMapThemeID}))
+            
             self.mapLayers.setInformationAboutCurrentAnnotations()
+            self.userAnnotationsContainer.setPreviousUserAnnotations()
         }
         
     }

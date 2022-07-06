@@ -33,6 +33,7 @@ struct MalinkiMap: View {
                 .environmentObject(self.features)
                 .environmentObject(self.mapLayers.annotations)
                 .environmentObject(self.mapRegion)
+                .environmentObject(self.userAnnotations)
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
