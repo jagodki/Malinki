@@ -47,11 +47,8 @@ struct MalinkiUserAnnotationsView: View {
                                 VStack(alignment: .leading) {
                                     Text(annotation.name)
                                         .font(.headline)
-                                    HStack {
-                                        ForEach(annotation.theme_ids, id: \.self) {theme_id in
-                                            Text(self.config.getExternalThemeName(id: theme_id))
-                                        }
-                                    }
+                                    
+                                    Text("\(self.config.getExternalThemeName(id: annotation.theme_ids.first ?? -99)) | Lat: \(String(format: "%.3f", annotation.position.latitude)), Lon: \(String(format: "%.3f", annotation.position.longitude))")
                                     .font(.footnote)
                                     .foregroundColor(.secondary)
                                 }
@@ -74,7 +71,7 @@ struct MalinkiUserAnnotationsView: View {
                                 //update the annotation location
                                 if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == annotation.id}) {
                                     
-                                    self.userAnnotationsContainer.userAnnotations[index] = MalinkiUserAnnotation (id: annotation.id, name: annotation.name, theme_ids: annotation.theme_ids, position: MalinkiUserAnnotationsPosition(longitude: self.mapRegion.mapRegion.center.longitude,latitude: self.mapRegion.mapRegion.center.latitude))
+                                    self.userAnnotationsContainer.userAnnotations[index] = MalinkiUserAnnotation (id: annotation.id, name: annotation.name, theme_ids: [self.mapLayers.selectedMapThemeID], position: MalinkiUserAnnotationsPosition(longitude: self.mapRegion.mapRegion.center.longitude,latitude: self.mapRegion.mapRegion.center.latitude))
                                 }
                             }, label: {
                                 Label(String(localized: "Update"), systemImage: "arrow.triangle.2.circlepath")
