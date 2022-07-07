@@ -40,13 +40,18 @@ struct MalinkiUserAnnotationsView: View {
                         Button(action: {
                             //change the center of the map
                             self.mapRegion.mapRegion.center = CLLocationCoordinate2D(latitude: annotation.position.latitude, longitude: annotation.position.longitude)
+                            if annotation.theme_ids.first ?? -99 == self.mapLayers.selectedMapThemeID {
+                                self.userAnnotationsContainer.selectedAnnotationID = annotation.id
+                            }
                         }) {
                             HStack {
                                 Image(systemName: "mappin.and.ellipse")
                                     .padding()
+                                    .foregroundColor(self.mapLayers.selectedMapThemeID == annotation.theme_ids.first ?? -99 ? Color.accentColor : Color.secondary)
                                 VStack(alignment: .leading) {
                                     Text(annotation.name)
                                         .font(.headline)
+                                        .foregroundColor(self.mapLayers.selectedMapThemeID == annotation.theme_ids.first ?? -99 ? Color.accentColor : Color.secondary)
                                     
                                     Text("\(self.config.getExternalThemeName(id: annotation.theme_ids.first ?? -99)) | Lat: \(String(format: "%.3f", annotation.position.latitude)), Lon: \(String(format: "%.3f", annotation.position.longitude))")
                                     .font(.footnote)
