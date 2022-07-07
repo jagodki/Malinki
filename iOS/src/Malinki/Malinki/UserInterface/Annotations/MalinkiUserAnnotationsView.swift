@@ -39,7 +39,7 @@ struct MalinkiUserAnnotationsView: View {
                     List(self.userAnnotationsContainer.userAnnotations, id: \.id) {annotation in
                         Button(action: {
                             //change the center of the map
-                            self.mapRegion.mapRegion.center = CLLocationCoordinate2D(latitude: annotation.position.latitude, longitude: annotation.position.longitude)
+                            self.mapRegion.mapRegion.center = CLLocationCoordinate2D(latitude: MalinkiCoordinatesConverter.sharedInstance.latitudeOverSheet(for: annotation.position.latitude, with: self.mapRegion.mapRegion.span.latitudeDelta), longitude: annotation.position.longitude)
                             if annotation.theme_ids.first ?? -99 == self.mapLayers.selectedMapThemeID {
                                 self.userAnnotationsContainer.selectedAnnotationID = annotation.id
                             }
