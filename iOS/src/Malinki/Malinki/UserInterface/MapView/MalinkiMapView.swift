@@ -112,6 +112,11 @@ struct MalinkiMapView: UIViewRepresentable {
     }
     
     private func updateAnnotations(from mapView: MKMapView) {
+        //select a user annotation if an ID is given
+        if let annotation = mapView.annotations.map({$0 as? MalinkiAnnotation}).filter({$0?.isUserAnnotation ?? false && $0?.featureID == self.userAnnotationsContainer.selectedAnnotationID && $0?.themeID == self.mapLayers.selectedMapThemeID}).first {
+            mapView.selectAnnotation(annotation!, animated: true)
+        }
+        
         //first to check, whether annotations have to be updated or redraw does not affect the annotations
         if self.shouldUpdateAnnotations() {
             
@@ -248,6 +253,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
     @MainActor func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         self.control.closeSheet()
         self.control.features.clearAll()
+        self.control.userAnnotationsContainer.selectedAnnotationID = nil
     }
     
     @MainActor func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
