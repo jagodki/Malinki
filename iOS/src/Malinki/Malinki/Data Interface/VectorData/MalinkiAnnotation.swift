@@ -19,14 +19,16 @@ public class MalinkiAnnotation: NSObject, MKAnnotation, ObservableObject {
     public var themeID: Int
     public var layerID: Int
     public var featureID: String
+    public var isUserAnnotation: Bool
     
-    init(title: String?, subtitle: String?, coordinate: CLLocationCoordinate2D, themeID: Int, layerID: Int, featureID: String) {
+    init(title: String?, subtitle: String?, coordinate: CLLocationCoordinate2D, themeID: Int, layerID: Int, featureID: String, isUserAnnotation: Bool = false) {
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
         self.themeID = themeID
         self.layerID = layerID
         self.featureID = featureID
+        self.isUserAnnotation = isUserAnnotation
     }
     
 }
