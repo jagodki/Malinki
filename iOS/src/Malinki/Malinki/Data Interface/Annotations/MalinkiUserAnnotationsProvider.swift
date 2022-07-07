@@ -20,6 +20,7 @@ class MalinkiUserAnnotationsProvider: ObservableObject {
             self.saveUserAnnotationsToFile()
         }
     }
+    @Published var selectedAnnotationID: String? = nil
     
     var userAnnotations: [MalinkiUserAnnotation] {
         get { self.userAnnotationsRoot.user_annotations }
@@ -78,7 +79,7 @@ class MalinkiUserAnnotationsProvider: ObservableObject {
     }
     
     public func getAnnotations() -> [MalinkiAnnotation] {
-        return self.userAnnotations.map({MalinkiAnnotation(title: $0.name, subtitle: String(localized: "User Map Pin"), coordinate: CLLocationCoordinate2D(latitude: $0.position.latitude, longitude: $0.position.longitude), themeID: $0.theme_ids.first ?? -99, layerID: -99, featureID: "")})
+        return self.userAnnotations.map({MalinkiAnnotation(title: $0.name, subtitle: String(localized: "User Map Pin"), coordinate: CLLocationCoordinate2D(latitude: $0.position.latitude, longitude: $0.position.longitude), themeID: $0.theme_ids.first ?? -99, layerID: -99, featureID: $0.id, isUserAnnotation: true)})
     }
     
     public func setPreviousUserAnnotations() {
