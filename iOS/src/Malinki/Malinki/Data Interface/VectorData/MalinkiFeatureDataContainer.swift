@@ -34,11 +34,36 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         //clear the current data
         self.featureData = []
         
-        //get the layer data from the config file
-        let featureLayer = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? 0, theme: self.selectedAnnotation?.themeID ?? 0)
-        let featureInfo = featureLayer?.featureInfo
+        //different behaviour for user annotations
+        if self.selectedAnnotation?.isUserAnnotation ?? false {
+            //get all feature layers of the map theme
+            let featureLayers = MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.selectedAnnotation?.themeID ?? -99)
+            
+            //check the count of feature layers
+            if featureLayers.count == 0 {
+                self.addFeature(name: self.selectedAnnotation?.title ?? "", data: [String(localized: "Result"): String(localized: "No data to query")])
+            } else {
+                //iterate over all layers and start the data query
+                for layer in featureLayers {
+                    self.getFeatureData(for: layer.featureInfo)
+                }
+            }
+            
+        } else {
+            //get the layer data from the config file
+            let featureLayer = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.selectedAnnotation?.layerID ?? 0, theme: self.selectedAnnotation?.themeID ?? 0)
+            let featureInfo = featureLayer?.featureInfo
+            
+            //get the feature data for this layer
+            self.getFeatureData(for: featureInfo)
+        }
+    }
+    
+    /// This function starts the data query.
+    /// - Parameter featureInfo: an config object with all necesary data to query the data
+    private func getFeatureData(for featureInfo: MalinkiConfigurationVectorFeatureInfo?) {
         
-        if let wfs = featureInfo?.wfs {
+       if let wfs = featureInfo?.wfs {
             self.getFeature(config: wfs)
         } else if let wms = featureInfo?.wms {
             self.getFeatureInfo(config: wms)
@@ -161,11 +186,11 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                     
                 } else if config.infoFormat == "text/plain" {
                     let text = String(data: data, encoding: .utf8) ?? ""
-                    self.addFeature(name: selectedAnnotation?.title ?? "", data: ["Data": text])
+                    self.addFeature(name: selectedAnnotation?.title ?? "", data: [String(localized: "Data"): text])
                 }
                 
             } catch {
-                self.addFeature(name: selectedAnnotation?.title ?? "", data: ["Error": "not able to get data from webservice"])
+                self.addFeature(name: selectedAnnotation?.title ?? "", data: [String(localized: "Error"): String(localized: "not able to get data from webservice")])
             }
         }
     }
@@ -187,7 +212,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature], filterField: String? = nil, filterValue: String? = nil) async {
         //pass an information to the user, if the query returned no data
         if geojsonFeatures.count == 0 {
-            self.addFeature(name: name, data: ["Result": "No Data"])
+            self.addFeature(name: name, data: [String(localized: "Result"): String(localized: "No Data")])
         } else {
             //iterate over features
             for feature in geojsonFeatures {
@@ -250,7 +275,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                 //check for features in the response
                 let members = gml["wfs:FeatureCollection"]["wfs:member"].all
                 if members.count == 0 {
-                    self.addFeature(name: annotation.title ?? "", data: ["Result": "No Data"])
+                    self.addFeature(name: annotation.title ?? "", data: [String(localized: "Result"): String(localized: "No Data")])
                 } else {
                     for member in members {
                         //init an array to store the attribute data
