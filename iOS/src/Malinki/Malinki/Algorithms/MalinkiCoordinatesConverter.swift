@@ -63,11 +63,11 @@ struct MalinkiCoordinatesConverter {
         return Int(log2(360 * ((width / 128) / spanStraight)))
     }
     
-    func latitudeOverSheet(for latitude: Double, with latitudeDelta: Double) -> Double {
+    func latitudeUnderSheet(for latitude: Double, with latitudeDelta: Double) -> Double {
         return latitude - latitudeDelta / 4
     }
     
-    func latitudeUnderSheet(for latitude: Double, with latitudeDelta: Double) -> Double {
+    func latitudeOverSheet(for latitude: Double, with latitudeDelta: Double) -> Double {
         return latitude + latitudeDelta / 4
     }
     
