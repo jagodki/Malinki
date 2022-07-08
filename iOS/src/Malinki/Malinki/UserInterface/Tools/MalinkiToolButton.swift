@@ -52,7 +52,7 @@ struct MalinkiToolButton: View {
                 .font(.title2)
                 .foregroundColor(Color.primary)
                 .padding()
-        }.confirmationDialog(Text(LocalizedStringKey("All cached map tiles will be removed, e.g. map tiles will be requested from web services again after panning or zooming the map.")), isPresented: self.$showingActions, titleVisibility: .visible, actions: {
+        }.confirmationDialog(Text(LocalizedStringKey("All cached map tiles will be removed, i.e. map tiles will be requested from web services again after panning or zooming the map.")), isPresented: self.$showingActions, titleVisibility: .visible, actions: {
             Button("OK", role: .destructive) {
                 let fm = FileManager.default
                 let documentsUrl = fm.urls(for: .documentDirectory, in: .userDomainMask).first
