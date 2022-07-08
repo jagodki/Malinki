@@ -38,8 +38,6 @@ struct MalinkiUserAnnotationsView: View {
                 NavigationView {
                     List(self.userAnnotationsContainer.userAnnotations, id: \.id) {annotation in
                         Button(action: {
-                            //change the center of the map
-                            self.mapRegion.mapRegion.center = CLLocationCoordinate2D(latitude: MalinkiCoordinatesConverter.sharedInstance.latitudeOverSheet(for: annotation.position.latitude, with: self.mapRegion.mapRegion.span.latitudeDelta), longitude: annotation.position.longitude)
                             if annotation.theme_ids.first ?? -99 == self.mapLayers.selectedMapThemeID {
                                 self.userAnnotationsContainer.selectedAnnotationID = annotation.id
                             }
@@ -76,7 +74,7 @@ struct MalinkiUserAnnotationsView: View {
                                 //update the annotation location
                                 if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == annotation.id}) {
                                     
-                                    self.userAnnotationsContainer.userAnnotations[index] = MalinkiUserAnnotation (id: annotation.id, name: annotation.name, theme_ids: [self.mapLayers.selectedMapThemeID], position: MalinkiUserAnnotationsPosition(longitude: self.mapRegion.mapRegion.center.longitude,latitude: self.mapRegion.mapRegion.center.latitude))
+                                    self.userAnnotationsContainer.userAnnotations[index] = MalinkiUserAnnotation (id: annotation.id, name: annotation.name, theme_ids: [self.mapLayers.selectedMapThemeID], position: MalinkiUserAnnotationsPosition(longitude: self.mapRegion.mapRegion.center.longitude,latitude: MalinkiCoordinatesConverter.sharedInstance.latitudeOverSheet(for: self.mapRegion.mapRegion.center.latitude, with: self.mapRegion.mapRegion.span.latitudeDelta)))
                                 }
                             }, label: {
                                 Label(String(localized: "Update"), systemImage: "arrow.triangle.2.circlepath")

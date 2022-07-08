@@ -13,7 +13,7 @@ class MalinkiUserAnnotationsProvider: ObservableObject {
     
     static let sharedInstance = MalinkiUserAnnotationsProvider()  // The singleton of this class
     private let fileName: String = "user_annotations.geojson"
-    var previousUserAnnotations: [MalinkiAnnotation] = []
+    var previousUserAnnotations: [String: String] = [:] //["ids": "... + - + ...", "names": "... + - + ...", "themes": "... + - + ...", "positions": String(...) + "-" + String(...)]
     
     @Published var userAnnotationsRoot: MalinkiUserAnnotationsRoot = MalinkiUserAnnotationsRoot(user_annotations: []) {
         didSet {
@@ -45,8 +45,6 @@ class MalinkiUserAnnotationsProvider: ObservableObject {
                 }
             }
         }
-        
-        self.setPreviousUserAnnotations()
     }
     
     /// A function to encode the user annotations object.
@@ -82,8 +80,15 @@ class MalinkiUserAnnotationsProvider: ObservableObject {
         return self.userAnnotations.map({MalinkiAnnotation(title: $0.name, subtitle: String(localized: "User Map Pin"), coordinate: CLLocationCoordinate2D(latitude: $0.position.latitude, longitude: $0.position.longitude), themeID: $0.theme_ids.first ?? -99, layerID: -99, featureID: $0.id, isUserAnnotation: true)})
     }
     
-    public func setPreviousUserAnnotations() {
-        self.previousUserAnnotations = self.getAnnotations()
+    public func setInformationAboutCurrentUserAnnotations() {
+        self.previousUserAnnotations = self.getInformationAboutCurrentUserAnnotations()
+    }
+    
+    public func getInformationAboutCurrentUserAnnotations() -> [String: String] {
+        return ["ids": self.userAnnotations.map({$0.id}).joined(separator: "-"),
+                "names": self.userAnnotations.map({$0.name}).joined(separator: "-"),
+                "themes": self.userAnnotations.map({String($0.theme_ids.first ?? -99)}).joined(separator: "-"),
+                "positions": self.userAnnotations.map({"\($0.position.latitude) \($0.position.longitude)"}).joined(separator: "-")]
     }
     
 }

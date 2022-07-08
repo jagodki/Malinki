@@ -79,9 +79,14 @@ struct MalinkiMapView: UIViewRepresentable {
         let checkMapTheme = self.mapLayers.previousAnnotations["mapTheme"] != String(self.mapLayers.selectedMapThemeID)
         let checkIsThemeToggled = self.mapLayers.previousAnnotations["areAnnotationsToggled"] != self.mapLayers.getInformationAboutCurrentAnnotations()["areAnnotationsToggled"]
         let checkLayers = self.mapLayers.previousAnnotations["layers"] != self.mapLayers.getInformationAboutCurrentAnnotations()["layers"]
-        let checkUserAnnotations = self.userAnnotationsContainer.getAnnotations() != self.userAnnotationsContainer.previousUserAnnotations
         
-        return checkMapTheme || checkIsThemeToggled || checkLayers || self.mapAnnotations.newAnnotationsLoaded || checkUserAnnotations
+        let checkUserAnnotationsIDs = self.userAnnotationsContainer.previousUserAnnotations["ids"] != self.userAnnotationsContainer.getInformationAboutCurrentUserAnnotations()["ids"]
+        let checkUserAnnotationsThemes = self.userAnnotationsContainer.previousUserAnnotations["themes"] != self.userAnnotationsContainer.getInformationAboutCurrentUserAnnotations()["themes"]
+        let checkUserAnnotationsPositions = self.userAnnotationsContainer.previousUserAnnotations["positions"] != self.userAnnotationsContainer.getInformationAboutCurrentUserAnnotations()["positions"]
+        let checkUserAnnotationsNames = self.userAnnotationsContainer.previousUserAnnotations["names"] != self.userAnnotationsContainer.getInformationAboutCurrentUserAnnotations()["names"]
+        
+        
+        return checkMapTheme || checkIsThemeToggled || checkLayers || self.mapAnnotations.newAnnotationsLoaded || checkUserAnnotationsIDs || checkUserAnnotationsThemes || checkUserAnnotationsPositions || checkUserAnnotationsNames
     }
     
     func updateUIView(_ view: MKMapView, context: UIViewRepresentableContext<MalinkiMapView>) {
@@ -125,14 +130,12 @@ struct MalinkiMapView: UIViewRepresentable {
             
             //add annotations, if theme is toggled
             if self.mapLayers.areAnnotationsToggled() {
-                mapView.addAnnotations(self.mapAnnotations.annotations.values.flatMap({$0}))
+                mapView.addAnnotations(self.mapAnnotations.annotations.values.flatMap({$0}))//add user annotations to the map
+                mapView.addAnnotations(self.userAnnotationsContainer.getAnnotations().filter({$0.themeID == self.mapLayers.selectedMapThemeID}))
             }
             
-            //add user annotations to the map
-            mapView.addAnnotations(self.userAnnotationsContainer.getAnnotations().filter({$0.themeID == self.mapLayers.selectedMapThemeID}))
-            
             self.mapLayers.setInformationAboutCurrentAnnotations()
-            self.userAnnotationsContainer.setPreviousUserAnnotations()
+            self.userAnnotationsContainer.setInformationAboutCurrentUserAnnotations()
         }
         
     }
@@ -290,10 +293,9 @@ final class Coordinator: NSObject, MKMapViewDelegate {
         if let annotation = view.annotation as? MalinkiAnnotation {
             //focus the map on the selected annotation
             let span = mapView.region.span
-            let coordinates = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude - span.latitudeDelta / 4, longitude: annotation.coordinate.longitude)
+            let coordinates = CLLocationCoordinate2D(latitude: MalinkiCoordinatesConverter.sharedInstance.latitudeUnderSheet(for: annotation.coordinate.latitude, with: span.latitudeDelta), longitude: annotation.coordinate.longitude)
             let region = MKCoordinateRegion(center: coordinates, span: span)
             mapView.setRegion(region, animated: true)
-            
             
             self.control.features.selectedAnnotation = annotation
             self.control.features.span = mapView.region.span
