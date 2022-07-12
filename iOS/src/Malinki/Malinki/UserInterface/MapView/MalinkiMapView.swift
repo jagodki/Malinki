@@ -299,7 +299,7 @@ final class Coordinator: NSObject, MKMapViewDelegate {
             
             self.control.features.selectedAnnotation = annotation
             self.control.features.span = mapView.region.span
-            self.control.features.getFeatureData()
+            self.control.features.getFeatureData(for: self.control.mapLayers.rasterLayers.filter({$0.isToggled && $0.themeID == self.control.mapLayers.selectedMapThemeID}).map({$0.id}))
             self.control.showDetailSheet()
         } else {
             self.control.closeSheet()

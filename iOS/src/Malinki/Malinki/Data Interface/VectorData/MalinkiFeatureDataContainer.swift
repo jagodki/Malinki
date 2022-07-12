@@ -30,14 +30,15 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     }
     
     /// This function is the main entry point for querying feature data, no matter of the data source.
-    public func getFeatureData() {
+    /// - Parameter toggledRasterLayerIDs: an array of IDs for all toggled, i.e. visible, raster layers
+    public func getFeatureData(for toggledRasterLayerIDs: [Int] = []) {
         //clear the current data
         self.featureData = []
         
         //different behaviour for user annotations
         if self.selectedAnnotation?.isUserAnnotation ?? false {
-            //get all feature layers of the map theme
-            let featureLayers = MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.selectedAnnotation?.themeID ?? -99)
+            //get all feature layers of the visible raster layers of the map theme
+            let featureLayers = MalinkiConfigurationProvider.sharedInstance.getAllVectorLayers(for: self.selectedAnnotation?.themeID ?? -99).filter({toggledRasterLayerIDs.contains($0.id) || $0.correspondingRasterLayer == nil})
             
             //check the count of feature layers
             if featureLayers.count == 0 {
