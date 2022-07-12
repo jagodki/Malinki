@@ -74,7 +74,7 @@ struct AlertControlView: UIViewControllerRepresentable {
                                 id: UUID().uuidString,
                                 name: text,
                                 theme_id: self.mapLayers.selectedMapThemeID,
-                                layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).map({$0.id}),
+                                layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID && $0.isToggled}).map({$0.id}),
                                 show_annotations: self.mapLayers.areAnnotationsToggled(),
                                 map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
                                     latitude: self.mapRegion.mapRegion.center.latitude,
