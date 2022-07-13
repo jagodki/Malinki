@@ -143,6 +143,7 @@ struct MalinkiBookmarksView: View {
             }
             .background(Color(uiColor: .systemGray6))
         }
+        .ignoresSafeArea(.keyboard)
     }
 }
 

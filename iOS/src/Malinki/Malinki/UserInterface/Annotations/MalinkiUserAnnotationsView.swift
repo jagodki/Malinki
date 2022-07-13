@@ -118,6 +118,7 @@ struct MalinkiUserAnnotationsView: View {
                 .padding()
             }
             .background(Color(uiColor: .systemGray6))
+            .ignoresSafeArea(.keyboard)
         }
     }
 }

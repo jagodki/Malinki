@@ -77,6 +77,7 @@ struct MalinkiMap: View {
                 
             }
         }
+        .ignoresSafeArea(.keyboard)
         .shee(isPresented: self.$sheet.isShowing, presentationStyle: .formSheet(properties: SheetProperties(prefersEdgeAttachedInCompactHeight: true, prefersGrabberVisible: true, detents: [.medium(), .large()], selectedDetentIdentifier: self.$selectedDetentIdentifier, largestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false)), content: {self.sheetContent()})
     }
     
