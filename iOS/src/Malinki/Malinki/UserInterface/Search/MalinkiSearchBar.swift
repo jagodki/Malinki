@@ -26,6 +26,19 @@ struct MalinkiSearchBar: View {
         self._sheetDetent = sheetDetent
     }
     
+    var showCancelButton: Bool {
+        var result = false
+        
+        if self.isEditing && self.sheetDetent == .large {
+            result = true
+        } else if self.sheetDetent == .medium {
+            DispatchQueue.main.async { self.isEditing = false }
+        }
+        
+        return result
+    }
+    
+    
     var body: some View {
         HStack {
             HStack {
@@ -47,18 +60,20 @@ struct MalinkiSearchBar: View {
             .padding(.horizontal, 5)
             .background(RoundedRectangle(cornerRadius: 10).fill(Color(UIColor.secondarySystemFill)))
             .padding(.bottom)
-            //When you tap the SearchBar, the BottomSheet moves to the .top position to make room for the keyboard.
+            //When you tap the SearchBar, the BottomSheet moves to the .top position to make space for the keyboard.
             .onTapGesture {
                 self.isEditing = true
                 self.sheetDetent = .large
             }
 
-            if self.isEditing {
+            if self.showCancelButton {
                 Button(action: {
-                    self.searchText = ""
-                    self.isEditing = false
-                    self.sheetDetent = .medium
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
+                    withAnimation {
+                        self.searchText = ""
+                        self.isEditing = false
+                        self.sheetDetent = .medium
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
+                    }
 
                 }) {
                     Text(LocalizedStringKey("Cancel"))
