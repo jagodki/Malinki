@@ -29,7 +29,7 @@ struct MalinkiObjectDetailsView: View {
         } else {
             NavigationView {
                 List(self.$features.featureData) { $feature in
-                    Section(header: Text(self.features.featureData.count > 1 ? feature.name : "Object Data").sectionHeaderStyle()) {
+                    Section(header: Text(self.features.featureData.count > 1 ? MalinkiConfigurationProvider.sharedInstance.getExternalVectorName(id: feature.vectorLayerID, theme: feature.themeID) : "Object Data").sectionHeaderStyle()) {
                         ForEach(feature.data.sorted(by: >), id: \.key) { key, value in
                             VStack(alignment: .leading) {
                                 Text(key)
@@ -43,7 +43,7 @@ struct MalinkiObjectDetailsView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(content: {
                     ToolbarItem(placement: .principal, content: {
-                        MalinkiSheetHeader(title: self.features.featureData.count > 1 ? "\(self.features.featureData[0].name) +\(self.features.featureData.count - 1)" : self.features.featureData.first?.name ?? "", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent, subtitle: self.features.selectedAnnotation?.subtitle ?? "")
+                        MalinkiSheetHeader(title: self.features.featureData.count > 1 ? "\(self.features.featureData[0].name) (\(self.features.featureData.count))" : self.features.featureData.first?.name ?? "", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent, subtitle: self.features.selectedAnnotation?.subtitle ?? "")
                     })
                 })
             }
