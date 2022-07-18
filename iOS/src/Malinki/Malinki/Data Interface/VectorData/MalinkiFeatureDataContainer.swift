@@ -226,38 +226,54 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         } else {
             //iterate over features
             for feature in geojsonFeatures {
-                //get the properties as a dictionary
-                if let properties = feature.properties {
-                    var attributes: [String: String] = [:]
-                    
-                    //get a dictionary from the json data
-                    let property = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
-                    
-                    //investigate the feature regarding a possible given filter
-                    //only appropriate for pre configured annotations
-                    if !(self.selectedAnnotation?.isUserAnnotation ?? false) {
-                        var continueLoop = false
-                        if let fieldName = filterField, let fieldValue = filterValue, let propertyValues = property {
-                            continueLoop = self.createStringValue(from: propertyValues[fieldName] as Any) != fieldValue
-                        }
-                        if continueLoop {
-                            continue
-                        }
-                    }
-                    
-                    //parsing all properties of the current feature
-                    for (key, value) in property ?? ["": ""] {
-                        attributes[key] = String(describing: value)
-                    }
-                    
-                    //add the feature to the feature data object
-                    self.addFeature(name: name, themeID: self.selectedAnnotation?.themeID ?? -99, vectorLayerID: layerID, data: attributes)
-                }
-                
-                //get the geometry
+                //look for a valid geometry
                 if let geometry = feature.geometry.first {
+                    
+                    //get the properties as a dictionary
+                    if let properties = feature.properties {
+                        var attributes: [String: String] = [:]
+                        
+                        //get a dictionary from the json data
+                        let property = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
+                        
+                        //investigate the feature regarding a possible given filter
+                        //only appropriate for pre configured annotations
+                        if !(self.selectedAnnotation?.isUserAnnotation ?? false) {
+                            var continueLoop = false
+                            if let fieldName = filterField, let fieldValue = filterValue, let propertyValues = property {
+                                continueLoop = self.createStringValue(from: propertyValues[fieldName] as Any) != fieldValue
+                            }
+                            if continueLoop {
+                                continue
+                            }
+                        } else {
+                            //create a spatial filter, i.e. does the annotation interact with the geometry of the current feature
+                            let vectorGeometry = MalinkiVectorGeometry(mapThemeID: self.selectedAnnotation?.themeID ?? -99, layerID: layerID, geometry: geometry)
+                            if !vectorGeometry.isInteracting(with: self.selectedAnnotation?.coordinate ?? CLLocationCoordinate2D(latitude: -999.99, longitude: -999.99)) {
+                                continue
+                            }
+                        }
+                        
+                        //parsing all properties of the current feature
+                        for (key, value) in property ?? ["": ""] {
+                            attributes[key] = String(describing: value)
+                        }
+                        
+                        //add the feature to the feature data object
+                        self.addFeature(name: name, themeID: self.selectedAnnotation?.themeID ?? -99, vectorLayerID: layerID, data: attributes)
+                    } else {
+                        //skip the feature if properties cannot be extracted
+                        continue
+                    }
+                    
+                    //store the geometry
                     self.geometries.append(MalinkiVectorGeometry(mapThemeID: self.selectedAnnotation?.themeID ?? -99, layerID: layerID, geometry: geometry))
                 }
+            }
+            
+            //check if no matching features were found
+            if self.featureData.count == 0 {
+                self.addFeature(name: name, themeID: self.selectedAnnotation?.themeID ?? -99, vectorLayerID: layerID, data: [String(localized: "Result"): String(localized: "No Data")])
             }
         }
     }

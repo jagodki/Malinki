@@ -55,4 +55,32 @@ public class MalinkiVectorGeometry {
         }
     }
     
+    func isInteracting(with position: CLLocationCoordinate2D) -> Bool {
+        let isInteracting: Bool
+        
+        switch self.type {
+        case .point:
+            isInteracting = self.point.coordinate.latitude == position.latitude && self.point.coordinate.longitude == position.longitude
+            break
+        case .linestring:
+            isInteracting = self.linestring.boundingMapRect.contains(MKMapPoint(position))
+            break
+        case .multilinestring:
+            isInteracting = self.multiLinestring.boundingMapRect.contains(MKMapPoint(position))
+            break
+        case .polygon:
+            isInteracting = self.polygon.boundingMapRect.contains(MKMapPoint(position))
+            break
+        case .multipolygon:
+            print(self.multiPolygon.boundingMapRect)
+            isInteracting = self.multiPolygon.boundingMapRect.contains(MKMapPoint(position))
+            break
+        case .non:
+            isInteracting = false
+            break
+        }
+        
+        return isInteracting
+    }
+    
 }
