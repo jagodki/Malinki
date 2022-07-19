@@ -103,7 +103,7 @@ class MalinkiConfigurationProvider {
     /// - Returns: an array of MalinkiMapLayer with all layers of the given map theme
     func getMapLayers(of mapTheme: Int) -> [MalinkiLayer] {
         var mapLayers: [MalinkiLayer] = []
-        mapLayers.append(contentsOf: self.getRasterLayers(of: mapTheme).map({MalinkiLayer(id: $0.id, name: self.getExternalLayerName(themeID: mapTheme, layerID: $0.id), imageName: $0.imageName, themeID: mapTheme)}))
+        mapLayers.append(contentsOf: self.getRasterLayers(of: mapTheme).map({MalinkiLayer(id: $0.id, name: self.getExternalRasterLayerName(themeID: mapTheme, layerID: $0.id), imageName: $0.imageName, themeID: mapTheme)}))
         return mapLayers
     }
     
@@ -139,30 +139,55 @@ class MalinkiConfigurationProvider {
         return self.configData?.mapThemes.filter({$0.id == mapTheme}).first?.layers.rasterLayers.filter({$0.id == layerID}).first
     }
     
+    /// This function returns all themes from the config.
+    /// - Returns: an array containing all map themes
     func getAllMapThemes() -> [MalinkiTheme] {
         return self.configData?.mapThemes.map({MalinkiTheme(themeID: $0.id)}) ?? []
     }
     
+    /// This function returns the configuration of a vector layer.
+    /// - Parameters:
+    ///   - id: the ID of the vector layer
+    ///   - theme: the ID of the correpsonding map theme
+    /// - Returns: a configuration object for the given vector layer
     func getVectorLayer(id: Int, theme: Int) -> MalinkiConfigurationVectorData? {
         return self.getMapTheme(for: theme)?.layers.vectorLayers.filter({$0.id == id}).first
     }
     
+    /// This function returns the external name of a given vector layer.
+    /// - Parameters:
+    ///   - id: the ID of the vector layer
+    ///   - theme: the ID of the correpsonding map theme
+    /// - Returns: a String with the external name of the layer
     func getExternalVectorName(id: Int, theme: Int) -> String {
         return self.getVectorLayer(id: id, theme: theme)?.externalNames.en ?? ""
     }
     
+    /// This function returns all vector layers of a given map theme.
+    /// - Parameter mapTheme: the ID of the map theme
+    /// - Returns: an array of vector configuration objects
     func getAllVectorLayers(for mapTheme: Int) -> [MalinkiConfigurationVectorData] {
         return self.getMapTheme(for: mapTheme)?.layers.vectorLayers ?? []
     }
     
+    /// This function returns the external name of a given map theme.
+    /// - Parameter id: the ID of the map theme
+    /// - Returns: a String with the external name of the theme
     func getExternalThemeName(id: Int) -> String {
         return self.getMapTheme(for: id)?.externalNames.en ?? ""
     }
     
-    func getExternalLayerName(themeID: Int, layerID: Int) -> String {
+    /// This function returns the external name of a given raster layer.
+    /// - Parameters:
+    ///   - themeID: the ID of the map theme
+    ///   - layerID: the ID of the raster layer
+    /// - Returns: a String with the external name of the layer
+    func getExternalRasterLayerName(themeID: Int, layerID: Int) -> String {
         return self.getRasterLayer(with: layerID, of: themeID)?.externalNames.en ?? ""
     }
     
+    /// This function returns the name of the cache.
+    /// - Returns: a String containing the cache name
     func getCacheName() -> String {
         return self.configData?.cacheName ?? "TILE_CACHE"
     }

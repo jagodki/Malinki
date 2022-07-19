@@ -82,7 +82,7 @@ struct MalinkiSearchView: View {
                                         self.mapLayers.selectedMapThemeID = layer.themeID
                                         self.isSheetShowing = false
                                     }) {
-                                        MalinkiSearchResultView(title: self.config.getExternalLayerName(themeID: layer.themeID, layerID: layer.id), footnote: self.config.getExternalThemeName(id: layer.themeID), imageName: self.config.getMapTheme(for: layer.themeID)?.iconName ?? "questionmark.circle")
+                                        MalinkiSearchResultView(title: self.config.getExternalRasterLayerName(themeID: layer.themeID, layerID: layer.id), footnote: self.config.getExternalThemeName(id: layer.themeID), imageName: self.config.getMapTheme(for: layer.themeID)?.iconName ?? "questionmark.circle")
                                     }
                                 }
                                 
