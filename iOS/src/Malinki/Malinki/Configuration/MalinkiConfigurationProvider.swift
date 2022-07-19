@@ -192,4 +192,8 @@ class MalinkiConfigurationProvider {
         return self.configData?.cacheName ?? "TILE_CACHE"
     }
     
+    func getInitialMapPosition() -> MalinkiConfigurationInitialMap {
+        return self.configData?.onStartUp.initialMapPosition ?? MalinkiConfigurationInitialMap(longitude: 0.0, latitude: 0.0, longitudinalMeters: 1000000000.0, latitudinalMeters: 1000000000.0)
+    }
+    
 }

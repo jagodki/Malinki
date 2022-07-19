@@ -20,9 +20,17 @@ struct MalinkiMap: View {
     
     @StateObject private var sheet: MalinkiSheet = MalinkiSheet()
     @StateObject private var features: MalinkiFeatureDataContainer = MalinkiFeatureDataContainer()
-    @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes(), selectedMapThemeID: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
+    @StateObject var mapLayers: MalinkiLayerContainer = MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(),
+                                                                              themes: MalinkiConfigurationProvider.sharedInstance.getAllMapThemes(),
+                                                                              selectedMapThemeID: MalinkiConfigurationProvider.sharedInstance.getIDOfMapThemeOnStartUp())
     @StateObject private var bookmarks: MalinkiBookmarksProvider = MalinkiBookmarksProvider.sharedInstance
-    @StateObject private var mapRegion: MalinkiMapRegion = MalinkiMapRegion(mapRegion: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 56.00, longitude: 15.00), latitudinalMeters: 1000000, longitudinalMeters: 1000000))
+    @StateObject private var mapRegion: MalinkiMapRegion = MalinkiMapRegion(
+        mapRegion:MKCoordinateRegion(
+            center: CLLocationCoordinate2D(
+                latitude: MalinkiConfigurationProvider.sharedInstance.getInitialMapPosition().latitude,
+                longitude: MalinkiConfigurationProvider.sharedInstance.getInitialMapPosition().longitude),
+            latitudinalMeters: MalinkiConfigurationProvider.sharedInstance.getInitialMapPosition().latitudinalMeters,
+            longitudinalMeters: MalinkiConfigurationProvider.sharedInstance.getInitialMapPosition().longitudinalMeters))
     @StateObject private var userAnnotations: MalinkiUserAnnotationsProvider = MalinkiUserAnnotationsProvider()
     
     var body: some View {

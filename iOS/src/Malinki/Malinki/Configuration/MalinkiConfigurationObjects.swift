@@ -164,8 +164,16 @@ struct MalinkiConfigurationBasemapExternalName: Decodable {
     var pl: String
 }
 
-//MARK: - Additional Configuration at Root Level
+//MARK: - Configurations for app start
 struct MalinkiConfigurationStartUp: Decodable {
     var theme: Int
     var basemap: Int
+    var initialMapPosition: MalinkiConfigurationInitialMap
+}
+
+struct MalinkiConfigurationInitialMap: Decodable {
+    var longitude: Double
+    var latitude: Double
+    var longitudinalMeters: Double
+    var latitudinalMeters: Double
 }

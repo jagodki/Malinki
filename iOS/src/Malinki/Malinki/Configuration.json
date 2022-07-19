@@ -610,7 +610,13 @@
     ],
     "onStartUp": {
         "theme": 1,
-        "basemap": 0
+        "basemap": 0,
+        "initialMapPosition": {
+            "longitude": 15.0,
+            "latitude": 56.0,
+            "longitudinalMeters": 1000000.0,
+            "latitudinalMeters": 1000000.0
+        }
     },
     "cacheName": "TILE_CACHE"
 }
