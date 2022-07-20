@@ -166,6 +166,10 @@
                             "wmts": null,
                             "apple": false
                         },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 25
+                        },
                         "imageName": "cloud.drizzle",
                         "opacity": 1.0
                     },
@@ -194,6 +198,10 @@
                             "wmts": null,
                             "apple": false
                         },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 25
+                        },
                         "imageName": "cloud.drizzle",
                         "opacity": 0.8
                     },
@@ -206,6 +214,10 @@
                             "fr": "Zones d'alerte en mer",
                             "sv": "Varningsområden till sjöss",
                             "pl": "Obszary ostrzegania na morzu"
+                        },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 10
                         },
                         "rasterTypes": {
                             "tms": null,
@@ -250,6 +262,10 @@
                             "wmts": null,
                             "apple": false
                         },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 25
+                        },
                         "imageName": "cloud.drizzle",
                         "opacity": 0.75
                     }
@@ -293,6 +309,10 @@
                             },
                             "apple": false
                         },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 25
+                        },
                         "imageName": "waveform",
                         "opacity": 0.75
                     },
@@ -320,6 +340,10 @@
                             },
                             "wmts": null,
                             "apple": false
+                        },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 25
                         },
                         "imageName": "cloud.drizzle",
                         "opacity": 1.0
@@ -349,6 +373,10 @@
                             "wmts": null,
                             "apple": false
                         },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 25
+                        },
                         "imageName": "cloud.drizzle",
                         "opacity": 1.0
                     },
@@ -374,6 +402,10 @@
                                 "format": "image/png"
                             },
                             "apple": false
+                        },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 25
                         },
                         "imageName": "mappin",
                         "opacity": 1.0
@@ -520,6 +552,10 @@
                             "wmts": null,
                             "apple": false
                         },
+                        "zConstraints": {
+                            "min": 0,
+                            "max": 25
+                        },
                         "imageName": "tornado",
                         "opacity": 1.0
                     }
@@ -547,6 +583,10 @@
                 "wmts": null,
                 "apple": false
             },
+            "zConstraints": {
+                "min": 0,
+                "max": 25
+            },
             "imageName": "osm_basemap",
             "opacity": 1.0
         },
@@ -565,6 +605,10 @@
                 "wms": null,
                 "wmts": null,
                 "apple": true
+            },
+            "zConstraints": {
+                "min": 0,
+                "max": 25
             },
             "imageName": "apple_roads_basemap",
             "opacity": 1.0
@@ -585,6 +629,10 @@
                 "wmts": null,
                 "apple": true
             },
+            "zConstraints": {
+                "min": 0,
+                "max": 25
+            },
             "imageName": "apple_aerial_basemap",
             "opacity": 1.0
         },
@@ -603,6 +651,10 @@
                 "wms": null,
                 "wmts": null,
                 "apple": true
+            },
+            "zConstraints": {
+                "min": 0,
+                "max": 25
             },
             "imageName": "apple_hybrid_basemap",
             "opacity": 1.0

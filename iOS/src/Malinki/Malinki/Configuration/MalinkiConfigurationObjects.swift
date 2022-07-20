@@ -30,8 +30,14 @@ struct MalinkiConfigurationMapData: Decodable {
     var internalName: String
     var externalNames: MalinkiConfigurationBasemapExternalName
     var rasterTypes: MalinkiConfigurationRasterType
+    var zConstraints: MalinkiConfigurationMapDataZConstraints
     var imageName: String
     var opacity: Double
+}
+
+struct MalinkiConfigurationMapDataZConstraints: Decodable {
+    var min: Int
+    var max: Int
 }
 
 struct MalinkiConfigurationMapLayers: Decodable {

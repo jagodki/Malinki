@@ -62,6 +62,10 @@ struct MalinkiRasterData {
             overlay = MKTileOverlay()
         }
         
+        //constraints on zoom level
+        overlay.minimumZ = self.mapDataConfiguration.zConstraints.min
+        overlay.maximumZ = self.mapDataConfiguration.zConstraints.max
+        
         return overlay
     }
     
