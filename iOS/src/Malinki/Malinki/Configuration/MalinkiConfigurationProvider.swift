@@ -192,8 +192,16 @@ class MalinkiConfigurationProvider {
         return self.configData?.cacheName ?? "TILE_CACHE"
     }
     
+    /// This function returns a config object for the initial map position at app start.
+    /// - Returns: the initial map position containing center, width and height
     func getInitialMapPosition() -> MalinkiConfigurationInitialMap {
         return self.configData?.onStartUp.initialMapPosition ?? MalinkiConfigurationInitialMap(longitude: 0.0, latitude: 0.0, longitudinalMeters: 1000000000.0, latitudinalMeters: 1000000000.0)
+    }
+    
+    /// This function returns the configuration for the map constraints.
+    /// - Returns: a config object containing the map constraints
+    func getMapConstraints() -> MalinkiConfigurationMapConstraints {
+        return self.configData?.mapConstraints ?? MalinkiConfigurationMapConstraints(scale: MalinkiConfigurationMapScales(min: 1.0, max: 1000000000000000000.0))
     }
     
 }

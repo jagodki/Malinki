@@ -21,6 +21,8 @@ struct MalinkiMapView: UIViewRepresentable {
     @EnvironmentObject var mapRegion: MalinkiMapRegion
     @EnvironmentObject var userAnnotationsContainer: MalinkiUserAnnotationsProvider
     
+    private var config: MalinkiConfigurationProvider = MalinkiConfigurationProvider.sharedInstance
+    
     init(basemapID: Binding<Int>, sheetState: Binding<MalinkiSheetState?>) {
         self._basemapID = basemapID
         self._sheetState = sheetState
@@ -41,7 +43,7 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.region = self.mapRegion.mapRegion
         
-        let zoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: 10000)
+        let zoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: self.config.getMapConstraints().scale.min, maxCenterCoordinateDistance: self.config.getMapConstraints().scale.max)
         mapView.setCameraZoomRange(zoomRange, animated: true)
         
         //register the annotations

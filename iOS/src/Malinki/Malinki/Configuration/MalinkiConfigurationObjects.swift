@@ -12,6 +12,7 @@ struct MalinkiConfiguration: Decodable {
     var mapThemes: [MalinkiConfigurationTheme]
     var basemaps: [MalinkiConfigurationMapData]
     var onStartUp: MalinkiConfigurationStartUp
+    var mapConstraints: MalinkiConfigurationMapConstraints
     var cacheName: String
 }
 
@@ -176,4 +177,14 @@ struct MalinkiConfigurationInitialMap: Decodable {
     var latitude: Double
     var longitudinalMeters: Double
     var latitudinalMeters: Double
+}
+
+//MARK: - Map Constraints
+struct MalinkiConfigurationMapConstraints: Decodable {
+    var scale: MalinkiConfigurationMapScales
+}
+
+struct MalinkiConfigurationMapScales: Decodable {
+    var min: Double
+    var max: Double
 }
