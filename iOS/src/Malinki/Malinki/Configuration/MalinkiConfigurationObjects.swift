@@ -187,10 +187,22 @@ struct MalinkiConfigurationInitialMap: Decodable {
 
 //MARK: - Map Constraints
 struct MalinkiConfigurationMapConstraints: Decodable {
-    var scale: MalinkiConfigurationMapScales
+    var scale: MalinkiConfigurationMapScaleConstraints
+    var region: MalinkiConfigurationRegionConstraints?
 }
 
-struct MalinkiConfigurationMapScales: Decodable {
+struct MalinkiConfigurationMapScaleConstraints: Decodable {
     var min: Double
     var max: Double
+}
+
+struct MalinkiConfigurationRegionConstraints: Decodable {
+    var center: MalinkiConfigurationRegionCenterConstraints
+    var latitudinalMeters: Double
+    var longitudinalMeters: Double
+}
+
+struct MalinkiConfigurationRegionCenterConstraints: Decodable {
+    var latitude: Double
+    var longitude: Double
 }

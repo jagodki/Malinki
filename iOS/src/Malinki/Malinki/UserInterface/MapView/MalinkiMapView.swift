@@ -43,8 +43,16 @@ struct MalinkiMapView: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.region = self.mapRegion.mapRegion
         
+        //add zoom constraints
         let zoomRange = MKMapView.CameraZoomRange(minCenterCoordinateDistance: self.config.getMapConstraints().scale.min, maxCenterCoordinateDistance: self.config.getMapConstraints().scale.max)
         mapView.setCameraZoomRange(zoomRange, animated: true)
+        
+        //add constraints to the visible region
+        if let regionConstraints = self.config.getMapConstraints().region {
+            let cameraBounds = MKMapView.CameraBoundary(coordinateRegion: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: regionConstraints.center.latitude, longitude: regionConstraints.center.longitude), latitudinalMeters: regionConstraints.latitudinalMeters, longitudinalMeters: regionConstraints.longitudinalMeters))
+            mapView.setCameraBoundary(cameraBounds, animated: true)
+        }
+        
         
         //register the annotations
         mapView.register(MalinkiAnnotationView.self, forAnnotationViewWithReuseIdentifier: "annotations")

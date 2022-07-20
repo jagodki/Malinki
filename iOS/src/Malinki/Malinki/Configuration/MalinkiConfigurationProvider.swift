@@ -201,7 +201,7 @@ class MalinkiConfigurationProvider {
     /// This function returns the configuration for the map constraints.
     /// - Returns: a config object containing the map constraints
     func getMapConstraints() -> MalinkiConfigurationMapConstraints {
-        return self.configData?.mapConstraints ?? MalinkiConfigurationMapConstraints(scale: MalinkiConfigurationMapScales(min: 1.0, max: 1000000000000000000.0))
+        return self.configData?.mapConstraints ?? MalinkiConfigurationMapConstraints(scale: MalinkiConfigurationMapScaleConstraints(min: 1.0, max: 1000000000000000000.0))
     }
     
 }

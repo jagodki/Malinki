@@ -674,6 +674,14 @@
         "scale": {
             "min": 1000.0,
             "max": 1000000000.0
+        },
+        "region": {
+            "center": {
+                "latitude": 50.0,
+                "longitude": 10.0
+            },
+            "longitudinalMeters": 10000000.0,
+            "latitudinalMeters": 10000000.0
         }
     },
     "cacheName": "TILE_CACHE"
