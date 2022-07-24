@@ -45,7 +45,7 @@ struct MalinkiBasemaps: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(content: {
                 ToolbarItem(placement: .principal, content: {
-                    MalinkiSheetHeader(title: "Basemaps", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent)
+                    MalinkiSheetHeader(title: String(localized: "Basemaps"), isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent)
                 })
             })
         }
