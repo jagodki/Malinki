@@ -8,6 +8,7 @@
 import SwiftUI
 
 @available(iOS 15.0, *)
+/// A structur to show the content of the datsources.md file.
 struct MalinkiDatasourcesView: View {
     
     @StateObject private var datasources: MalinkiDatasourcesProvider = MalinkiDatasourcesProvider.sharedInstance
