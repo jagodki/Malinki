@@ -119,6 +119,8 @@ struct MalinkiMap: View {
                 .environmentObject(self.userAnnotations)
                 .environmentObject(self.mapLayers)
                 .environmentObject(self.mapRegion)
+        case .datasources:
+            MalinkiDatasourcesView(isSheetShowing: self.$sheet.isShowing, sheetDetent: self.$selectedDetentIdentifier)
         default:
             EmptyView()
         }
