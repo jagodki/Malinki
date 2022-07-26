@@ -26,4 +26,5 @@ enum MalinkiSheetState {
     case search
     case bookmarks
     case annotations
+    case datasources
 }

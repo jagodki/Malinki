@@ -47,6 +47,14 @@ struct MalinkiToolButton: View {
                 Text(LocalizedStringKey("Clear Map Cache"))
                 Image(systemName: "trash.fill")
             }
+            
+            //show the datasources
+            Button(action: {
+                self.sheetState = .datasources
+            }) {
+                Text(LocalizedStringKey("Datasources"))
+                Image(systemName: "doc.plaintext")
+            }
         } label: {
             Image(systemName: "ellipsis")
                 .font(.title2)
