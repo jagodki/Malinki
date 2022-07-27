@@ -160,7 +160,37 @@ class MalinkiConfigurationProvider {
     ///   - theme: the ID of the correpsonding map theme
     /// - Returns: a String with the external name of the layer
     func getExternalVectorName(id: Int, theme: Int) -> String {
-        return self.getVectorLayer(id: id, theme: theme)?.externalNames.en ?? ""
+        return self.getExternalNameForDeviceLanguage(externalNames: self.getVectorLayer(id: id, theme: theme)?.externalNames ?? MalinkiConfigurationExternalNames(en: "", de: "", fr: "", sv: "", pl: ""))
+    }
+    
+    /// This function returns the external name depending on the device language
+    /// - Parameter externalNames: the external names
+    /// - Returns: a string of the external name for the current device language (or english as default)
+    private func getExternalNameForDeviceLanguage(externalNames: MalinkiConfigurationExternalNames) -> String {
+        var externalName: String = ""
+        
+        switch Locale.current.languageCode {
+        case "en":
+            externalName = externalNames.en
+            break
+        case "de":
+            externalName = externalNames.de
+            break
+        case "fr":
+            externalName = externalNames.fr
+            break
+        case "pl":
+            externalName = externalNames.pl
+            break
+        case "sv":
+            externalName = externalNames.sv
+            break
+        default:
+            externalName = externalNames.en
+            break
+        }
+        
+        return externalName
     }
     
     /// This function returns all vector layers of a given map theme.
@@ -174,7 +204,7 @@ class MalinkiConfigurationProvider {
     /// - Parameter id: the ID of the map theme
     /// - Returns: a String with the external name of the theme
     func getExternalThemeName(id: Int) -> String {
-        return self.getMapTheme(for: id)?.externalNames.en ?? ""
+        return self.getExternalNameForDeviceLanguage(externalNames: self.getMapTheme(for: id)?.externalNames ?? MalinkiConfigurationExternalNames(en: "", de: "", fr: "", sv: "", pl: ""))
     }
     
     /// This function returns the external name of a given raster layer.
@@ -183,7 +213,7 @@ class MalinkiConfigurationProvider {
     ///   - layerID: the ID of the raster layer
     /// - Returns: a String with the external name of the layer
     func getExternalRasterLayerName(themeID: Int, layerID: Int) -> String {
-        return self.getRasterLayer(with: layerID, of: themeID)?.externalNames.en ?? ""
+        return self.getExternalNameForDeviceLanguage(externalNames: self.getRasterLayer(with: layerID, of: themeID)?.externalNames ?? MalinkiConfigurationExternalNames(en: "", de: "", fr: "", sv: "", pl: ""))
     }
     
     /// This function returns the name of the cache.
