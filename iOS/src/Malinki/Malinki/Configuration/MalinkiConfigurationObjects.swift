@@ -19,7 +19,7 @@ struct MalinkiConfiguration: Decodable {
 struct MalinkiConfigurationTheme: Decodable {
     var id: Int
     var internalName: String
-    var externalNames: MalinkiConfigurationBasemapExternalName
+    var externalNames: MalinkiConfigurationExternalNames
     var iconName: String
     var layers: MalinkiConfigurationMapLayers
 }
@@ -28,7 +28,7 @@ struct MalinkiConfigurationTheme: Decodable {
 struct MalinkiConfigurationMapData: Decodable {
     var id: Int
     var internalName: String
-    var externalNames: MalinkiConfigurationBasemapExternalName
+    var externalNames: MalinkiConfigurationExternalNames
     var rasterTypes: MalinkiConfigurationRasterType
     var zConstraints: MalinkiConfigurationMapDataZConstraints
     var imageName: String
@@ -49,7 +49,7 @@ struct MalinkiConfigurationMapLayers: Decodable {
 struct MalinkiConfigurationVectorData: Decodable {
     var id: Int
     var internalName: String
-    var externalNames: MalinkiConfigurationBasemapExternalName
+    var externalNames: MalinkiConfigurationExternalNames
     var correspondingRasterLayer: Int?
     var vectorTypes: MalinkiConfigurationVectorTypes
     var attributes: MalinkiConfigurationVectorAttributes
@@ -91,7 +91,7 @@ struct MalinkiConfigurationVectorFeatureInfoWMS: Decodable {
 
 struct MalinkiConfigurationVectorFields: Decodable {
     var name: String
-    var externalNames: MalinkiConfigurationBasemapExternalName
+    var externalNames: MalinkiConfigurationExternalNames
 }
 
 struct MalinkiConfigurationVectorStyle: Decodable {
@@ -163,7 +163,7 @@ struct MalinkiConfigurationWMTS: Decodable {
 }
 
 //MARK: - External Representations
-struct MalinkiConfigurationBasemapExternalName: Decodable {
+struct MalinkiConfigurationExternalNames: Decodable {
     var en: String
     var de: String
     var fr: String
