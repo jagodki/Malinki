@@ -106,7 +106,7 @@ struct MalinkiUserAnnotationsView: View {
                     HStack {
                         Spacer()
                         Image(systemName: "plus")
-                        Text("Add Map Pin")
+                        Text(String(localized: "Add Map Pin"))
                         Spacer()
                     }
                     .font(.headline)

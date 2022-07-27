@@ -130,7 +130,7 @@ struct MalinkiBookmarksView: View {
                     HStack {
                         Spacer()
                         Image(systemName: "plus")
-                        Text("Test")
+                        Text(String(localized: "Add Bookmark"))
                         Spacer()
                     }
                     .font(.headline)
