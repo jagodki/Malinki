@@ -1,0 +1,93 @@
+/* No comment provided by engineer. */
+"%@ | Lat: %@, Lon: %@" = "%@ | Lat: %@, Lon: %@";
+
+/* No comment provided by engineer. */
+"Add Bookmark" = "Lägg till bokmärke";
+
+/* No comment provided by engineer. */
+"Add Map Pin" = "Lägg till kartnål";
+
+/* No comment provided by engineer. */
+"All cached map tiles will be removed, i.e. map tiles will be requested from web services again after panning or zooming the map." = "Alla lagrade kartplattor raderas, dvs. kartplattorna laddas ner igen när du flyttar eller zoomar kartan.";
+
+/* No comment provided by engineer. */
+"Basemaps" = "Grundkartor";
+
+/* No comment provided by engineer. */
+"Bookmark Name" = "Bokmärkesnamn";
+
+/* No comment provided by engineer. */
+"Bookmarks" = "Bokmärken";
+
+/* No comment provided by engineer. */
+"Clear Map Cache" = "Rensa kartans cacheminne";
+
+/* No comment provided by engineer. */
+"Data" = "Data";
+
+/* No comment provided by engineer. */
+"Datasources" = "Datakällor";
+
+/* No comment provided by engineer. */
+"Delete" = "Radera";
+
+/* No comment provided by engineer. */
+"Error" = "Fel";
+
+/* No comment provided by engineer. */
+"Insert the bookmark name." = "Lägg in bokmärkesnamnet.";
+
+/* No comment provided by engineer. */
+"Insert the name of the map pin." = "Lägg in namnet på kartnålen.";
+
+/* No comment provided by engineer. */
+"Loading..." = "Laddar...";
+
+/* No comment provided by engineer. */
+"Map Content" = "Kartans innehåll";
+
+/* No comment provided by engineer. */
+"Map Pin Name" = "Kartnål namn";
+
+/* No comment provided by engineer. */
+"Map Pins" = "Kartnålar";
+
+/* No comment provided by engineer. */
+"Map Themes" = "Teman på kartor";
+
+/* No comment provided by engineer. */
+"Marker" = "Markering";
+
+/* No comment provided by engineer. */
+"Marker to query data" = "Markering för att söka uppgifter";
+
+/* No comment provided by engineer. */
+"No Data" = "Inga uppgifter";
+
+/* No comment provided by engineer. */
+"No data to query" = "Inga uppgifter att söka";
+
+/* No comment provided by engineer. */
+"No search results..." = "Inga sökresultat...";
+
+/* No comment provided by engineer. */
+"not able to get data from webservice" = "kan inte hämta uppgifter från webbtjänsten";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Rename" = "Byt namn på";
+
+/* No comment provided by engineer. */
+"Result" = "Resultat";
+
+/* No comment provided by engineer. */
+"Search" = "Sök";
+
+/* No comment provided by engineer. */
+"Update" = "Uppdatera";
+
+/* No comment provided by engineer. */
+"Search for Map Themes and Content" = "Sök efter teman och innehåll i kartor";
+

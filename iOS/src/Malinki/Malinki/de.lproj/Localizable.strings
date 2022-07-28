@@ -1,0 +1,93 @@
+/* No comment provided by engineer. */
+"%@ | Lat: %@, Lon: %@" = "%@ | Lat: %@, Lon: %@";
+
+/* No comment provided by engineer. */
+"Add Bookmark" = "Lesezeichen hinzufügen";
+
+/* No comment provided by engineer. */
+"Add Map Pin" = "Stecknadel hinzufügen";
+
+/* No comment provided by engineer. */
+"All cached map tiles will be removed, i.e. map tiles will be requested from web services again after panning or zooming the map." = "Alle zwischengespeicherten Kartenkacheln werden gelöscht, d.h. die Kartenkacheln werden nach erneutem verschieben oder zoomen der Karte wieder heruntergeladen.";
+
+/* No comment provided by engineer. */
+"Basemaps" = "Grundkarten";
+
+/* No comment provided by engineer. */
+"Bookmark Name" = "Lesezeichenname";
+
+/* No comment provided by engineer. */
+"Bookmarks" = "Lesezeichen";
+
+/* No comment provided by engineer. */
+"Clear Map Cache" = "Zwischenspeicher leeren";
+
+/* No comment provided by engineer. */
+"Data" = "Daten";
+
+/* No comment provided by engineer. */
+"Datasources" = "Datenquellen";
+
+/* No comment provided by engineer. */
+"Delete" = "Löschen";
+
+/* No comment provided by engineer. */
+"Error" = "Fehler";
+
+/* No comment provided by engineer. */
+"Insert the bookmark name." = "Namen des Lesezeichens einfügen.";
+
+/* No comment provided by engineer. */
+"Insert the name of the map pin." = "Namen der Stecknadel einfügen.";
+
+/* No comment provided by engineer. */
+"Loading..." = "Laden...";
+
+/* No comment provided by engineer. */
+"Map Content" = "Karteninhalt";
+
+/* No comment provided by engineer. */
+"Map Pin Name" = "Markername";
+
+/* No comment provided by engineer. */
+"Map Pins" = "Marker";
+
+/* No comment provided by engineer. */
+"Map Themes" = "Kartenthemen";
+
+/* No comment provided by engineer. */
+"Marker" = "Marker";
+
+/* No comment provided by engineer. */
+"Marker to query data" = "Marker zur Datenabfrage";
+
+/* No comment provided by engineer. */
+"No Data" = "keine Daten";
+
+/* No comment provided by engineer. */
+"No data to query" = "keine Daten abzufragen";
+
+/* No comment provided by engineer. */
+"No search results..." = "keine Suchergebnisse...";
+
+/* No comment provided by engineer. */
+"not able to get data from webservice" = "Daten vom Webdienst können nicht geladen werden";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Rename" = "Umbenennen";
+
+/* No comment provided by engineer. */
+"Result" = "Ergebnis";
+
+/* No comment provided by engineer. */
+"Search" = "Suche";
+
+/* No comment provided by engineer. */
+"Update" = "Aktualisieren";
+
+/* No comment provided by engineer. */
+"Search for Map Themes and Content" = "Nach Kartenthemen oder -inhalt suchen";
+

@@ -43,7 +43,7 @@ struct MalinkiSearchBar: View {
         HStack {
             HStack {
                 Image(systemName: "magnifyingglass")
-                TextField(LocalizedStringKey("Search for Map Themes and Content"), text: self.$searchText).foregroundColor(.primary)
+                TextField(String(localized: "Search for Map Themes and Content"), text: self.$searchText).foregroundColor(.primary)
 
                 if self.searchText != "" {
                     Button(action: {

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="Malinki/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="de">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>Malinki</source>
+        <note>Bundle name</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Malinki/en.lproj/Localizable.strings" datatype="plaintext" source-language="en" target-language="de">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="13.4.1" build-num="13F100"/>
+    </header>
+    <body>
+      <trans-unit id="%@ | Lat: %@, Lon: %@" xml:space="preserve">
+        <source>%@ | Lat: %@, Lon: %@</source>
+        <target>%@ | Lat: %@, Lon: %@</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add Bookmark" xml:space="preserve">
+        <source>Add Bookmark</source>
+        <target>Lesezeichen hinzufügen</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add Map Pin" xml:space="preserve">
+        <source>Add Map Pin</source>
+        <target>Stecknadel hinzufügen</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="All cached map tiles will be removed, i.e. map tiles will be requested from web services again after panning or zooming the map." xml:space="preserve">
+        <source>All cached map tiles will be removed, i.e. map tiles will be requested from web services again after panning or zooming the map.</source>
+        <target>Alle zwischengespeicherten Kartenkacheln werden gelöscht, d.h. die Kartenkacheln werden nach erneutem verschieben oder zoomen der Karte wieder heruntergeladen.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Basemaps" xml:space="preserve">
+        <source>Basemaps</source>
+        <target>Grundkarten</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Bookmark Name" xml:space="preserve">
+        <source>Bookmark Name</source>
+        <target>Lesezeichenname</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Bookmarks" xml:space="preserve">
+        <source>Bookmarks</source>
+        <target>Lesezeichen</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Clear Map Cache" xml:space="preserve">
+        <source>Clear Map Cache</source>
+        <target>Zwischenspeicher leeren</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Data" xml:space="preserve">
+        <source>Data</source>
+        <target>Daten</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Datasources" xml:space="preserve">
+        <source>Datasources</source>
+        <target>Datenquellen</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Delete" xml:space="preserve">
+        <source>Delete</source>
+        <target>Löschen</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Error" xml:space="preserve">
+        <source>Error</source>
+        <target>Fehler</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Insert the bookmark name." xml:space="preserve">
+        <source>Insert the bookmark name.</source>
+        <target>Namen des Lesezeichens einfügen.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Insert the name of the map pin." xml:space="preserve">
+        <source>Insert the name of the map pin.</source>
+        <target>Namen der Stecknadel einfügen.</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Loading..." xml:space="preserve">
+        <source>Loading...</source>
+        <target>Laden...</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Map Content" xml:space="preserve">
+        <source>Map Content</source>
+        <target>Karteninhalt</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Map Pin Name" xml:space="preserve">
+        <source>Map Pin Name</source>
+        <target>Markername</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Map Pins" xml:space="preserve">
+        <source>Map Pins</source>
+        <target>Marker</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Map Themes" xml:space="preserve">
+        <source>Map Themes</source>
+        <target>Kartenthemen</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Marker" xml:space="preserve">
+        <source>Marker</source>
+        <target>Marker</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Marker to query data" xml:space="preserve">
+        <source>Marker to query data</source>
+        <target>Marker zur Datenabfrage</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No Data" xml:space="preserve">
+        <source>No Data</source>
+        <target>keine Daten</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No data to query" xml:space="preserve">
+        <source>No data to query</source>
+        <target>keine Daten abzufragen</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No search results..." xml:space="preserve">
+        <source>No search results...</source>
+        <target>keine Suchergebnisse...</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="OK" xml:space="preserve">
+        <source>OK</source>
+        <target>OK</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Rename" xml:space="preserve">
+        <source>Rename</source>
+        <target>Umbenennen</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Result" xml:space="preserve">
+        <source>Result</source>
+        <target>Ergebnis</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Search" xml:space="preserve">
+        <source>Search</source>
+        <target>Suche</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Update" xml:space="preserve">
+        <source>Update</source>
+        <target>Aktualisieren</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="not able to get data from webservice" xml:space="preserve">
+        <source>not able to get data from webservice</source>
+        <target>Daten vom Webdienst können nicht geladen werden</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

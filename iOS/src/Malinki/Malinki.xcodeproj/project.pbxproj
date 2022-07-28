@@ -56,6 +56,7 @@
 		CECCE5C5269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */; };
 		CEDF03CE284236D3002B25C6 /* AlertControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEDF03CD284236D3002B25C6 /* AlertControlView.swift */; };
 		CEE9EA7126CC49C00025AF80 /* Configuration.json in Resources */ = {isa = PBXBuildFile; fileRef = CE582B9D26B1E2C100BAA289 /* Configuration.json */; };
+		CEE9ED9E28931C97006901C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEE9ED9C28931C97006901C9 /* Localizable.strings */; };
 		CEEEC679273DA46E00A87CA3 /* MalinkiAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEEC678273DA46E00A87CA3 /* MalinkiAnnotation.swift */; };
 		CEF570E626E69D8F0038B00D /* MalinkiTileOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF570E526E69D8F0038B00D /* MalinkiTileOverlay.swift */; };
 		CEF7E010276935A40099A0D5 /* MalinkiFeatureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF7E00F276935A30099A0D5 /* MalinkiFeatureData.swift */; };
@@ -126,6 +127,10 @@
 		CECCE5C2269CC8FA00BA8B30 /* MalinkiSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSearchView.swift; sourceTree = "<group>"; };
 		CECCE5C4269CC90C00BA8B30 /* MalinkiObjectDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiObjectDetailsView.swift; sourceTree = "<group>"; };
 		CEDF03CD284236D3002B25C6 /* AlertControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertControlView.swift; sourceTree = "<group>"; };
+		CEE9ED9D28931C97006901C9 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEE9ED9F28931E0F006901C9 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEE9EDA028931E26006901C9 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEE9EDA128931E3E006901C9 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEEEC678273DA46E00A87CA3 /* MalinkiAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiAnnotation.swift; sourceTree = "<group>"; };
 		CEF570E526E69D8F0038B00D /* MalinkiTileOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiTileOverlay.swift; sourceTree = "<group>"; };
 		CEF7E00F276935A30099A0D5 /* MalinkiFeatureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiFeatureData.swift; sourceTree = "<group>"; };
@@ -385,6 +390,7 @@
 				CE4DB0CB274BE6C9006019F8 /* LocalData */,
 				CEC9FB50268A4447005882E7 /* Assets.xcassets */,
 				CEC9FB55268A4447005882E7 /* Info.plist */,
+				CEE9ED9C28931C97006901C9 /* Localizable.strings */,
 				CEC9FB52268A4447005882E7 /* Preview Content */,
 			);
 			path = Malinki;
@@ -479,6 +485,7 @@
 				CEC9FB54268A4447005882E7 /* Preview Assets.xcassets in Resources */,
 				CE4F33C327C2C06C0052AADD /* marine.geojson in Resources */,
 				CEFBB251275820B1003EE716 /* warngebiete_see_centroids.geojson in Resources */,
+				CEE9ED9E28931C97006901C9 /* Localizable.strings in Resources */,
 				CE1337DB288DC9CD00F90370 /* Datasources.md in Resources */,
 				CEE9EA7126CC49C00025AF80 /* Configuration.json in Resources */,
 				CE4F33C127C2C0640052AADD /* marine_centroids.geojson in Resources */,
@@ -543,6 +550,20 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		CEE9ED9C28931C97006901C9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEE9ED9D28931C97006901C9 /* de */,
+				CEE9ED9F28931E0F006901C9 /* fr */,
+				CEE9EDA028931E26006901C9 /* pl */,
+				CEE9EDA128931E3E006901C9 /* sv */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		CEC9FB56268A4447005882E7 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -601,6 +622,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -655,6 +677,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
