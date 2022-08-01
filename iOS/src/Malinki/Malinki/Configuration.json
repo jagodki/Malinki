@@ -685,5 +685,7 @@
         }
     },
     "cacheName": "TILE_CACHE",
-    "inAppPurchases": true
+    "inAppPurchases": {
+        "mapToolsProductID": "test"
+    }
 }

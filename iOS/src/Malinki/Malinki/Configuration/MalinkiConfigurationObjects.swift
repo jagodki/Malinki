@@ -14,7 +14,7 @@ struct MalinkiConfiguration: Decodable {
     var onStartUp: MalinkiConfigurationStartUp
     var mapConstraints: MalinkiConfigurationMapConstraints
     var cacheName: String
-    var inAppPurchases: Bool
+    var inAppPurchases: MalinkiConfigurationInAppPurchases?
 }
 
 struct MalinkiConfigurationTheme: Decodable {
@@ -23,6 +23,11 @@ struct MalinkiConfigurationTheme: Decodable {
     var externalNames: MalinkiConfigurationExternalNames
     var iconName: String
     var layers: MalinkiConfigurationMapLayers
+}
+
+//MARK: - in-App Purchases
+struct MalinkiConfigurationInAppPurchases: Decodable {
+    var mapToolsProductID: String
 }
 
 //MARK: - Map Data

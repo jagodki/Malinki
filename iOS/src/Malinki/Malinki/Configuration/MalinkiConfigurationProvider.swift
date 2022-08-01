@@ -237,7 +237,13 @@ class MalinkiConfigurationProvider {
     /// Returns the information, whether in app purchases are enabled or not.
     /// - Returns: true if in app purchases are enabled
     func inAppPurchasesAreEnabled() -> Bool {
-        self.configData?.inAppPurchases ?? false
+        return ((self.configData?.inAppPurchases) != nil)
+    }
+    
+    /// This function returns the in app purches configuration.
+    /// - Returns: an object containing the configuration for in app purchases
+    func getInAppPurchasesConfig() -> MalinkiConfigurationInAppPurchases {
+        return self.configData?.inAppPurchases ?? MalinkiConfigurationInAppPurchases(mapToolsProductID: "")
     }
     
 }
