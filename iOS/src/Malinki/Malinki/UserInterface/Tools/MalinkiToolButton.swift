@@ -40,6 +40,8 @@ struct MalinkiToolButton: View {
                 Image(systemName: "mappin.and.ellipse")
             }
             
+            Divider()
+            
             //the clean cache entry
             Button(action: {
                 self.showingActions = true
