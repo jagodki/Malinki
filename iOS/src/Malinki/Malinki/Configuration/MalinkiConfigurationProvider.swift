@@ -234,4 +234,10 @@ class MalinkiConfigurationProvider {
         return self.configData?.mapConstraints ?? MalinkiConfigurationMapConstraints(scale: MalinkiConfigurationMapScaleConstraints(min: 1.0, max: 1000000000000000000.0))
     }
     
+    /// Returns the information, whether in app purchases are enabled or not.
+    /// - Returns: true if in app purchases are enabled
+    func inAppPurchasesAreEnabled() -> Bool {
+        self.configData?.inAppPurchases ?? false
+    }
+    
 }
