@@ -14,6 +14,7 @@ struct MalinkiConfiguration: Decodable {
     var onStartUp: MalinkiConfigurationStartUp
     var mapConstraints: MalinkiConfigurationMapConstraints
     var cacheName: String
+    var inAppPurchases: Bool
 }
 
 struct MalinkiConfigurationTheme: Decodable {

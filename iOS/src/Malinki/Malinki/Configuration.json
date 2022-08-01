@@ -684,5 +684,6 @@
             "latitudinalMeters": 10000000.0
         }
     },
-    "cacheName": "TILE_CACHE"
+    "cacheName": "TILE_CACHE",
+    "inAppPurchases": true
 }
