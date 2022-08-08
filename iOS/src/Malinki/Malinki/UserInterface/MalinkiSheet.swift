@@ -27,4 +27,5 @@ enum MalinkiSheetState {
     case bookmarks
     case annotations
     case datasources
+    case inapppurchase
 }

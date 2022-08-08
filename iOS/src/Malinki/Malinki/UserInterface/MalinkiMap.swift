@@ -121,6 +121,8 @@ struct MalinkiMap: View {
                 .environmentObject(self.mapRegion)
         case .datasources:
             MalinkiDatasourcesView(isSheetShowing: self.$sheet.isShowing, sheetDetent: self.$selectedDetentIdentifier)
+        case .inapppurchase:
+            MalinkiInAppPurchasesView(sheetState: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing)
         default:
             EmptyView()
         }

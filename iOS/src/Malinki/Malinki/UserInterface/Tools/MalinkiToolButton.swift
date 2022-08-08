@@ -13,16 +13,19 @@ struct MalinkiToolButton: View {
     
     @Binding var sheetState: MalinkiSheetState?
     @State private var showingActions: Bool = false
+    private let disableButtons: Bool = MalinkiConfigurationProvider.sharedInstance.inAppPurchasesAreEnabled() && !(UserDefaults.standard.bool(forKey: MalinkiConfigurationProvider.sharedInstance.getInAppPurchasesConfig().mapToolsProductID))
     
     var body: some View {
         Menu {
+            
+            //disable buttons if not purchased
             //the search entry
             Button(action: {
                 self.sheetState = .search
             }) {
                 Text(LocalizedStringKey("Search"))
                 Image(systemName: "magnifyingglass")
-            }
+            }.disabled(self.disableButtons)
             
             //the bookmarks entry
             Button(action: {
@@ -30,7 +33,7 @@ struct MalinkiToolButton: View {
             }) {
                 Text(LocalizedStringKey("Bookmarks"))
                 Image(systemName: "bookmark.fill")
-            }
+            }.disabled(self.disableButtons)
             
             //the annotations entry
             Button(action: {
@@ -38,7 +41,7 @@ struct MalinkiToolButton: View {
             }) {
                 Text(LocalizedStringKey("Marker"))
                 Image(systemName: "mappin.and.ellipse")
-            }
+            }.disabled(self.disableButtons)
             
             Divider()
             
@@ -57,6 +60,19 @@ struct MalinkiToolButton: View {
                 Text(LocalizedStringKey("Datasources"))
                 Image(systemName: "doc.plaintext")
             }
+            
+            //in app purchases
+            if MalinkiConfigurationProvider.sharedInstance.inAppPurchasesAreEnabled() {
+                Divider()
+                
+                Button(action: {
+                    self.sheetState = .inapppurchase
+                }) {
+                    Text(LocalizedStringKey("In-App Purchases"))
+                    Image(systemName: "creditcard.fill")
+                }
+            }
+            
         } label: {
             Image(systemName: "ellipsis")
                 .font(.title2)
