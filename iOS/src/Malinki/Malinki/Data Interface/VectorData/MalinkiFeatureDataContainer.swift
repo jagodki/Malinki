@@ -64,7 +64,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     /// - Parameter featureInfo: an config object with all necesary data to query the data
     private func getFeatureData(for featureInfo: MalinkiConfigurationVectorFeatureInfo?, with id: Int) {
         
-       if let wfs = featureInfo?.wfs {
+        if let wfs = featureInfo?.wfs {
             self.getFeature(config: wfs, layerID: id)
         } else if let wms = featureInfo?.wms {
             self.getFeatureInfo(config: wms, layerID: id)
@@ -89,7 +89,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
             let json = self.decodeGeoJSON(from: data)
             
             //get features from json string
-            await self.getFeatureData(name: self.selectedAnnotation?.title ?? "", from: json, filterField: self.configProvider.getVectorLayer(id: layerID, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id, filterValue: self.selectedAnnotation?.featureID, layerID: layerID)
+            await self.getFeatureData(name: self.selectedAnnotation?.title ?? "", from: json, filterField: self.configProvider.getVectorLayer(id: layerID, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id ?? "", filterValue: self.selectedAnnotation?.featureID ?? "", layerID: layerID)
         }
     }
     
@@ -106,7 +106,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
             let json = self.decodeGeoJSON(from: data)
             
             //get features from json string
-            await self.getFeatureData(name: self.selectedAnnotation?.title ?? "", from: json, filterField: self.configProvider.getVectorLayer(id: layerID, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id, filterValue: self.selectedAnnotation?.featureID, layerID: layerID)
+            await self.getFeatureData(name: self.selectedAnnotation?.title ?? "", from: json, filterField: self.configProvider.getVectorLayer(id: layerID, theme: self.selectedAnnotation?.themeID ?? -99)?.attributes.id ?? "", filterValue: self.selectedAnnotation?.featureID ?? "", layerID: layerID)
         }
     }
     
@@ -212,6 +212,42 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         self.featureData.append(MalinkiFeatureData(data: data, name: name, themeID: themeID, vectorLayerID: vectorLayerID))
     }
     
+    /// This function stores all given objects in published instance vars.
+    /// - Parameters:
+    ///   - name: the name of the feature
+    ///   - geojsonFeatures: the previously queried GeoJSON features
+    ///   - layerID: the id of the vector layer
+    private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature], layerID: Int) async {
+        //pass an information to the user, if the query returned no data
+        if geojsonFeatures.count == 0 {
+            self.addFeature(name: name, themeID: self.selectedAnnotation?.themeID ?? -99, vectorLayerID: layerID, data: [String(localized: "Result"): String(localized: "No Data")])
+        } else {
+            for feature in geojsonFeatures {
+                //get the properties as a dictionary
+                if let properties = feature.properties {
+                    var attributes: [String: String] = [:]
+                    
+                    //get a dictionary from the json data
+                    let property = try? JSONSerialization.jsonObject(with: properties) as? [String: Any]
+                    
+                    //parsing all properties of the current feature
+                    for (key, value) in property ?? ["": ""] {
+                        attributes[key] = String(describing: value)
+                    }
+                    
+                    //add the feature to the feature data object
+                    self.addFeature(name: name, themeID: self.selectedAnnotation?.themeID ?? -99, vectorLayerID: layerID, data: attributes)
+                    
+                    //look for a valid geometry
+                    if let geometry = feature.geometry.first {
+                        //store the geometry
+                        self.geometries.append(MalinkiVectorGeometry(mapThemeID: self.selectedAnnotation?.themeID ?? -99, layerID: layerID, geometry: geometry))
+                    }
+                }
+            }
+        }
+    }
+    
     /// This function filters given features and stores them in a published instance var.
     /// - Parameters:
     ///   - name: the name of the feature
@@ -219,7 +255,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
     ///   - filterField: the name of the field to filter on
     ///   - filterValue: the value of the filter
     ///   - layerID: the id of the vector layer
-    private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature], filterField: String? = nil, filterValue: String? = nil, layerID: Int) async {
+    private func getFeatureData(name: String, from geojsonFeatures: [MKGeoJSONFeature], filterField: String, filterValue: String, layerID: Int) async {
         //pass an information to the user, if the query returned no data
         if geojsonFeatures.count == 0 {
             self.addFeature(name: name, themeID: self.selectedAnnotation?.themeID ?? -99, vectorLayerID: layerID, data: [String(localized: "Result"): String(localized: "No Data")])
@@ -240,8 +276,8 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                         //only appropriate for pre configured annotations
                         if !(self.selectedAnnotation?.isUserAnnotation ?? false) {
                             var continueLoop = false
-                            if let fieldName = filterField, let fieldValue = filterValue, let propertyValues = property {
-                                continueLoop = self.createStringValue(from: propertyValues[fieldName] as Any) != fieldValue
+                            if let propertyValues = property {
+                                continueLoop = self.createStringValue(from: propertyValues[filterField] as Any) != filterValue
                             }
                             if continueLoop {
                                 continue
@@ -305,7 +341,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                     
                     wfsRequest += "&FILTER=\(filter)"
                 }
-//                print(wfsRequest)
+                //                print(wfsRequest)
                 //query data from WFS
                 let data = try await self.fetchData(from: wfsRequest)
                 
