@@ -1,0 +1,38 @@
+{
+  "identifier" : "91DF61F3",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : true,
+      "internalID" : "979A0D33",
+      "localizations" : [
+        {
+          "description" : "Enable bookmarks, own map pins and a search",
+          "displayName" : "Map Tools",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Lesezeichen, eigene Kartenpins und eine Suche",
+          "displayName" : "Map Tools",
+          "locale" : "de"
+        }
+      ],
+      "productID" : "com.mapTools",
+      "referenceName" : "MapTools",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 2
+  }
+}
