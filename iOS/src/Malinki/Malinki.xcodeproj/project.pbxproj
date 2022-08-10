@@ -42,6 +42,7 @@
 		CE4BD8F82817212500C72807 /* MalinkiSearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4BD8F72817212500C72807 /* MalinkiSearchResultView.swift */; };
 		CE4F33C127C2C0640052AADD /* marine_centroids.geojson in Resources */ = {isa = PBXBuildFile; fileRef = CE4F33C027C2C0640052AADD /* marine_centroids.geojson */; };
 		CE4F33C327C2C06C0052AADD /* marine.geojson in Resources */ = {isa = PBXBuildFile; fileRef = CE4F33C227C2C06C0052AADD /* marine.geojson */; };
+		CE519CD228A1A54700DEEB4D /* MalinkiStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE519CD128A1A54700DEEB4D /* MalinkiStoreManager.swift */; };
 		CE5B566A26C458B6008EA9BE /* MalinkiMapThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B566926C458B6008EA9BE /* MalinkiMapThemes.swift */; };
 		CE711125276A781300D0F5EB /* MalinkiSheetHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE711124276A781300D0F5EB /* MalinkiSheetHeader.swift */; };
 		CE8695D626FBAA8100A0A916 /* MalinkiWMTSOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8695D526FBAA8100A0A916 /* MalinkiWMTSOverlay.swift */; };
@@ -114,6 +115,8 @@
 		CE4BD8F72817212500C72807 /* MalinkiSearchResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSearchResultView.swift; sourceTree = "<group>"; };
 		CE4F33C027C2C0640052AADD /* marine_centroids.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marine_centroids.geojson; sourceTree = "<group>"; };
 		CE4F33C227C2C06C0052AADD /* marine.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marine.geojson; sourceTree = "<group>"; };
+		CE519CD028A1A4EF00DEEB4D /* Configuration_Test.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration_Test.storekit; sourceTree = "<group>"; };
+		CE519CD128A1A54700DEEB4D /* MalinkiStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiStoreManager.swift; sourceTree = "<group>"; };
 		CE582B9D26B1E2C100BAA289 /* Configuration.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Configuration.json; sourceTree = "<group>"; };
 		CE5B566926C458B6008EA9BE /* MalinkiMapThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiMapThemes.swift; sourceTree = "<group>"; };
 		CE711124276A781300D0F5EB /* MalinkiSheetHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiSheetHeader.swift; sourceTree = "<group>"; };
@@ -205,6 +208,8 @@
 		CE0DE032289868E600D92F20 /* Purchases */ = {
 			isa = PBXGroup;
 			children = (
+				CE519CD028A1A4EF00DEEB4D /* Configuration_Test.storekit */,
+				CE519CD128A1A54700DEEB4D /* MalinkiStoreManager.swift */,
 			);
 			path = Purchases;
 			sourceTree = "<group>";
@@ -581,6 +586,7 @@
 				CE09C10E26BC5ECE0077177F /* MalinkiBasemapButton.swift in Sources */,
 				CE21F7CB283FF75400E085E5 /* MalinkiMapRegion.swift in Sources */,
 				CE4009C02742FA6E00C0ED75 /* MalinkiAnnotationView.swift in Sources */,
+				CE519CD228A1A54700DEEB4D /* MalinkiStoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,7 +735,7 @@
 				DEVELOPMENT_TEAM = PM6R3BPDX5;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Malinki/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -737,7 +743,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jagodki.Malinki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -751,7 +757,7 @@
 				DEVELOPMENT_TEAM = PM6R3BPDX5;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Malinki/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -759,7 +765,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = jagodki.Malinki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

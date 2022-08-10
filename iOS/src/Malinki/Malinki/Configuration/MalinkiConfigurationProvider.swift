@@ -246,4 +246,33 @@ class MalinkiConfigurationProvider {
         return self.configData?.inAppPurchases ?? MalinkiConfigurationInAppPurchases(mapToolsProductID: "")
     }
     
+    /// This function tells, whether the configuration file contains a support text for in-app purchases or not.
+    /// - Returns: true if a support text is provided in the configuration
+    func hasSupportText() -> Bool {
+        return ((self.configData?.inAppPurchases?.supportText) != nil)
+    }
+    
+    /// This function returns the support text in the current language of the device.
+    /// - Returns: the support text in the current device language or in english, if device language is not supported by the app
+    func getSupportText() -> String {
+        var localSupportText: String = ""
+        
+        switch Locale.current.languageCode {
+        case "en":
+            localSupportText = self.configData?.inAppPurchases?.supportText?.en ?? ""
+        case "de":
+            localSupportText = self.configData?.inAppPurchases?.supportText?.de ?? ""
+        case "fr":
+            localSupportText = self.configData?.inAppPurchases?.supportText?.fr ?? ""
+        case "pl":
+            localSupportText = self.configData?.inAppPurchases?.supportText?.pl ?? ""
+        case "sv":
+            localSupportText = self.configData?.inAppPurchases?.supportText?.sv ?? ""
+        default:
+            localSupportText = self.configData?.inAppPurchases?.supportText?.en ?? ""
+        }
+        
+        return localSupportText
+    }
+    
 }

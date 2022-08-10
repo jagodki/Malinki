@@ -28,6 +28,7 @@ struct MalinkiConfigurationTheme: Decodable {
 //MARK: - in-App Purchases
 struct MalinkiConfigurationInAppPurchases: Decodable {
     var mapToolsProductID: String
+    var supportText: MalinkiConfigurationExternalNames?
 }
 
 //MARK: - Map Data

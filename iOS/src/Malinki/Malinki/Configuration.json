@@ -686,6 +686,13 @@
     },
     "cacheName": "TILE_CACHE",
     "inAppPurchases": {
-        "mapToolsProductID": "test"
+        "mapToolsProductID": "com.mapTools",
+        "supportText": {
+            "de": "Sie unterstützen die kontinuierliche Entwicklung und den Support dieser App. Vielen Dank an alle, die diese App mit einem Kauf unterstützen.",
+            "en": "You support an ongoing development and support of this app. Thank's to all people supporting this app with a purchase.",
+            "pl": "Wspierasz ciągły rozwój i wsparcie tej aplikacji. Dziękujemy wszystkim osobom wspierającym tę aplikację poprzez zakup.",
+            "fr": "Vous soutenez le développement et le soutien continus de cette application. Merci à tous ceux qui soutiennent cette application par un achat.",
+            "sv": "Du stödjer den fortsatta utvecklingen av denna app. Tack till alla som stöder appen genom att köpa den."
+        }
     }
 }
