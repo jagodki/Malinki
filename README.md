@@ -10,10 +10,10 @@ The capabilities from a user point of view are shown on the GitHub page.
 Malinki is published under the terms of Apache-2.0 license.
 
 ## Documentation
-The documentation for creating a Malinki-based app, writing a valid configuration file in JSON-format, adding assets (e.g. images) to the app, known issues etc. can be found in the wiki.
+The documentation for creating a Malinki-based app, writing a valid configuration file in JSON-format, adding assets (e.g. images) to the app, known issues etc. can be found in the <a href="https://github.com/jagodki/Malinki/wiki">wiki</a>.
 
 ## Bugs, questions and discussions
-Bugs can be reported via <a href="https://github.com/jagodki/Malinki/issues">issues</a>. The repository contains also <a href="https://github.com/jagodki/Malinki/discussions">a board for discussions and questions</a>.
+Bugs, requests or questions can be reported via <a href="https://github.com/jagodki/Malinki/issues">issues</a>. The repository contains also <a href="https://github.com/jagodki/Malinki/discussions">a board for discussions</a>.
 
 ## Contributing
 Contributions to the project are welcome, especially if anybody will contribute a native or webbased android app. If you are interested in the development of an android app, please contact me via <a href="https://github.com/jagodki/Malinki/discussions">the discussion board</a> before creating a pull request.
