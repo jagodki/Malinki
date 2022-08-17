@@ -1,10 +1,17 @@
-<img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Icon.png" height=300/>
+<img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Icon.png" height=150/>
 Malinki is an app project for publishing spatial data via native mobile apps mainly using OGC-services.
 <br>The project contains a ready-to-use configurable app prototype for creating map based apps without the necessity of writing code.
 <br>At the moment, the project contains only a native iOS app.
 
 ## Capabilities of the App
-The capabilities from a user point of view are shown on the GitHub page.
+Malinki is a mobile app for using spatial data regarding the special requirements and behaviours of smartphones, e.g. small screens, mutlitouch displays and other widely known map apps like Google Maps or Apple Maps.
+
+#### Map presentation
+The map is covering the whole screen of the device with only three buttons upon the map:<br>
+- selecting the basemap and the map theme
+- changing the visibility of the map content for the selected map theme
+- additional tools like search, bookmarks or personal map markers
+
 
 ## License
 Malinki is published under the terms of Apache-2.0 license.
