@@ -1,0 +1,105 @@
+/* No comment provided by engineer. */
+"%@ | Lat: %@, Lon: %@" = "%@ | Lat: %@, Lon: %@";
+
+/* No comment provided by engineer. */
+"Add Bookmark" = "Add Bookmark";
+
+/* No comment provided by engineer. */
+"Add Map Pin" = "Add Map Pin";
+
+/* No comment provided by engineer. */
+"All cached map tiles will be removed, i.e. map tiles will be requested from web services again after panning or zooming the map." = "All cached map tiles will be removed, i.e. map tiles will be requested from web services again after panning or zooming the map.";
+
+/* No comment provided by engineer. */
+"Basemaps" = "Basemaps";
+
+/* No comment provided by engineer. */
+"Bookmark Name" = "Bookmark Name";
+
+/* No comment provided by engineer. */
+"Bookmarks" = "Bookmarks";
+
+/* No comment provided by engineer. */
+"Clear Map Cache" = "Clear Map Cache";
+
+/* No comment provided by engineer. */
+"Data" = "Data";
+
+/* No comment provided by engineer. */
+"Datasources" = "Datasources";
+
+/* No comment provided by engineer. */
+"Delete" = "Delete";
+
+/* No comment provided by engineer. */
+"Error" = "Error";
+
+/* No comment provided by engineer. */
+"Insert the bookmark name." = "Insert the bookmark name.";
+
+/* No comment provided by engineer. */
+"Insert the name of the map pin." = "Insert the name of the map pin.";
+
+/* No comment provided by engineer. */
+"Loading..." = "Loading...";
+
+/* No comment provided by engineer. */
+"Map Content" = "Map Content";
+
+/* No comment provided by engineer. */
+"Map Pin Name" = "Marker Name";
+
+/* No comment provided by engineer. */
+"Map Pins" = "Markers";
+
+/* No comment provided by engineer. */
+"Map Themes" = "Map Themes";
+
+/* No comment provided by engineer. */
+"Marker" = "Marker";
+
+/* No comment provided by engineer. */
+"Marker to query data" = "Marker to query data";
+
+/* No comment provided by engineer. */
+"No Data" = "No Data";
+
+/* No comment provided by engineer. */
+"No data to query" = "No data to query";
+
+/* No comment provided by engineer. */
+"No search results..." = "No search results...";
+
+/* No comment provided by engineer. */
+"not able to get data from webservice" = "not able to get data from webservice";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Rename" = "Rename";
+
+/* No comment provided by engineer. */
+"Result" = "Result";
+
+/* No comment provided by engineer. */
+"Search" = "Search";
+
+/* No comment provided by engineer. */
+"Update" = "Update";
+
+/* No comment provided by engineer. */
+"Search for Map Themes and Content" = "Search for Map Themes and Content";
+
+/* No comment provided by engineer. */
+"Restore Purchases" = "Restore Purchases";
+
+/* No comment provided by engineer. */
+"Purchased" = "Purchased";
+
+/* No comment provided by engineer. */
+"In-App Purchases" = "In-App Purchases";
+
+/* No comment provided by engineer. */
+"Support for the development" = "Support for the development";
+

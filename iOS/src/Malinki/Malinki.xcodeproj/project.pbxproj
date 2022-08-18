@@ -108,6 +108,7 @@
 		CE2DF8722889DE3E004691B0 /* MalinkiDatasourcesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiDatasourcesProvider.swift; sourceTree = "<group>"; };
 		CE2E133F280F4EA2007950DF /* MalinkiExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiExtensions.swift; sourceTree = "<group>"; };
 		CE2E9E4C27FF641500774CCD /* MalinkiToolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiToolButton.swift; sourceTree = "<group>"; };
+		CE3073CA28AECBDD00DE93E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE4009BF2742FA6E00C0ED75 /* MalinkiAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiAnnotationView.swift; sourceTree = "<group>"; };
 		CE44B0AC26C985FC00298DC3 /* MalinkiConfigurationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiConfigurationProvider.swift; sourceTree = "<group>"; };
 		CE44B0AE26C9867700298DC3 /* MalinkiConfigurationObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalinkiConfigurationObjects.swift; sourceTree = "<group>"; };
@@ -497,7 +498,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 				fr,
 				de,
 				pl,
@@ -600,6 +600,7 @@
 				CEE9ED9F28931E0F006901C9 /* fr */,
 				CEE9EDA028931E26006901C9 /* pl */,
 				CEE9EDA128931E3E006901C9 /* sv */,
+				CE3073CA28AECBDD00DE93E3 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
