@@ -1,10 +1,18 @@
 <img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Icon.png" height=150/>
 Malinki is an app project for publishing spatial data via native mobile apps mainly using OGC-services.
-<br>The project contains a ready-to-use configurable app prototype for creating map based apps without the necessity of writing code.
-<br><br><i>At the moment, the project contains only a native iOS app.</i>
+<br>The project contains a ready-to-use configurable app prototype for creating map based apps without the necessity of writing code. Just download the repoitory, create a config file and run your map based mobile app.
+<br>The following sources of spatial data are currently supported:<br>
+
+- WMS
+- WMTS
+- WFS
+- TMS
+- GeoJSON (local and remote)
+
+<br><i>At the moment, the project contains only a native iOS app.</i>
 
 ## Capabilities of the App
-Malinki is a mobile app for using spatial data regarding the special requirements and behaviours of smartphones, e.g. small screens, mutlitouch displays and other widely known map apps like Google Maps or Apple Maps.
+Malinki is a mobile app for using spatial data regarding the special requirements and behaviours of smartphones, e.g. small screens, mutlitouch displays and other widely known map apps like Google Maps or Apple Maps. The following screenshots showing data from the example configuration file within this repository. If you want to create your own map app based on Malinki, please create a new configuration file. More information about this can be found in the [documentation section](#documentation).
 
 ### Map presentation
 The map is covering the whole screen of the device with only three buttons upon the map:<br>
@@ -12,6 +20,18 @@ The map is covering the whole screen of the device with only three buttons upon 
 - changing the visibility of the map content for the selected map theme
 - additional tools like search, bookmarks or personal map markers
 <p align="center"><img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Capabilities-1.png" height=450/></p>
+
+### Data query
+
+### Search
+
+### Spatial Bookmarks
+
+### User Defined Markers
+
+### Delete Map Cache
+
+### In-App-Purchases
 
 ## License
 Malinki is published under the terms of Apache-2.0 license.
