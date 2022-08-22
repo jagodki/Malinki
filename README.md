@@ -1,6 +1,5 @@
 <img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Icon.png" width=350/>
-Malinki is an app project for publishing spatial data via native mobile apps mainly using OGC-services.
-<br>The project contains a ready-to-use configurable app prototype for creating map based apps without the necessity of writing code. Just download the repoitory, create a config file and run your map based mobile app.
+Malinki is an app project for publishing spatial data via native mobile apps mainly using OGC-services. The project contains a ready-to-use configurable app prototype for creating map based apps without the necessity of writing code. Just download the repoitory, create a config file and run your map based mobile app.
 <br>The following sources of spatial data are currently supported:<br>
 
 - WMS
@@ -22,12 +21,17 @@ The map is covering the whole screen of the device with only three buttons upon 
 <p align="center"><img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Capabilities-1.png" width=750/></p>
 
 ### Data query
+<p>
+Malinki offers the posibility to query data for obtaining additional information via map markers above the map. Just like all other map layers, the visibility of map markers can be en- and disabled by the user. The map markers will be provided via the configuration, i.e. the app provider controls the locations to query data. They are always vector data with a WFS or GeoJSON-file as datasource. Technically the data will be queried with a GetFeatureInfo-requests on a WMS, GetFeature-requests on a WFS (using a spatial or ID filter) or directly from a GeoJSON-file (using a spatial or ID filter). The response will be highlighted on the map if it contains a geometry.
+</p>
+<p>
+Malinki offers the posibility to create map pins by the user. These map pins queries data always with a spatial filter on all queryable map layers of the current map theme.
+</p>
+<p align="center"><img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Capabilities-2.png" width=750/></p>
 
 ### Search
 
 ### Spatial Bookmarks
-
-### User Defined Markers
 
 ### Delete Map Cache
 
