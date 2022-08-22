@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Icon.png" height=150/>
+<img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Icon.png" width=350/>
 Malinki is an app project for publishing spatial data via native mobile apps mainly using OGC-services.
 <br>The project contains a ready-to-use configurable app prototype for creating map based apps without the necessity of writing code. Just download the repoitory, create a config file and run your map based mobile app.
 <br>The following sources of spatial data are currently supported:<br>
@@ -19,7 +19,7 @@ The map is covering the whole screen of the device with only three buttons upon 
 - selecting the basemap and the map theme
 - changing the visibility of the map content for the selected map theme
 - additional tools like search, bookmarks or personal map markers
-<p align="center"><img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Capabilities-1.png" height=450/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Capabilities-1.png" width=750/></p>
 
 ### Data query
 
