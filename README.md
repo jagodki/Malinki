@@ -1,14 +1,14 @@
 <img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Icon.png" width=350/>
-Malinki is an app project for publishing spatial data via native mobile apps mainly using OGC-services. The project contains a ready-to-use configurable app prototype for creating map based apps without the necessity of writing code. Just download the repoitory, create a config file and run your map based mobile app.
-<br>The following sources of spatial data are currently supported:<br>
-
+Malinki is an app project for publishing spatial data via native mobile apps mainly using OGC-services. The project contains a ready-to-use configurable app prototype for creating map based apps without the necessity of writing code. Just download the repoitory, create a config file and run your map based mobile app.<br>
+<p>The following sources of spatial data are currently supported:
+  
 - WMS
 - WMTS
 - WFS
 - TMS
 - GeoJSON (local and remote)
-
-<br><i>At the moment, the project contains only a native iOS app.</i>
+</p>
+<i>At the moment, the project contains only a native iOS app.</i>
 
 ## Capabilities of the App
 Malinki is a mobile app for using spatial data regarding the special requirements and behaviours of smartphones, e.g. small screens, mutlitouch displays and other widely known map apps like Google Maps or Apple Maps. The following screenshots showing data from the example configuration file within this repository. If you want to create your own map app based on Malinki, please create a new configuration file. More information about this can be found in the [documentation section](#documentation).
@@ -29,9 +29,9 @@ Malinki offers the posibility to create map pins by the user. These map pins que
 </p>
 <p align="center"><img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Capabilities-2.png" width=750/></p>
 
-### Search
-
-### Spatial Bookmarks
+### Search and Spatial Bookmarks
+Malinki contains a search for looking up for map themes and map layers. Searching for addresses or map features is not implemented. A map view containing the map theme, the enabled map layers and the position and scale of the map view can be stored in spatial bookmarks. They are stored directly on the device like the user map markers. Each spatial bookmark and user map pin offers some functions after swiping from right to left (rename, update, delete).
+<p align="center"><img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Capabilities-3.png" width=750/></p>
 
 ### Delete Map Cache
 
