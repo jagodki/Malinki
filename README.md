@@ -34,8 +34,10 @@ Malinki contains a search for looking up for map themes and map layers. Searchin
 <p align="center"><img src="https://raw.githubusercontent.com/jagodki/Malinki/main/assets/Malinki-Capabilities-3.png" width=750/></p>
 
 ### Delete Map Cache
+All requested map tiles will be stored on the device for the current session (the tiles will be deleted, when the app goes into the background mode) to improve load time if the same tiles have to be displayed again. It is possible, that e.g. a GetMap-request goes wrong and will not return a map tile. In this case the map view cannot show this single map tile. The user has the possibility to delete the whole map cache to force new GetMap-requests.
 
 ### In-App-Purchases
+The configuration file contains a section to enable or disable in-app-purchases. If in-app-purchases are enabled, the user have to pay for enabling the app functions search, bookmarks and user map markers. These functions are already enabled if in-app-purchases are disabled via the app configuration. The wiki contains a description how to configure the in-app-purchase for the app in the configuration file and in app store connect.
 
 ## License
 Malinki is published under the terms of Apache-2.0 license.
