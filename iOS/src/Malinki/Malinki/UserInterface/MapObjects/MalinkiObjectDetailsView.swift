@@ -29,7 +29,7 @@ struct MalinkiObjectDetailsView: View {
         } else {
             NavigationView {
                 List(self.$features.featureData) { $feature in
-                    Section(header: Text(self.features.featureData.count > 1 ? MalinkiConfigurationProvider.sharedInstance.getExternalVectorName(id: feature.vectorLayerID, theme: feature.themeID) : "Object Data").sectionHeaderStyle()) {
+                    Section(header: Text(self.features.featureData.count > 1 ? MalinkiConfigurationProvider.sharedInstance.getExternalVectorName(id: feature.vectorLayerID, theme: feature.themeID) : String(localized: "Object Data")).sectionHeaderStyle()) {
                         ForEach(feature.data.sorted(by: >), id: \.key) { key, value in
                             VStack(alignment: .leading) {
                                 Text(key)

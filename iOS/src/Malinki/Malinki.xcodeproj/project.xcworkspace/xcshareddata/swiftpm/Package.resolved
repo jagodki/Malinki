@@ -1,25 +1,23 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "SheeKit",
-        "repositoryURL": "https://github.com/edudnyk/SheeKit.git",
-        "state": {
-          "branch": null,
-          "revision": "9ec74245190dafc11bb98e4904172c0abff6011c",
-          "version": "1.0.0"
-        }
-      },
-      {
-        "package": "SWXMLHash",
-        "repositoryURL": "https://github.com/drmohundro/SWXMLHash",
-        "state": {
-          "branch": null,
-          "revision": "6469881a3f30417c5bb02404ea4b69207f297592",
-          "version": "6.0.0"
-        }
+  "pins" : [
+    {
+      "identity" : "sheekit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/edudnyk/SheeKit.git",
+      "state" : {
+        "revision" : "4bdc3b7ff784b893ec8f802e4154cd0d0bdf1b46",
+        "version" : "2.0.1"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swxmlhash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/drmohundro/SWXMLHash",
+      "state" : {
+        "revision" : "4d0f62f561458cbe1f732171e625f03195151b60",
+        "version" : "7.0.1"
+      }
+    }
+  ],
+  "version" : 2
 }
