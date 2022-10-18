@@ -40,6 +40,12 @@ struct MalinkiConfigurationMapData: Decodable {
     var zConstraints: MalinkiConfigurationMapDataZConstraints
     var imageName: String
     var opacity: Double
+    var legendGraphic: MalinkiConfigurationMapLegendeGraphic
+}
+
+struct MalinkiConfigurationMapLegendeGraphic: Decodable {
+    var file: String?
+    var url: String?
 }
 
 struct MalinkiConfigurationMapDataZConstraints: Decodable {
