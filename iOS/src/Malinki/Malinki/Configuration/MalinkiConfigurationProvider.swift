@@ -275,4 +275,13 @@ class MalinkiConfigurationProvider {
         return localSupportText
     }
     
+    /// This function returns an object containing information for getting the legend graphic.
+    /// - Parameters:
+    ///   - layerID: the ID of the layer
+    ///   - mapTheme: the ID of the map theme
+    /// - Returns: an object of type MalinkiConfigurationMapLegendeGraphic
+    func getLegendGraphic(for layerID: Int, in mapTheme: Int) -> MalinkiConfigurationMapLegendeGraphic {
+        return self.getRasterLayer(with: layerID, of: mapTheme)?.legendGraphic ?? MalinkiConfigurationMapLegendeGraphic()
+    }
+    
 }
