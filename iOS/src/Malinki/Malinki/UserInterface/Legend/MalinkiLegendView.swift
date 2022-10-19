@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct MalinkiLegendView: View {
+    
+    var title: String
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView() {
+            Form {
+                Image(systemName: "cloud.moon.bolt.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            }
+        }
+        .navigationTitle("test")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct MalinkiLegendView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiLegendView()
+        MalinkiLegendView(title: "Legend Graphic")
     }
 }
