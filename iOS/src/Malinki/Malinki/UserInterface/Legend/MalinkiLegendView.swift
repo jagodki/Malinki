@@ -9,24 +9,60 @@ import SwiftUI
 
 struct MalinkiLegendView: View {
     
-    var title: String
+    @ObservedObject private var imageLoader: MalinkiImageLoader
+    private let title: String
+    private let mapTheme: Int
+    private let layerID: Int
     
+    /// The initialiser of this structure.
+    /// - Parameters:
+    ///   - title: the title of this navigation view
+    ///   - mapTheme: the ID of the map theme
+    ///   -  layerID: the ID of the layer providing the legend
+    init(title: String, mapTheme: Int, layerID: Int) {
+        self.title = title
+        self.mapTheme = mapTheme
+        self.layerID = layerID
+        self.imageLoader = MalinkiImageLoader(mapTheme: mapTheme, layerID: layerID)
+        self.imageLoader.load()
+    }
     
-    var body: some View {
+    private var image: some View {
         NavigationView() {
             Form {
-                Image(systemName: "cloud.moon.bolt.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+                if let legendImage = self.imageLoader.image {
+                    Image(uiImage: legendImage)
+                        .resizable()
+                        .scaledToFit()
+                } else {
+                    HStack {
+                        Spacer()
+                        
+                        VStack {
+                            ProgressView()
+                                .frame(width: 100, height: 100)
+                            Text(LocalizedStringKey("Loading..."))
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Spacer()
+                    }
+                }
             }
         }
-        .navigationTitle("test")
+        .navigationTitle(self.title)
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    var body: some View {
+        self.image
+            .onDisappear(perform: self.imageLoader.cancel)
     }
 }
 
 struct MalinkiLegendView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiLegendView(title: "Legend Graphic")
+        MalinkiLegendView(title: "Legend Graphic", mapTheme: 0, layerID: 0)
     }
 }

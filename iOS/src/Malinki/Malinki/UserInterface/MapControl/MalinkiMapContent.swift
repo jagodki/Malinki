@@ -48,7 +48,7 @@ struct MalinkiMapContent: View {
                         List(self.$mapLayers.rasterLayers.filter({$0.themeID.wrappedValue == self.mapLayers.selectedMapThemeID})) { $layer in
                             Toggle(isOn: $layer.isToggled) {
                                 HStack {
-                                    NavigationLink(destination: MalinkiLegendView(title: layer.name)) {
+                                    NavigationLink(destination: MalinkiLegendView(title: layer.name, mapTheme: layer.themeID, layerID: layer.id)) {
                                         layer.image
                                             .foregroundColor(.accentColor)
                                         Text(layer.name)
