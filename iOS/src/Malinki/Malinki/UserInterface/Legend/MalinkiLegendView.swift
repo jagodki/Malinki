@@ -30,14 +30,15 @@ struct MalinkiLegendView: View {
     private var image: some View {
         NavigationView() {
             Form {
-                if let legendImage = self.imageLoader.image {
-                    Image(uiImage: legendImage)
-                        .resizable()
-                        .scaledToFit()
-                } else {
-                    HStack {
-                        Spacer()
-                        
+                HStack {
+                    Spacer()
+                    
+                    if let legendImage = self.imageLoader.image {
+                        Image(uiImage: legendImage)
+                    } else if self.imageLoader.noImage {
+                        Image(systemName: "photo")
+                            .resizable()
+                    } else {
                         VStack {
                             ProgressView()
                                 .frame(width: 100, height: 100)
@@ -45,9 +46,9 @@ struct MalinkiLegendView: View {
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
-                        
-                        Spacer()
                     }
+                    
+                    Spacer()
                 }
             }
         }

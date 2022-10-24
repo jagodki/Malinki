@@ -12,6 +12,7 @@ import Combine
 class MalinkiImageLoader: ObservableObject {
     
     @Published var image: UIImage?
+    @Published var noImage: Bool = false
     private var cancellable: AnyCancellable?
     private let mapTheme: Int
     private let layerID: Int
@@ -35,10 +36,10 @@ class MalinkiImageLoader: ObservableObject {
                     .replaceError(with: nil)
                     .receive(on: DispatchQueue.main)
                     .assign(to: \.image, on: self)
-            } else if let imageName = config.file {
+            } else if let imageName = config.fileName {
                 self.image = UIImage(named: imageName)
             } else {
-                self.image = UIImage(systemName: "photo")
+                self.noImage = true
             }
         }
         
@@ -46,6 +47,7 @@ class MalinkiImageLoader: ObservableObject {
     
     /// This function cancels the image load.
     func cancel() {
+        self.noImage = false
         self.cancellable?.cancel()
     }
     

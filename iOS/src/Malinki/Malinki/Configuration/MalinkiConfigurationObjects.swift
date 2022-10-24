@@ -44,7 +44,7 @@ struct MalinkiConfigurationMapData: Decodable {
 }
 
 struct MalinkiConfigurationMapLegendeGraphic: Decodable {
-    var file: String?
+    var fileName: String?
     var url: String?
 }
 
