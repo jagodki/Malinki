@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view for displaying a legend graphic.
 struct MalinkiLegendView: View {
     
     @ObservedObject private var imageLoader: MalinkiImageLoader

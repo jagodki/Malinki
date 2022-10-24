@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
+/// A class for loading images.
 class MalinkiImageLoader: ObservableObject {
     
     @Published var image: UIImage?
