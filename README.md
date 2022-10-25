@@ -48,6 +48,12 @@ The documentation for creating a Malinki-based app, writing a valid configuratio
 ## Bugs, questions and discussions
 Bugs, requests or questions can be reported via <a href="https://github.com/jagodki/Malinki/issues">issues</a>. The repository contains also <a href="https://github.com/jagodki/Malinki/discussions">a board for discussions</a>.
 
+## Version Numbering
+**vM.m.b**
+- **M** - major releases containing adjustements on the configuration file, e.g. existing config files have to be updated for using a new major release and will be not downward compatible
+- **m** - minor releases providing new functions without any effect on existing configurations
+- **b** - bug releases for solving bugs without providing new functions or effecting existing configuration files
+
 ## Contributing
 Contributions to the project are welcome, especially if anybody will contribute a native or webbased android app. If you are interested in the development of an android app, please contact me via <a href="https://github.com/jagodki/Malinki/discussions">the discussion board</a> before creating a pull request.
 
