@@ -40,15 +40,20 @@ struct MalinkiSearchView: View {
     var body: some View {
         NavigationView {
             VStack {
-                MalinkiSearchBar(searchText: self.$searchText, isEditing: self.$isEditing, sheetDetent: self.$sheetDetent)
-                    .padding()
-                Spacer()
                 
                 //show an information to the user, if no search string is inserted
                 if self.searchText == "" || (self.filteredThemes.count == 0 && self.filteredMapLayers.count == 0) {
-                    Text(LocalizedStringKey("No search results..."))
-                        .foregroundColor(.secondary)
-                        .italic()
+                    
+                    HStack {
+                        Spacer()
+                        
+                        Text(LocalizedStringKey("No search results..."))
+                            .foregroundColor(.secondary)
+                            .italic()
+                        
+                        Spacer()
+                    }
+                    
                     Spacer()
                 } else {
                     Form {
@@ -101,6 +106,9 @@ struct MalinkiSearchView: View {
                 })
             })
         }
+        .searchable(text: self.$searchText)
+        .padding(.top)
+        .background(Color(uiColor: .systemGray6))
     }
 }
 

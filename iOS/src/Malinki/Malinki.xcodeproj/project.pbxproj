@@ -831,7 +831,7 @@
 			repositoryURL = "https://github.com/edudnyk/SheeKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.0.1;
 			};
 		};
 		CE1B0A2127DA883C00077716 /* XCRemoteSwiftPackageReference "SWXMLHash" */ = {
@@ -839,7 +839,7 @@
 			repositoryURL = "https://github.com/drmohundro/SWXMLHash";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				minimumVersion = 7.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
