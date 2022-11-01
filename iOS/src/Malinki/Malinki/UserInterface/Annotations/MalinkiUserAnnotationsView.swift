@@ -36,60 +36,78 @@ struct MalinkiUserAnnotationsView: View {
             
             VStack {
                 NavigationView {
-                    List(self.userAnnotationsContainer.userAnnotations, id: \.id) {annotation in
-                        Button(action: {
-                            if annotation.theme_ids.first ?? -99 == self.mapLayers.selectedMapThemeID {
-                                self.userAnnotationsContainer.selectedAnnotationID = annotation.id
-                            }
-                        }) {
-                            HStack {
-                                Image(systemName: "mappin.and.ellipse")
-                                    .padding()
-                                    .foregroundColor(self.mapLayers.selectedMapThemeID == annotation.theme_ids.first ?? -99 ? Color.accentColor : Color.secondary)
-                                VStack(alignment: .leading) {
-                                    Text(annotation.name)
-                                        .font(.headline)
-                                        .foregroundColor(self.mapLayers.selectedMapThemeID == annotation.theme_ids.first ?? -99 ? Color.accentColor : Color.secondary)
-                                    
-                                    Text("\(self.config.getExternalThemeName(id: annotation.theme_ids.first ?? -99)) | Lat: \(String(format: "%.3f", annotation.position.latitude)), Lon: \(String(format: "%.3f", annotation.position.longitude))")
-                                    .font(.footnote)
-                                    .foregroundColor(.secondary)
+                    VStack {
+                        if self.userAnnotationsContainer.userAnnotations.count == 0 {
+                            VStack {
+                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    Text(LocalizedStringKey("no markers saved..."))
+                                        .foregroundColor(.secondary)
+                                        .italic()
+                                    Spacer()
                                 }
+                                Spacer()
                             }
-                        }
-                        .swipeActions(content: {
-                            Button(action: {
-                                //remove the annotation
-                                if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == annotation.id}) {
-                                    _ = withAnimation() {
-                                        self.userAnnotationsContainer.userAnnotations.remove(at: index)
+                            .background(Color(uiColor: .systemGray6).ignoresSafeArea(.all))
+                        } else {
+                            
+                            List(self.userAnnotationsContainer.userAnnotations, id: \.id) {annotation in
+                                Button(action: {
+                                    if annotation.theme_ids.first ?? -99 == self.mapLayers.selectedMapThemeID {
+                                        self.userAnnotationsContainer.selectedAnnotationID = annotation.id
+                                    }
+                                }) {
+                                    HStack {
+                                        Image(systemName: "mappin.and.ellipse")
+                                            .padding()
+                                            .foregroundColor(self.mapLayers.selectedMapThemeID == annotation.theme_ids.first ?? -99 ? Color.accentColor : Color.secondary)
+                                        VStack(alignment: .leading) {
+                                            Text(annotation.name)
+                                                .font(.headline)
+                                                .foregroundColor(self.mapLayers.selectedMapThemeID == annotation.theme_ids.first ?? -99 ? Color.accentColor : Color.secondary)
+                                            
+                                            Text("\(self.config.getExternalThemeName(id: annotation.theme_ids.first ?? -99)) | Lat: \(String(format: "%.3f", annotation.position.latitude)), Lon: \(String(format: "%.3f", annotation.position.longitude))")
+                                                .font(.footnote)
+                                                .foregroundColor(.secondary)
+                                        }
                                     }
                                 }
-                            }, label: {
-                                Label(String(localized: "Delete"), systemImage: "trash.fill")
-                            }).tint(.red)
-                        })
-                        .swipeActions(content: {
-                            Button(action: {
-                                //update the annotation location
-                                if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == annotation.id}) {
-                                    
-                                    self.userAnnotationsContainer.userAnnotations[index] = MalinkiUserAnnotation (id: annotation.id, name: annotation.name, theme_ids: [self.mapLayers.selectedMapThemeID], position: MalinkiUserAnnotationsPosition(longitude: self.mapRegion.mapRegion.center.longitude,latitude: MalinkiCoordinatesConverter.sharedInstance.latitudeOverSheet(for: self.mapRegion.mapRegion.center.latitude, with: self.mapRegion.mapRegion.span.latitudeDelta)))
-                                }
-                            }, label: {
-                                Label(String(localized: "Update"), systemImage: "arrow.triangle.2.circlepath")
-                            }).tint(.purple)
-                        })
-                        .swipeActions(content: {
-                            Button(action: {
-                                //rename the annotation
-                                self.actionType = .updateMapPin
-                                self.uuidString = annotation.id
-                                self.showAlert = true
-                            }, label: {
-                                Label(String(localized: "Rename"), systemImage: "pencil")
-                            }).tint(.blue)
-                        })
+                                .swipeActions(content: {
+                                    Button(action: {
+                                        //remove the annotation
+                                        if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == annotation.id}) {
+                                            _ = withAnimation() {
+                                                self.userAnnotationsContainer.userAnnotations.remove(at: index)
+                                            }
+                                        }
+                                    }, label: {
+                                        Label(String(localized: "Delete"), systemImage: "trash.fill")
+                                    }).tint(.red)
+                                })
+                                .swipeActions(content: {
+                                    Button(action: {
+                                        //update the annotation location
+                                        if let index = self.userAnnotationsContainer.userAnnotations.firstIndex(where: {$0.id == annotation.id}) {
+                                            
+                                            self.userAnnotationsContainer.userAnnotations[index] = MalinkiUserAnnotation (id: annotation.id, name: annotation.name, theme_ids: [self.mapLayers.selectedMapThemeID], position: MalinkiUserAnnotationsPosition(longitude: self.mapRegion.mapRegion.center.longitude,latitude: MalinkiCoordinatesConverter.sharedInstance.latitudeOverSheet(for: self.mapRegion.mapRegion.center.latitude, with: self.mapRegion.mapRegion.span.latitudeDelta)))
+                                        }
+                                    }, label: {
+                                        Label(String(localized: "Update"), systemImage: "arrow.triangle.2.circlepath")
+                                    }).tint(.purple)
+                                })
+                                .swipeActions(content: {
+                                    Button(action: {
+                                        //rename the annotation
+                                        self.actionType = .updateMapPin
+                                        self.uuidString = annotation.id
+                                        self.showAlert = true
+                                    }, label: {
+                                        Label(String(localized: "Rename"), systemImage: "pencil")
+                                    }).tint(.blue)
+                                })
+                            }
+                        }
                     }
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar(content: {

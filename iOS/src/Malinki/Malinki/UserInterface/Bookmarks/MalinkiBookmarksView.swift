@@ -42,78 +42,98 @@ struct MalinkiBookmarksView: View {
             
             VStack {
                 NavigationView {
-                    List(self.bookmarksContainer.bookmarks, id: \.id) {bookmark in
-                        Button(action: {
-                            //adjust the map view
-                            self.mapLayers.selectedMapThemeID = bookmark.theme_id
-                            self.mapLayers.mapThemes.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).first?.annotationsAreToggled = bookmark.show_annotations
-                            
-                            //toggle layers according to the bookmark
-                            _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && bookmark.layer_ids.contains($0.id)}).map({$0.isToggled = true})
-                            
-                            //untoggle layers according to the bookmark
-                            _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && !(bookmark.layer_ids.contains($0.id))}).map({$0.isToggled = false})
-                            
-                            //change the bbox of the map
-                            self.mapRegion.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: bookmark.map.centre.latitude, longitude: bookmark.map.centre.longitude),
-                                                                          span: MKCoordinateSpan(latitudeDelta: bookmark.map.span.delta_latitude, longitudeDelta: bookmark.map.span.delta_longitude))
-                        }) {
-                            HStack {
-                                Image(systemName: "bookmark.fill")
-                                    .padding()
-                                VStack(alignment: .leading) {
-                                    Text(bookmark.name)
-                                        .font(.headline)
-                                    Text(self.config.getExternalThemeName(id: bookmark.theme_id))
-                                        .font(.footnote)
+                    VStack {
+                        if self.bookmarksContainer.bookmarks.count == 0 {
+                            VStack {
+                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    Text(LocalizedStringKey("no bookmarks saved..."))
                                         .foregroundColor(.secondary)
+                                        .italic()
+                                    Spacer()
                                 }
+                                Spacer()
                             }
-                        }
-                        .swipeActions(content: {
-                            Button(action: {
-                                //remove the bookmark
-                                if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == bookmark.id}) {
-                                    _ = withAnimation() {
-                                        self.bookmarksContainer.bookmarks.remove(at: index)
+                            .background(Color(uiColor: .systemGray6).ignoresSafeArea(.all))
+                        } else {
+                            
+                            List(self.bookmarksContainer.bookmarks, id: \.id) {bookmark in
+                                Button(action: {
+                                    //adjust the map view
+                                    self.mapLayers.selectedMapThemeID = bookmark.theme_id
+                                    self.mapLayers.mapThemes.filter({$0.themeID == self.mapLayers.selectedMapThemeID}).first?.annotationsAreToggled = bookmark.show_annotations
+                                    
+                                    //toggle layers according to the bookmark
+                                    _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && bookmark.layer_ids.contains($0.id)}).map({$0.isToggled = true})
+                                    
+                                    //untoggle layers according to the bookmark
+                                    _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && !(bookmark.layer_ids.contains($0.id))}).map({$0.isToggled = false})
+                                    
+                                    //change the bbox of the map
+                                    self.mapRegion.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: bookmark.map.centre.latitude, longitude: bookmark.map.centre.longitude),
+                                                                                  span: MKCoordinateSpan(latitudeDelta: bookmark.map.span.delta_latitude, longitudeDelta: bookmark.map.span.delta_longitude))
+                                }) {
+                                    HStack {
+                                        Image(systemName: "bookmark.fill")
+                                            .foregroundColor(.accentColor)
+                                            .padding()
+                                        VStack(alignment: .leading) {
+                                            Text(bookmark.name)
+                                                .foregroundColor(.accentColor)
+                                                .font(.headline)
+                                            Text(self.config.getExternalThemeName(id: bookmark.theme_id))
+                                                .font(.footnote)
+                                                .foregroundColor(.secondary)
+                                        }
                                     }
                                 }
-                            }, label: {
-                                Label(String(localized: "Delete"), systemImage: "trash.fill")
-                            }).tint(.red)
-                        })
-                        .swipeActions(content: {
-                            Button(action: {
-                                //update map region and content
-                                if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == bookmark.id}) {
-                                    
-                                    self.bookmarksContainer.bookmarks[index] = MalinkiBookmarksObject(
-                                        id: bookmark.id,
-                                        name: bookmark.name,
-                                        theme_id: self.mapLayers.selectedMapThemeID,
-                                        layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID && $0.isToggled}).map({$0.id}),
-                                        show_annotations: self.mapLayers.areAnnotationsToggled(),
-                                        map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
-                                            latitude: self.mapRegion.mapRegion.center.latitude,
-                                            longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
-                                                delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
-                                                delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
-                                    )
-                                }
-                            }, label: {
-                                Label(String(localized: "Update"), systemImage: "arrow.triangle.2.circlepath")
-                            }).tint(.purple)
-                        })
-                        .swipeActions(content: {
-                            Button(action: {
-                                //rename the bookmark
-                                self.actionType = .updateBookmark
-                                self.uuidString = bookmark.id
-                                self.showAlert = true
-                            }, label: {
-                                Label(String(localized: "Rename"), systemImage: "pencil")
-                            }).tint(.blue)
-                        })
+                                .swipeActions(content: {
+                                    Button(action: {
+                                        //remove the bookmark
+                                        if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == bookmark.id}) {
+                                            _ = withAnimation() {
+                                                self.bookmarksContainer.bookmarks.remove(at: index)
+                                            }
+                                        }
+                                    }, label: {
+                                        Label(String(localized: "Delete"), systemImage: "trash.fill")
+                                    }).tint(.red)
+                                })
+                                .swipeActions(content: {
+                                    Button(action: {
+                                        //update map region and content
+                                        if let index = self.bookmarksContainer.bookmarks.firstIndex(where: {$0.id == bookmark.id}) {
+                                            
+                                            self.bookmarksContainer.bookmarks[index] = MalinkiBookmarksObject(
+                                                id: bookmark.id,
+                                                name: bookmark.name,
+                                                theme_id: self.mapLayers.selectedMapThemeID,
+                                                layer_ids: self.mapLayers.rasterLayers.filter({$0.themeID == self.mapLayers.selectedMapThemeID && $0.isToggled}).map({$0.id}),
+                                                show_annotations: self.mapLayers.areAnnotationsToggled(),
+                                                map: MalinkiBookmarksMap(centre: MalinkiBookmarksMapCentre(
+                                                    latitude: self.mapRegion.mapRegion.center.latitude,
+                                                    longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
+                                                        delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
+                                                        delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
+                                            )
+                                        }
+                                    }, label: {
+                                        Label(String(localized: "Update"), systemImage: "arrow.triangle.2.circlepath")
+                                    }).tint(.purple)
+                                })
+                                .swipeActions(content: {
+                                    Button(action: {
+                                        //rename the bookmark
+                                        self.actionType = .updateBookmark
+                                        self.uuidString = bookmark.id
+                                        self.showAlert = true
+                                    }, label: {
+                                        Label(String(localized: "Rename"), systemImage: "pencil")
+                                    }).tint(.blue)
+                                })
+                            }
+                        }
                     }
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar(content: {
