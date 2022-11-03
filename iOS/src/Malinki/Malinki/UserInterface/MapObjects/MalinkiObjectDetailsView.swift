@@ -24,8 +24,20 @@ struct MalinkiObjectDetailsView: View {
     var body: some View {
         
         if self.features.featureData.count == 0 {
-            ProgressView("Loading...")
-                .progressViewStyle(CircularProgressViewStyle())
+            VStack {
+                Spacer()
+                
+                HStack {
+                    Spacer()
+                    
+                    ProgressView(String(localized: "Loading..."))
+                        .progressViewStyle(CircularProgressViewStyle())
+                    
+                    Spacer()
+                }
+                
+                Spacer()
+            }
         } else {
             NavigationView {
                 List(self.$features.featureData) { $feature in
