@@ -31,6 +31,7 @@ struct MalinkiSheetHeader: View {
     
     var body: some View {
         HStack {
+            
             VStack(alignment: .leading) {
                 Text(LocalizedStringKey(self.title))
                     .font(.headline)
@@ -55,6 +56,7 @@ struct MalinkiSheetHeader: View {
                     .font(.headline)
             }
         }
+        .padding(.top)
     }
 }
 
