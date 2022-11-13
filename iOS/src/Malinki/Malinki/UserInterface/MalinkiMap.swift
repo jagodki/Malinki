@@ -86,7 +86,10 @@ struct MalinkiMap: View {
             }
         }
         .ignoresSafeArea(.keyboard)
-        .shee(isPresented: self.$sheet.isShowing, presentationStyle: .formSheet(properties: SheetProperties(prefersEdgeAttachedInCompactHeight: true, prefersGrabberVisible: true, detents: [.medium(), .large()], selectedDetentIdentifier: self.$selectedDetentIdentifier, largestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false)), content: {self.sheetContent()})
+        .shee(isPresented: self.$sheet.isShowing, presentationStyle: .formSheet(properties: SheetProperties(prefersEdgeAttachedInCompactHeight: true, prefersGrabberVisible: true, detents: [.medium(), .large()], selectedDetentIdentifier: self.$selectedDetentIdentifier, largestUndimmedDetentIdentifier: .medium, prefersScrollingExpandsWhenScrolledToEdge: false)), content: {
+            self.sheetContent()
+            .background(Color(uiColor: .systemGray6).ignoresSafeArea(.all))
+        })
     }
     
     @ViewBuilder

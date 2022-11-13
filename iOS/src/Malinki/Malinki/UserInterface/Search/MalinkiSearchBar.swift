@@ -72,7 +72,7 @@ struct MalinkiSearchBar: View {
                         self.searchText = ""
                         self.isEditing = false
                         self.sheetDetent = .medium
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
 
                 }) {
@@ -82,7 +82,7 @@ struct MalinkiSearchBar: View {
                 .padding(.horizontal, 5)
                 .padding(.bottom)
                 .transition(.move(edge: .trailing))
-                .animation(.default)
+                .animation(.default, value: self.showCancelButton)
             }
         }
     }

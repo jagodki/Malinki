@@ -19,7 +19,7 @@ struct MalinkiMapContent: View {
     /// The initialiser of this sctructure.
     /// - Parameters:
     ///   - isSheetShowing: a binding to control the presentation of a sheet
-    ///   - sheetDetent: a binding to control the selected detent of a sheet   
+    ///   - sheetDetent: a binding to control the selected detent of a sheet
     init(isSheetShowing: Binding<Bool>, sheetDetent: Binding<UISheetPresentationController.Detent.Identifier?>) {
         self._isSheetShowing = isSheetShowing
         self._sheetDetent = sheetDetent
@@ -48,8 +48,11 @@ struct MalinkiMapContent: View {
                         List(self.$mapLayers.rasterLayers.filter({$0.themeID.wrappedValue == self.mapLayers.selectedMapThemeID})) { $layer in
                             Toggle(isOn: $layer.isToggled) {
                                 HStack {
-                                    layer.image
-                                    Text(layer.name)
+                                    NavigationLink(destination: MalinkiLegendView(title: layer.name, mapTheme: layer.themeID, layerID: layer.id)) {
+                                        layer.image
+                                            .foregroundColor(.accentColor)
+                                        Text(layer.name)
+                                    }
                                 }
                             }.toggleStyle(SwitchToggleStyle(tint: Color.accentColor))
                         }

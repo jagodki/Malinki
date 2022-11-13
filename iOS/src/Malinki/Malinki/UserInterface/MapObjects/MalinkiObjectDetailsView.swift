@@ -23,31 +23,60 @@ struct MalinkiObjectDetailsView: View {
     
     var body: some View {
         
-        if self.features.featureData.count == 0 {
-            ProgressView("Loading...")
-                .progressViewStyle(CircularProgressViewStyle())
-        } else {
+//        if self.features.featureData.count == 0 {
+//            VStack {
+//                Spacer()
+//
+//                HStack {
+//                    Spacer()
+//
+//                    ProgressView(String(localized: "Loading..."))
+//                        .progressViewStyle(CircularProgressViewStyle())
+//
+//                    Spacer()
+//                }
+//
+//                Spacer()
+//            }
+//        } else {
             NavigationView {
-                List(self.$features.featureData) { $feature in
-                    Section(header: Text(self.features.featureData.count > 1 ? MalinkiConfigurationProvider.sharedInstance.getExternalVectorName(id: feature.vectorLayerID, theme: feature.themeID) : String(localized: "Object Data")).sectionHeaderStyle()) {
-                        ForEach(feature.data.sorted(by: >), id: \.key) { key, value in
-                            VStack(alignment: .leading) {
-                                Text(key)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                Text(value)
+                
+                if self.features.featureData.count == 0 {
+                    VStack {
+                        Spacer()
+                        
+                        HStack {
+                            Spacer()
+                            
+                            ProgressView(String(localized: "Loading..."))
+                                .progressViewStyle(CircularProgressViewStyle())
+                            
+                            Spacer()
+                        }
+                        
+                        Spacer()
+                    }
+                } else {
+                    List(self.$features.featureData) { $feature in
+                        Section(header: Text(self.features.featureData.count > 1 ? MalinkiConfigurationProvider.sharedInstance.getExternalVectorName(id: feature.vectorLayerID, theme: feature.themeID) : String(localized: "Object Data")).sectionHeaderStyle()) {
+                            ForEach(feature.data.sorted(by: >), id: \.key) { key, value in
+                                VStack(alignment: .leading) {
+                                    Text(key)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                    Text(value)
+                                }
                             }
                         }
                     }
-                }
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar(content: {
-                    ToolbarItem(placement: .principal, content: {
-                        MalinkiSheetHeader(title: self.features.featureData.count > 1 ? "\(self.features.featureData[0].name) (\(self.features.featureData.count))" : self.features.featureData.first?.name ?? "", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent, subtitle: self.features.selectedAnnotation?.subtitle ?? "")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar(content: {
+                        ToolbarItem(placement: .principal, content: {
+                            MalinkiSheetHeader(title: self.features.featureData.count > 1 ? "\(self.features.featureData[0].name) (\(self.features.featureData.count))" : self.features.featureData.first?.name ?? "", isSheetShowing: self.$isSheetShowing, sheetDetent: self.$sheetDetent, subtitle: self.features.selectedAnnotation?.subtitle ?? "")
+                        })
                     })
-                })
+                }
             }
-        }
         
     }
     

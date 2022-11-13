@@ -171,7 +171,11 @@
                             "max": 25
                         },
                         "imageName": "cloud.drizzle",
-                        "opacity": 1.0
+                        "opacity": 1.0,
+                        "legendGraphic": {
+                            "fileName": null,
+                            "url": "https://maps.dwd.de/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image/png&width=20&height=20&layer=dwd:Warnungen_See&"
+                        }
                     },
                     {
                         "id": 109,
@@ -203,7 +207,11 @@
                             "max": 25
                         },
                         "imageName": "cloud.drizzle",
-                        "opacity": 0.8
+                        "opacity": 0.8,
+                        "legendGraphic": {
+                            "fileName": null,
+                            "url": "https://maps.dwd.de/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image/png&width=20&height=20&layer=dwd:Warnungen_See&"
+                        }
                     },
                     {
                         "id": 108,
@@ -235,7 +243,11 @@
                             "apple": false
                         },
                         "imageName": "cloud.drizzle",
-                        "opacity": 0.8
+                        "opacity": 0.8,
+                        "legendGraphic": {
+                            "fileName": null,
+                            "url": "https://maps.dwd.de/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image/png&width=20&height=20&layer=dwd:Warnungen_See&"
+                        }
                     },
                     {
                         "id": 107,
@@ -267,7 +279,11 @@
                             "max": 25
                         },
                         "imageName": "cloud.drizzle",
-                        "opacity": 0.75
+                        "opacity": 0.75,
+                        "legendGraphic": {
+                            "fileName": null,
+                            "url": "https://maps.dwd.de/geoserver/ows?service=WMS&request=GetLegendGraphic&format=image/png&width=20&height=20&layer=dwd:Warnungen_See&"
+                        }
                     }
                 ]
             }
@@ -314,7 +330,11 @@
                             "max": 25
                         },
                         "imageName": "waveform",
-                        "opacity": 0.75
+                        "opacity": 0.75,
+                        "legendGraphic": {
+                            "fileName": "legend_test",
+                            "url": null
+                        }
                     },
                     {
                         "id": 301,
@@ -346,7 +366,11 @@
                             "max": 25
                         },
                         "imageName": "cloud.drizzle",
-                        "opacity": 1.0
+                        "opacity": 1.0,
+                        "legendGraphic": {
+                            "fileName": "legend_test",
+                            "url": null
+                        }
                     },
                     {
                         "id": 302,
@@ -378,7 +402,11 @@
                             "max": 25
                         },
                         "imageName": "cloud.drizzle",
-                        "opacity": 1.0
+                        "opacity": 1.0,
+                        "legendGraphic": {
+                            "fileName": "legend_test",
+                            "url": null
+                        }
                     },
                     {
                         "id": 303,
@@ -408,7 +436,11 @@
                             "max": 25
                         },
                         "imageName": "mappin",
-                        "opacity": 1.0
+                        "opacity": 1.0,
+                        "legendGraphic": {
+                            "fileName": "legend_test",
+                            "url": null
+                        }
                     }
                 ]
             }
@@ -557,7 +589,11 @@
                             "max": 25
                         },
                         "imageName": "tornado",
-                        "opacity": 1.0
+                        "opacity": 1.0,
+                        "legendGraphic": {
+                            "fileName": null,
+                            "url": null
+                        }
                     }
                 ]
             }
@@ -588,7 +624,11 @@
                 "max": 25
             },
             "imageName": "osm_basemap",
-            "opacity": 1.0
+            "opacity": 1.0,
+            "legendGraphic": {
+                "fileName": null,
+                "url": null
+            }
         },
         {
             "id": 1,
@@ -611,7 +651,11 @@
                 "max": 25
             },
             "imageName": "apple_roads_basemap",
-            "opacity": 1.0
+            "opacity": 1.0,
+            "legendGraphic": {
+                "fileName": null,
+                "url": null
+            }
         },
         {
             "id": 2,
@@ -634,7 +678,11 @@
                 "max": 25
             },
             "imageName": "apple_aerial_basemap",
-            "opacity": 1.0
+            "opacity": 1.0,
+            "legendGraphic": {
+                "fileName": null,
+                "url": null
+            }
         },
         {
             "id": 3,
@@ -657,7 +705,11 @@
                 "max": 25
             },
             "imageName": "apple_hybrid_basemap",
-            "opacity": 1.0
+            "opacity": 1.0,
+            "legendGraphic": {
+                "fileName": null,
+                "url": null
+            }
         }
     ],
     "onStartUp": {
