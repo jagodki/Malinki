@@ -74,7 +74,7 @@ struct MalinkiRasterData {
     /// - Returns: a text without placeholders
     private func replaceTimePlaceholders(for text: String) -> String {
         //get the current timestamp and its components
-        let timestamp = Calendar(identifier: .gregorian).dateComponents([.year, .month, .day, .hour, .minute, .second], from: .now)
+        let timestamp = Calendar(identifier: .gregorian).dateComponents(in: TimeZone(identifier: "UTC")!, from: .now)
         let year = String(timestamp.year ?? 2000)
         let month = String(timestamp.month ?? 1)
         let day = String(timestamp.day ?? 1)
