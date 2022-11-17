@@ -164,7 +164,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
         
         //create request
         let fc: String = String(config.featureCount)
-        let request: String = (config.baseURL +
+        let request: String = (MalinkiSimpleDataConverter.sharedInstance.replaceTimePlaceholders(for: config.baseURL) +
                                "SERVICE=WMS&REQUEST=GetFeatureInfo" +
                                "&VERSION=" + config.version +
                                "&BBOX=" + bbox +
