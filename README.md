@@ -60,7 +60,7 @@ The following steps are mandatory to create a new app based on Malinki:
 - extract the content of the downloaded zip archive
 - changing the name of the root directory and the Xcode project file is possible, other directories should not be renamed!
 - open the target settings within the Xcode project and adjust the **Bundle Identifier** and the **Display Name** at least
-- add an app icon named *App Icon*
+- add an app icon named **App Icon**
 - create a valid configuration file
 - create an accent colour and add all needed images to the assets
 
