@@ -59,14 +59,14 @@ The following steps are mandatory to create a new app based on Malinki:
 - download the newest version of Malinki directly from the [release page](https://github.com/jagodki/Malinki/releases)
 - extract the content of the downloaded zip archive
 - changing the name of the root directory and the Xcode project file is possible, other directories should not be renamed!
-- open the target settings within the Xcode project and adjust the *Bundle Identifier* and the *Display Name* at least
+- open the target settings within the Xcode project and adjust the **Bundle Identifier** and the **Display Name** at least
 - add an app icon named *App Icon*
 - create a valid configuration file
 - create an accent colour and add all needed images to the assets
 
 ## Contributing
-Contributions to the project are welcome, especially if anybody will contribute a native or webbased android app. If you are interested in the development of an android app, please contact me via <a href="https://github.com/jagodki/Malinki/discussions">the discussion board</a> before creating a pull request.
+Contributions to the project are welcome, especially if anybody will contribute a native or webbased android app. If you are interested in the development of an android app, please contact me via [the discussion board](https://github.com/jagodki/Malinki/discussions) before creating a pull request.
 
 ## More information
-The project was demonstrated in a talk on the FOSSGIS conference in 2022, the video can be found <a href="https://media.ccc.de/v/fossgis2022-13739-malinki-erstellung-kartenbasierter-mobile-apps-ohne-programmierung">here</a> (in german language).<br>
-The main principles of the app concerning the presentation and interaction with spatial data on a smartphone were presentated at the FOSSGIS conference on 2021, the video can be found <a href="https://media.ccc.de/v/fossgis2021-8787-geodaten-auf-smartphones-ein-drittes-paradigma-nach-desktop-und-web-gis-">here</a> (in german language).
+The project was demonstrated in a talk on the FOSSGIS conference in 2022, the video can be found [here](https://media.ccc.de/v/fossgis2022-13739-malinki-erstellung-kartenbasierter-mobile-apps-ohne-programmierung) (in german language).<br>
+The main principles of the app concerning the presentation and interaction with spatial data on a smartphone were presentated at the FOSSGIS conference on 2021, the video can be found [here](https://media.ccc.de/v/fossgis2021-8787-geodaten-auf-smartphones-ein-drittes-paradigma-nach-desktop-und-web-gis) (in german language).
