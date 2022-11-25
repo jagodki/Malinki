@@ -168,7 +168,7 @@ struct MalinkiMapView: UIViewRepresentable {
                 } else {
                     let overlay = baseLayer.getOverlay()
                     overlay.canReplaceMapContent = true
-                    mapView.addOverlay(overlay)
+                    mapView.addOverlay(overlay, level: .aboveLabels)
                 }
             }
             
@@ -185,7 +185,7 @@ struct MalinkiMapView: UIViewRepresentable {
                     } else {
                         let overlay = layer.getOverlay()
                         overlay.canReplaceMapContent = false
-                        mapView.addOverlay(overlay)
+                        mapView.addOverlay(overlay, level: .aboveLabels)
                     }
                 }
                 
