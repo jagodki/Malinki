@@ -169,7 +169,7 @@ class MalinkiConfigurationProvider {
     private func getExternalNameForDeviceLanguage(externalNames: MalinkiConfigurationExternalNames) -> String {
         var externalName: String = ""
         
-        switch Locale.current.languageCode {
+        switch Locale.current.language.languageCode?.identifier {
         case "en":
             externalName = externalNames.en
             break
@@ -257,7 +257,7 @@ class MalinkiConfigurationProvider {
     func getSupportText() -> String {
         var localSupportText: String = ""
         
-        switch Locale.current.languageCode {
+        switch Locale.current.language.languageCode?.identifier {
         case "en":
             localSupportText = self.configData?.inAppPurchases?.supportText?.en ?? ""
         case "de":
