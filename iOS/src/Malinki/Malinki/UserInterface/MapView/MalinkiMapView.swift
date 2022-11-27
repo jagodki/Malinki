@@ -164,7 +164,7 @@ struct MalinkiMapView: UIViewRepresentable {
                 
                 //add the basemap to the mapview
                 if baseLayer.isAppleMaps {
-                    mapView.mapType = baseLayer.getAppleMapType()
+                    mapView.preferredConfiguration = baseLayer.getAppleMapConfiguration()
                 } else {
                     let overlay = baseLayer.getOverlay()
                     overlay.canReplaceMapContent = true
