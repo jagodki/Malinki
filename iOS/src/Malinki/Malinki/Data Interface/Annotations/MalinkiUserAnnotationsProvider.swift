@@ -31,11 +31,11 @@ class MalinkiUserAnnotationsProvider: ObservableObject {
         let fm = FileManager.default
         if let path = self.getUserAnnotationsPath(fileManager: fm) {
             
-            //create a bookmarks file if not existing
+            //create a user annotation file if not existing
             if !(fm.fileExists(atPath: path)) {
                 fm.createFile(atPath: path, contents: self.encodeUserAnnotations())
             } else {
-                //read the bookmarks file
+                //read the user annotation file
                 do {
                     let decoder = JSONDecoder()
                     self.userAnnotationsRoot = try decoder.decode(MalinkiUserAnnotationsRoot.self, from: Data(contentsOf: URL(string: "file://\(path)")!))
