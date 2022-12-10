@@ -25,6 +25,7 @@ struct AlertControlView: UIViewControllerRepresentable {
     @EnvironmentObject var mapLayers: MalinkiLayerContainer
     @EnvironmentObject var mapRegion: MalinkiMapRegion
     
+    @Binding var basemapID: Int
     @Binding var showAlert: Bool
     
     var textString: String = ""
@@ -80,7 +81,8 @@ struct AlertControlView: UIViewControllerRepresentable {
                                     latitude: self.mapRegion.mapRegion.center.latitude,
                                     longitude: self.mapRegion.mapRegion.center.longitude), span: MalinkiBookmarksMapSpan(
                                         delta_latitude: self.mapRegion.mapRegion.span.latitudeDelta,
-                                        delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta))
+                                        delta_longitude: self.mapRegion.mapRegion.span.longitudeDelta)),
+                                basemapID: self.basemapID
                             ))
                         }
                     case .updateBookmark:
