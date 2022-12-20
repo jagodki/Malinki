@@ -186,7 +186,7 @@ public class MalinkiFeatureDataContainer: MalinkiVectorData, ObservableObject {
                 let data = try await self.fetchData(from: request)
                 
                 //parse data depending on info format
-                if config.infoFormat == "application/json" {
+                if config.infoFormat == "application/json" || config.infoFormat == "application/geojson" {
                     
                     //get geojson object and its data
                     await self.getFeatureData(name: selectedAnnotation?.title ?? "", from: self.decodeGeoJSON(from: data), layerID: layerID)
