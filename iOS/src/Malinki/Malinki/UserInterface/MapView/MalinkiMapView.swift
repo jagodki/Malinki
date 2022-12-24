@@ -209,17 +209,24 @@ struct MalinkiMapView: UIViewRepresentable {
             let linestrings = self.features.geometries.filter({$0.type == .linestring})
             let multilinestring = self.features.geometries.filter({$0.type == .multilinestring})
             
+            //get the layer id for user annotations
+            let layerID = self.features.featureData.first?.vectorLayerID ?? -99
+            
             //create and add one multipolygon
             var allPolygons: [MKPolygon] = []
             allPolygons.append(contentsOf: polygons.map({$0.polygon}))
             allPolygons.append(contentsOf: multipolygons.map({$0.multiPolygon.polygons}).flatMap({$0}))
-            mapView.addOverlay(MKMultiPolygon(allPolygons), level: MKOverlayLevel(rawValue: 1)!)
+            let multiPolygon = MKMultiPolygon(allPolygons)
+            multiPolygon.subtitle = String(layerID)
+            mapView.addOverlay(multiPolygon, level: MKOverlayLevel(rawValue: 1)!)
             
             //create and add one multilinestring
             var allLinestrings: [MKPolyline] = []
             allLinestrings.append(contentsOf: linestrings.map({$0.linestring}))
             allLinestrings.append(contentsOf: multilinestring.map({$0.multiLinestring.polylines}).flatMap({$0}))
-            mapView.addOverlay(MKMultiPolyline(allLinestrings), level: MKOverlayLevel(rawValue: 1)!)
+            let multiLinestring = MKMultiPolyline(allLinestrings)
+            multiLinestring.subtitle = String(layerID)
+            mapView.addOverlay(multiLinestring, level: MKOverlayLevel(rawValue: 1)!)
         }
     }
     
@@ -279,8 +286,13 @@ final class Coordinator: NSObject, MKMapViewDelegate {
             overlayRender.alpha = mto.alpha
         } else if overlay is MKMultiPolyline {
             let renderer = MKMultiPolylineRenderer(multiPolyline: overlay as! MKMultiPolyline)
-            if let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.selectedAnnotation?.layerID ?? 0, theme: self.control.features.selectedAnnotation?.themeID ?? 0)?.style {
+            if let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.selectedAnnotation?.layerID ?? -99, theme: self.control.features.selectedAnnotation?.themeID ?? -99)?.style {
                 //styling with information from the config file
+                renderer.strokeColor = UIColor(named: vectorStyle.featureStyle?.outline.colour ?? "AccentColor")
+                renderer.lineWidth = vectorStyle.featureStyle?.outline.width ?? 1.0
+            }
+            else if let layerID = overlay.subtitle, let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: Int(layerID ?? "-99") ?? -99, theme: self.control.features.selectedAnnotation?.themeID ?? -99)?.style {
+                //styling with information from config using the layerid from the subtitle property of the overlay
                 renderer.strokeColor = UIColor(named: vectorStyle.featureStyle?.outline.colour ?? "AccentColor")
                 renderer.lineWidth = vectorStyle.featureStyle?.outline.width ?? 1.0
             }
@@ -293,8 +305,14 @@ final class Coordinator: NSObject, MKMapViewDelegate {
             
         } else if overlay is MKMultiPolygon {
             let renderer = MKMultiPolygonRenderer(multiPolygon: overlay as! MKMultiPolygon)
-            if let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.selectedAnnotation?.layerID ?? 0, theme: self.control.features.selectedAnnotation?.themeID ?? 0)?.style {
+            if let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: self.control.features.selectedAnnotation?.layerID ?? -99, theme: self.control.features.selectedAnnotation?.themeID ?? -99)?.style {
                 //styling with information from the config file
+                renderer.strokeColor = UIColor(named: vectorStyle.featureStyle?.outline.colour ?? "AccentColor")
+                renderer.fillColor = UIColor(named: vectorStyle.featureStyle?.fill?.colour ?? "AccentColor")?.withAlphaComponent(vectorStyle.featureStyle?.fill?.opacity ?? 0.5)
+                renderer.lineWidth = vectorStyle.featureStyle?.outline.width ?? 1.0
+            }
+            else if let layerID = overlay.subtitle, let vectorStyle = MalinkiConfigurationProvider.sharedInstance.getVectorLayer(id: Int(layerID ?? "-99") ?? -99, theme: self.control.features.selectedAnnotation?.themeID ?? -99)?.style {
+                //styling with information from config using the layerid from the subtitle property of the overlay
                 renderer.strokeColor = UIColor(named: vectorStyle.featureStyle?.outline.colour ?? "AccentColor")
                 renderer.fillColor = UIColor(named: vectorStyle.featureStyle?.fill?.colour ?? "AccentColor")?.withAlphaComponent(vectorStyle.featureStyle?.fill?.opacity ?? 0.5)
                 renderer.lineWidth = vectorStyle.featureStyle?.outline.width ?? 1.0
