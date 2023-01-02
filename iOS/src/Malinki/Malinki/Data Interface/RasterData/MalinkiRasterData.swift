@@ -90,4 +90,34 @@ struct MalinkiRasterData {
         return mapType
     }
     
+    /// This function returns the configuration of a map from apple.
+    /// This function should be used to access the data of the current configuration object, if the property isAppleMaps is true.
+    /// - Returns: the configuration of an MKMap
+    func getAppleMapConfiguration() -> MKMapConfiguration {
+        let appleMapsType = self.mapDataConfiguration.internalName
+        let mapConfig: MKMapConfiguration
+        
+        switch appleMapsType {
+        case "apple_roads":
+            let standardMapConfig = MKStandardMapConfiguration(elevationStyle: .realistic, emphasisStyle: .default)
+            standardMapConfig.showsTraffic = false
+            standardMapConfig.pointOfInterestFilter = .excludingAll
+            mapConfig = standardMapConfig
+        case "apple_aerial":
+            mapConfig = MKImageryMapConfiguration(elevationStyle: .realistic)
+        case "apple_hybrid":
+            let hybridMapConfig = MKHybridMapConfiguration(elevationStyle: .realistic)
+            hybridMapConfig.showsTraffic = false
+            hybridMapConfig.pointOfInterestFilter = .excludingAll
+            mapConfig = hybridMapConfig
+        default:
+            let standardMapConfig = MKStandardMapConfiguration(elevationStyle: .realistic, emphasisStyle: .muted)
+            standardMapConfig.showsTraffic = false
+            standardMapConfig.pointOfInterestFilter = .excludingAll
+            mapConfig = standardMapConfig
+        }
+        
+        return mapConfig
+    }
+    
 }

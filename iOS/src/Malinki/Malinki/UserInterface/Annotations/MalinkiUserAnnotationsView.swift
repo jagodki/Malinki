@@ -32,7 +32,7 @@ struct MalinkiUserAnnotationsView: View {
     
     var body: some View {
         ZStack {
-            AlertControlView(showAlert: self.$showAlert, title: String(localized: "Map Pin Name"), message: String(localized: "Insert the name of the map pin."), actionType: self.actionType, uuidString: self.uuidString)
+            AlertControlView(basemapID: .constant(0), showAlert: self.$showAlert, title: String(localized: "Map Pin Name"), message: String(localized: "Insert the name of the map pin."), actionType: self.actionType, uuidString: self.uuidString)
             
             VStack {
                 NavigationView {

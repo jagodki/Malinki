@@ -113,7 +113,7 @@ struct MalinkiMap: View {
             MalinkiSearchView(searchText: self.$searchText, sheetDetent: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing, isEditing: self.$isEditing)
                 .environmentObject(self.mapLayers)
         case .bookmarks:
-            MalinkiBookmarksView(sheetState: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing)
+            MalinkiBookmarksView(sheetState: self.$selectedDetentIdentifier, isSheetShowing: self.$sheet.isShowing, basemapID: self.$basemapID)
                 .environmentObject(self.bookmarks)
                 .environmentObject(self.mapLayers)
                 .environmentObject(self.mapRegion)

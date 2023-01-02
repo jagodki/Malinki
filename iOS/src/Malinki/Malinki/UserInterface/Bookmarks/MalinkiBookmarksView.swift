@@ -19,6 +19,7 @@ struct MalinkiBookmarksView: View {
     
     @Binding private var sheetState: UISheetPresentationController.Detent.Identifier?
     @Binding private var isSheetShowing: Bool
+    @Binding private var basemapID: Int
     
     private var config = MalinkiConfigurationProvider.sharedInstance
     
@@ -30,15 +31,16 @@ struct MalinkiBookmarksView: View {
     /// - Parameters:
     ///   - sheetState: the state of the sheet
     ///   - isSheetShowing: a boolean binding indicating, whether the sheet is open or closed
-    init(sheetState: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>) {
+    init(sheetState: Binding<UISheetPresentationController.Detent.Identifier?>, isSheetShowing: Binding<Bool>, basemapID: Binding<Int>) {
         self._sheetState = sheetState
         self._isSheetShowing = isSheetShowing
+        self._basemapID = basemapID
     }
     
     var body: some View {
         
         ZStack {
-            AlertControlView(showAlert: self.$showAlert, title: String(localized: "Bookmark Name"), message: String(localized: "Insert the bookmark name."), actionType: self.actionType, uuidString: self.uuidString)
+            AlertControlView(basemapID: self.$basemapID, showAlert: self.$showAlert, title: String(localized: "Bookmark Name"), message: String(localized: "Insert the bookmark name."), actionType: self.actionType, uuidString: self.uuidString)
             
             VStack {
                 NavigationView {
@@ -69,6 +71,9 @@ struct MalinkiBookmarksView: View {
                                     
                                     //untoggle layers according to the bookmark
                                     _ = self.mapLayers.rasterLayers.filter({$0.themeID == bookmark.theme_id && !(bookmark.layer_ids.contains($0.id))}).map({$0.isToggled = false})
+                                    
+                                    //adjust the basemap
+                                    self.basemapID = bookmark.basemapID ?? self.basemapID
                                     
                                     //change the bbox of the map
                                     self.mapRegion.mapRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: bookmark.map.centre.latitude, longitude: bookmark.map.centre.longitude),
@@ -170,7 +175,7 @@ struct MalinkiBookmarksView: View {
 @available(iOS 15.0.0, *)
 struct MalinkiBookmarksView_Previews: PreviewProvider {
     static var previews: some View {
-        MalinkiBookmarksView(sheetState: .constant(UISheetPresentationController.Detent.Identifier.medium), isSheetShowing: .constant(true))
+        MalinkiBookmarksView(sheetState: .constant(UISheetPresentationController.Detent.Identifier.medium), isSheetShowing: .constant(true), basemapID: .constant(0))
             .environmentObject(MalinkiBookmarksProvider.sharedInstance)
             .environmentObject(MalinkiLayerContainer(layers: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray(), themes: MalinkiConfigurationProvider.sharedInstance.getAllMapLayersArray().map({MalinkiTheme(themeID: $0.themeID)}), selectedMapThemeID: 0))
             .environmentObject(MalinkiMapRegion(mapRegion: MKCoordinateRegion()))
