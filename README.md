@@ -58,12 +58,11 @@ Bugs, requests or questions can be reported via <a href="https://github.com/jago
 The following steps are mandatory to create a new app based on Malinki:
 - download the newest version of Malinki directly from the [release page](https://github.com/jagodki/Malinki/releases)
 - extract the content of the downloaded zip archive
-- changing the name of the root directory and the Xcode project file is possible, other directories should not be renamed!
+- changing the name of the root directory and the Xcode project file is possible, **other directories should not be renamed!**
 - open the target settings within the Xcode project and adjust the **Bundle Identifier** and the **Display Name** at least
-- add an app icon named **App Icon**
+- add an app icon named **AppIcon**
 - create a valid configuration file
 - create an accent colour and add all needed images to the assets
-- create an app icon
 
 ## Contributing
 Contributions to the project are welcome, especially if anybody will contribute a native or webbased android app. If you are interested in the development of an android app, please contact me via [the discussion board](https://github.com/jagodki/Malinki/discussions) before creating a pull request.
