@@ -63,6 +63,7 @@ The following steps are mandatory to create a new app based on Malinki:
 - add an app icon named **App Icon**
 - create a valid configuration file
 - create an accent colour and add all needed images to the assets
+- create an app icon
 
 ## Contributing
 Contributions to the project are welcome, especially if anybody will contribute a native or webbased android app. If you are interested in the development of an android app, please contact me via [the discussion board](https://github.com/jagodki/Malinki/discussions) before creating a pull request.
